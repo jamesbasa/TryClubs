@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="all_clubs_suggestions">
+        <item>Academic</item>
+        <item>Co-Ops/Enterprise</item>
+        <item>Cultural</item>
+        <item>Dance</item>
+        <item>Educational</item>
+        <item>Health Professions</item>
+        <item>Interfraternity Council (IFC)</item>
+        <item>Martial Arts</item>
+        <item>Media</item>
+        <item>Greek Council - Fraternity</item>
+        <item>Greek Council - Sorority</item>
+        <item>Panhellenic</item>
+        <item>Political</item>
+        <item>Pre-Professional</item>
+        <item>Service</item>
+        <item>Social</item>
+        <item>Spiritual</item>
+        <item>Student Affirmative Action Committee (SAAC)</item>
+    </string-array>
+
+</resources>

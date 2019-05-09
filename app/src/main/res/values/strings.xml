@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">TryClubs</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="next">Next</string>
+
+    <string name="timeline">Timeline</string>
+    <string name="clublists">ClubLists</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+
+    <string name="username_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="asaguest">Continue as a Guest</string>
+    <string name="login">Log In</string>
+    <string name="signup">Sign Up</string>
+    <string name="noAccount">"Don't have an account?"</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="alreadyhave_account">Already have an account?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="delete_account">Delete my Account</string>
+    <string name="enter_username">Enter your username (Optional)</string>
+    <string name="click_gary">Click Gary to Log In</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
