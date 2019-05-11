@@ -9,15 +9,16 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
+        app:headerLayout="@layout/header_layout"
+        app:menu="@menu/nav_menu"
+
         android:layout_width="wrap_content"
-        android:paddingTop="52dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:paddingTop="52dp"
         android:background="@color/white"
-        app:headerLayout="@layout/header_layout"
         app:itemIconTint="@color/darkgary"
-        app:itemTextColor="@color/darkgary"
-        app:menu="@menu/nav_menu">
+        app:itemTextColor="@color/darkgary">
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

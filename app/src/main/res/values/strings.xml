@@ -5,7 +5,7 @@
     <string name="next">Next</string>
 
     <string name="timeline">Timeline</string>
-    <string name="clublists">ClubLists</string>
+    <string name="clublist">Clublist</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
 
@@ -23,6 +23,7 @@
     <string name="delete_account">Delete my Account</string>
     <string name="enter_username">Enter your username (Optional)</string>
     <string name="click_gary">Click Gary to Log In</string>
+    <string name="skip">Skip</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -20,7 +20,10 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-import com.ucsd.tryclubs.login.LoginActivity;
+import com.ucsd.tryclubs.Activity.UserProfileActivity;
+import com.ucsd.tryclubs.Fragment.ClublistFragment;
+import com.ucsd.tryclubs.Fragment.TimelineFragment;
+import com.ucsd.tryclubs.Login.LoginActivity;
 
 /**
  * Class MainActivity sets the content to res/layout/activity_main.xml
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View headerView;
     private ImageView mProfileView;
     private TextView mUserEmailAccount;
-    private TextView mUserusername;
+    private TextView mUsername;
 
     /**
      * OnCreate() method is the first method run automatically when
@@ -69,14 +72,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar)findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        // TODO - Timeline
+        // set the timeline fragment as default
         fTimelineFragment = new TimelineFragment();
-        //setFragment(fTimelineFragment);
+        setFragment(fTimelineFragment);
 
         // SEARCH BAR:
-        // Library (Please Check): https://github.com/MiguelCatalan/MaterialSearchView_
+        // Library (Please Check): https://github.com/MiguelCatalan/MaterialSearchView
         // TODO - implementation
         materialSearchView = (MaterialSearchView) findViewById(R.id.search_view);
+
         // add auto fill in the search bar
         materialSearchView.setSuggestions(getResources().getStringArray(R.array.all_clubs_suggestions));
         materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -88,8 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Do some magic
-                return false;
+                return true;
             }
         });
 
@@ -131,10 +134,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // locate more components
-        mUserusername = headerView.findViewById(R.id.usernameTextView);
+        mUsername = headerView.findViewById(R.id.usernameTextView);
         mUserEmailAccount = headerView.findViewById(R.id.emailTextView);
         mLogoutItem = mNavigationView.getMenu().getItem(3);
-
     }
 
     /**
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // checking if user is signed in
         if (user == null) {
             // when user is not signed in
-            mUserusername.setText("Click Gary to Log In");
+            mUsername.setText("Click Gary to Log In");
             mUserEmailAccount.setText("");
             mLogoutItem.setVisible(false);
         } else {
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String userEmailAddress = user.getEmail();
             mUserEmailAccount.setText(userEmailAddress);
             mLogoutItem.setVisible(true);
-            mUserusername.setText(user.getDisplayName());
+            mUsername.setText(user.getDisplayName());
         }
     }
 
@@ -222,20 +224,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // TODO - Fill in
         if (id == R.id.timeline) {
-
-            CloseDrawerAndSearchBar();
-        } else if (id == R.id.clublists) {
-
-            CloseDrawerAndSearchBar();
+            getSupportActionBar().setTitle("Timeline");
+            setFragment(new TimelineFragment());
+        } else if (id == R.id.clublist) {
+            getSupportActionBar().setTitle("Clublist");
+            setFragment(new ClublistFragment());
         } else if (id == R.id.settings) {
 
-            CloseDrawerAndSearchBar();
         } else if (id == R.id.logout_in_drawer) {
             userClickedLogOut();
-            CloseDrawerAndSearchBar();
-            return true;
         }
-        return false;
+
+        CloseDrawerAndSearchBar();
+        return true;
     }
 
     /**
@@ -283,12 +284,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     * Switching screen of the app
-     * TODO
+     * Switching screen of the app between different fragment
      */
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        //fragmentTransaction.replace(R.id.timeline_frame, fragment);
+        fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
     }
 }
