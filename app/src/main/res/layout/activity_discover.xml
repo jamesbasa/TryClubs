@@ -1,19 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    tools:context=".login.DiscoverActivity">
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/bubblepicker_discover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="26dp"
+        android:gravity="center"
+        android:text="Discover"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="49sp" />
+
+    <TextView
+        android:id="@+id/bubblepicker_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="-7dp"
+        android:gravity="center"
+        android:text=" the beauty of UCSD"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/bubblepicker_tapTochoose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="14dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1"
+        android:text="Tap to choose your interested \ncategory"
+        android:textColor="#9b9b9b"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/bubblepicker_next_button"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"
+        android:background="@drawable/loginbutton_style"
+        android:text="@string/skip" />
 
     <com.igalata.bubblepicker.rendering.BubblePicker
         android:id="@+id/picker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="150dp"
-        app:backgroundColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:backgroundColor="@android:color/white" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
