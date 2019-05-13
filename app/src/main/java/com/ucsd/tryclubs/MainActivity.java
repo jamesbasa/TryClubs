@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavigationView;
     private MenuItem mTimelineItem;
     private MenuItem mClublistsItem;
-    private MenuItem mSettinsItem;
+    private MenuItem mCreateAclub;
+    private MenuItem mManageMyClub;
     private MenuItem mLogoutItem;
     // header content
     private View headerView;
@@ -136,7 +137,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // locate more components
         mUsername = headerView.findViewById(R.id.usernameTextView);
         mUserEmailAccount = headerView.findViewById(R.id.emailTextView);
-        mLogoutItem = mNavigationView.getMenu().getItem(3);
+        mCreateAclub = mNavigationView.getMenu().getItem(2);
+        mManageMyClub = mNavigationView.getMenu().getItem(3);
+        mLogoutItem = mNavigationView.getMenu().getItem(4);
     }
 
     /**
@@ -154,11 +157,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // when user is not signed in
             mUsername.setText("Click Gary to Log In");
             mUserEmailAccount.setText("");
+            mCreateAclub.setVisible(false);
+            mManageMyClub.setVisible(false);
             mLogoutItem.setVisible(false);
         } else {
             // when user is signed in, assign their username and email to the headerView
             String userEmailAddress = user.getEmail();
             mUserEmailAccount.setText(userEmailAddress);
+            mCreateAclub.setVisible(true);
+            mManageMyClub.setVisible(true);
             mLogoutItem.setVisible(true);
             mUsername.setText(user.getDisplayName());
         }
@@ -223,15 +230,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = menuItem.getItemId();
 
         // TODO - Fill in
-        if (id == R.id.timeline) {
+        if (id == R.id.drawer_timeline) {
             getSupportActionBar().setTitle("Timeline");
             setFragment(new TimelineFragment());
-        } else if (id == R.id.clublist) {
+        } else if (id == R.id.drawer_clublist) {
             getSupportActionBar().setTitle("Clublist");
             setFragment(new ClublistFragment());
-        } else if (id == R.id.settings) {
+        } else if (id == R.id.drawer_create_club) {
 
-        } else if (id == R.id.logout_in_drawer) {
+        } else if (id == R.id.drawer_logout) {
             userClickedLogOut();
         }
 

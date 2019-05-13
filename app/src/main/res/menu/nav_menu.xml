@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/timeline"
+    <item android:id="@+id/drawer_timeline"
         android:title="@string/timeline"
         android:icon="@drawable/ic_baseline_dashboard_24px"/>
 
-    <item android:id="@+id/clublist"
+    <item android:id="@+id/drawer_clublist"
         android:title="@string/clublist"
         android:icon="@drawable/ic_baseline_view_list_24px"/>
 
-    <item android:id="@+id/settings"
-        android:title="@string/settings"
-        android:icon="@drawable/ic_baseline_settings_20px"/>
+    <item android:id="@+id/drawer_create_club"
+        android:title="@string/create_club"
+        android:icon="@drawable/ic_baseline_group_add_24px"/>
 
-    <item android:id="@+id/logout_in_drawer"
+    <item android:id="@+id/drawer_my_club"
+        android:title="@string/my_club"
+        android:icon="@drawable/ic_baseline_people_outline_24px"/>
+
+    <item android:id="@+id/drawer_logout"
         android:title="@string/logout"
         android:icon="@drawable/ic_baseline_exit_to_app_24px"/>
 

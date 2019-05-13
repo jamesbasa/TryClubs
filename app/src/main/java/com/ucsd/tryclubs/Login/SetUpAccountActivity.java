@@ -19,7 +19,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ucsd.tryclubs.Activity.UserProfileActivity;
 import com.ucsd.tryclubs.MainActivity;
-import com.ucsd.tryclubs.Module.User;
+import com.ucsd.tryclubs.Model.User;
 import com.ucsd.tryclubs.R;
 
 /**
@@ -93,7 +93,6 @@ public class SetUpAccountActivity extends AppCompatActivity {
         User user = new User(username, userEmail, student);
         FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid())
                 .setValue(user);
-
     }
 
     /**

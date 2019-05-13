@@ -6,7 +6,8 @@
 
     <string name="timeline">Timeline</string>
     <string name="clublist">Clublist</string>
-    <string name="settings">Settings</string>
+    <string name="create_club">Create a club</string>
+    <string name="my_club">Manage my club</string>
     <string name="logout">Logout</string>
 
     <string name="username_hint">Email</string>
