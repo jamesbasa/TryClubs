@@ -32,5 +32,7 @@
     <string name="firebase_users_tag">users</string>
     <string name="firebase_clubs_tag">clubs</string>
     <string name="firebase_following_clubs_tag">following_clubs</string>
+    <string name="firebase_clubmembers_tag">members</string>
+    <string name="firebase_purpose_tag">purpose</string>
 
 </resources>

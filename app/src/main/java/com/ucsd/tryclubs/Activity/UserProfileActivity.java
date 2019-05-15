@@ -17,7 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ucsd.tryclubs.MainActivity;
 import com.ucsd.tryclubs.R;
 
@@ -35,6 +39,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private TextView mWelcomeTextView;
     private FirebaseAuth mAuth;
     private ImageView mGaryFace;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mBigBranchRef;
 
     // Easter Egg
     private int hitGary = 1;
@@ -50,6 +56,21 @@ public class UserProfileActivity extends AppCompatActivity {
 
         // Firebase stuff
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mBigBranchRef = mFirebaseDatabase.getReference();
+        mBigBranchRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChild(getApplicationContext().getString(R.string.firebase_users_tag))) {
+                    mBigBranchRef.child(getApplicationContext().getString(R.string.firebase_users_tag)).setValue("");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // getting all stuff from view
         final FirebaseUser user = mAuth.getCurrentUser();
@@ -86,7 +107,8 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 user.delete();
 
-                FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid()).removeValue();
+                FirebaseDatabase.getInstance().getReference().child(getApplicationContext().getString(R.string.firebase_users_tag))
+                        .child(mAuth.getCurrentUser().getUid()).removeValue();
 
 
                 mAuth.signOut();

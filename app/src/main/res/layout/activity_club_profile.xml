@@ -61,7 +61,6 @@
                 android:layout_margin="@dimen/card_margin">
 
                 <LinearLayout
-                    android:id="@+id/club_profile_info_listView"
                     style="@style/Widget.CardContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -69,20 +68,14 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Info"
+                        android:text="Principal Members"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-                    <TextView
-                        android:id="@+id/club_profile_info_name_textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Name " />
-
-                    <TextView
-                        android:id="@+id/club_profile_info_email_textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Email " />
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/club_profile_info_recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                        </android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
 
@@ -102,23 +95,24 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/club_profile_purpose_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Purpose"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
-                        android:id="@+id/club_profile_purpose_detail_textView"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:id="@+id/club_profile_purpose_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Purpose Detail" />
+                        android:text="Name " />
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
-
-
 
         </LinearLayout>
 

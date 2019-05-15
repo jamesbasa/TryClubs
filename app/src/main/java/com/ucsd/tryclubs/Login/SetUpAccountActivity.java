@@ -97,7 +97,7 @@ public class SetUpAccountActivity extends AppCompatActivity {
     }
 
     private void createUserClassAndAddtoFirebase(String username, String userEmail, String uid) {
-        User user = new User(username, userEmail, uid, "intent", "intent");
+        User user = new User(username, userEmail, uid, "", "");
 
         mDatabaseReference.child(getApplicationContext().getString(R.string.firebase_users_tag))
                 .child(uid)

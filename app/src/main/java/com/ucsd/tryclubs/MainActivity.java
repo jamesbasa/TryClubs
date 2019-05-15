@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MaterialSearchView materialSearchView;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar mMainToolBar; // maybe useful in the future, toolbar is the "Blue Bar" in the top
+    private Toolbar toolbar; // maybe useful in the future, toolbar is the "Blue Bar" in the top
 
     // Firebase Instance
     private FirebaseAuth mAuth;
@@ -64,13 +64,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.drawer_layout);
 
         // get authentication from Firebase
         mAuth = FirebaseAuth.getInstance();
 
         // locate Toolbar
-        Toolbar toolbar = (Toolbar)findViewById(R.id.main_toolbar);
+        toolbar = (Toolbar)findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
         // set the timeline fragment as default

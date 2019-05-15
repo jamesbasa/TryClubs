@@ -2,23 +2,23 @@ package com.ucsd.tryclubs.Model;
 
 public class FollowingClubs {
 
-    public String club_id;
+    public String id;
     public String club_name;
 
     public FollowingClubs() {
     }
 
-    public FollowingClubs(String club_id, String club_name) {
-        this.club_id = club_id;
+    public FollowingClubs(String id, String club_name) {
+        this.id = id;
         this.club_name = club_name;
     }
 
-    public String getClub_id() {
-        return club_id;
+    public String getId() {
+        return id;
     }
 
-    public void setClub_id(String club_id) {
-        this.club_id = club_id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getClub_name() {
