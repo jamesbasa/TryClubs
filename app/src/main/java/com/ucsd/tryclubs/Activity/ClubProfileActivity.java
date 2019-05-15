@@ -47,7 +47,7 @@ public class ClubProfileActivity extends AppCompatActivity {
     private DatabaseReference mUserFollowingClubRef;
     private DatabaseReference mThisclubMembersRef;
 
-    private boolean isFollwed;
+    private boolean isFollowed;
     private String followedClubUID = "";
 
     public static final String EXTRA = "club_name";
@@ -69,7 +69,7 @@ public class ClubProfileActivity extends AppCompatActivity {
         mFloatingBtn = (FloatingActionButton) findViewById(R.id.club_profile_floatingbtn);
         ImageView imageView = findViewById(R.id.backdrop);
         Glide.with(this).load(getRandomPicture.getRandomCheeseDrawable()).apply(RequestOptions.centerCropTransform()).into(imageView);
-        isFollwed = false;
+        isFollowed = false;
 
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(clubName);
@@ -91,11 +91,11 @@ public class ClubProfileActivity extends AppCompatActivity {
                 if (checkIfclubIsFollwed(clubName, dataSnapshot)) {
                     mFloatingBtn.setImageResource(R.drawable.ic_baseline_check_24px);
                     mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.greenEnd));
-                    isFollwed = true;
+                    isFollowed = true;
                 } else {
                     mFloatingBtn.setImageResource(R.drawable.ic_baseline_star_rate_18px);
                     mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
-                    isFollwed = false;
+                    isFollowed = false;
                 }
             }
 
@@ -108,19 +108,19 @@ public class ClubProfileActivity extends AppCompatActivity {
         mFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isFollwed) {
+                if (isFollowed) {
                     // when followed, click to unfollow
                     Log.d(TAG, "Trying to unfollow this club" + followedClubUID);
                     mUserFollowingClubRef.child(followedClubUID).removeValue();
                     mFloatingBtn.setImageResource(R.drawable.ic_baseline_star_rate_18px);
                     mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
-                    isFollwed = false;
+                    isFollowed = false;
                 } else {
                     // when unfollow, click to follow
                     followthisclub();
                     mFloatingBtn.setImageResource(R.drawable.ic_baseline_check_24px);
                     mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.greenEnd));
-                    isFollwed = true;
+                    isFollowed = true;
                 }
             }
         });
