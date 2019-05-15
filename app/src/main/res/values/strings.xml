@@ -6,7 +6,8 @@
 
     <string name="timeline">Timeline</string>
     <string name="clublist">Clublist</string>
-    <string name="settings">Settings</string>
+    <string name="create_club">Create a club</string>
+    <string name="my_club">Manage my club</string>
     <string name="logout">Logout</string>
 
     <string name="username_hint">Email</string>
@@ -27,5 +28,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="firebase_users_tag">users</string>
+    <string name="firebase_clubs_tag">clubs</string>
+    <string name="firebase_following_clubs_tag">following_clubs</string>
+    <string name="firebase_clubmembers_tag">members</string>
+    <string name="firebase_purpose_tag">purpose</string>
 
 </resources>

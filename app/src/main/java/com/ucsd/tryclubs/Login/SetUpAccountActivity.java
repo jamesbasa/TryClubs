@@ -16,10 +16,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ucsd.tryclubs.Activity.UserProfileActivity;
 import com.ucsd.tryclubs.MainActivity;
-import com.ucsd.tryclubs.Module.User;
+import com.ucsd.tryclubs.Model.User;
 import com.ucsd.tryclubs.R;
 
 /**
@@ -31,15 +32,15 @@ public class SetUpAccountActivity extends AppCompatActivity {
 
     // Firebase stuff
     private FirebaseAuth mAuth;
+    private String uid;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     // all stuff in the view
     private EditText mEnterUserNameEditText;
     private Button mNextButton;
     private String usernameField;
     private String userEmail;
-
-    static final String admit = "ADMIT";
-    static final String student = "STUDENT";
 
     /**
      * OnCreate() method is the first method run automatically when
@@ -52,6 +53,9 @@ public class SetUpAccountActivity extends AppCompatActivity {
 
         // Firebase stuff
         mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getCurrentUser().getUid();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
 
         // all stuff in the view
         mEnterUserNameEditText = (EditText) findViewById(R.id.setup_account_username_editText);
@@ -75,7 +79,10 @@ public class SetUpAccountActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                createUserClassAndAddtoFirebase(usernameField,userEmail);
+
+
+
+                                createUserClassAndAddtoFirebase(usernameField,userEmail, uid);
                             } else {
                                 Toast.makeText(getApplicationContext(), task.getException().getMessage(),Toast.LENGTH_LONG).show();
                             }
@@ -89,9 +96,11 @@ public class SetUpAccountActivity extends AppCompatActivity {
         });
     }
 
-    private void createUserClassAndAddtoFirebase(String username, String userEmail) {
-        User user = new User(username, userEmail, student);
-        FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid())
+    private void createUserClassAndAddtoFirebase(String username, String userEmail, String uid) {
+        User user = new User(username, userEmail, uid, "", "");
+
+        mDatabaseReference.child(getApplicationContext().getString(R.string.firebase_users_tag))
+                .child(uid)
                 .setValue(user);
 
     }

@@ -9,8 +9,9 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activity.UserProfileActivity"></activity>
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".Activity.ClubProfileActivity" />
+        <activity android:name=".Activity.UserProfileActivity" />
         <activity android:name=".Login.DiscoverActivity" />
         <activity android:name=".Login.SetUpAccountActivity" />
         <activity android:name=".Login.ForgottenPasswordActivity" />
