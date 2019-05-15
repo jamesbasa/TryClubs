@@ -72,7 +72,7 @@ public class ForgottenPasswordActivity extends AppCompatActivity {
                                 goToLoginInActivityHelper();
                                 Toast.makeText(ForgottenPasswordActivity.this, "Reset Password Email Sent", Toast.LENGTH_LONG).show();
                             } else {
-                                // TODO
+                                Toast.makeText(ForgottenPasswordActivity.this, "Couldn't send reset password email.", Toast.LENGTH_LONG).show();
                             }
                             mProgressBar.setVisibility(View.INVISIBLE);
                             mAlreadyHaveaccountTextView.setVisibility(View.VISIBLE);

@@ -1,6 +1,7 @@
 package com.ucsd.tryclubs.Model;
 
 public class ClubMembers {
+
     public String names;
     public String email;
 

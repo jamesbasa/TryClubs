@@ -2,180 +2,240 @@ package com.ucsd.tryclubs.Model;
 
 public class Tags {
 
-    public boolean academic = false;
-    public boolean art = false;
-    public boolean comedy = false;
-    public boolean culture = false;
-    public boolean dance = false;
-    public boolean ethnic = false;
-    public boolean gaming = false;
-    public boolean greek = false;
-    public boolean matrial_arts = false;
-    public boolean media = false;
-    public boolean music = false;
-    public boolean programming = false;
-    public boolean religion = false;
-    public boolean science = false;
-    public boolean social = false;
-    public boolean sports = false;
-    public boolean technology = false;
+    public String academic;
+    public String art;
+    public String business;
+    public String comedy;
+    public String community_service;
+    public String culture;
+    public String dance;
+    public String engineering;
+    public String ethnic;
+    public String gaming;
+    public String greek;
+    public String martial_arts;
+    public String media;
+    public String medical;
+    public String music;
+    public String performing_arts;
+    public String programming;
+    public String religion;
+    public String science;
+    public String self_improvement;
+    public String social;
+    public String sports;
+    public String technology;
 
     public Tags() {
     }
 
-    public Tags(boolean academic, boolean art, boolean comedy, boolean culture, boolean dance, boolean ethnic, boolean gaming, boolean greek, boolean matrial_arts, boolean media, boolean music, boolean programming, boolean religion, boolean science, boolean social, boolean sports, boolean technology) {
+    public Tags(String academic, String art, String business, String comedy, String community_service, String culture, String dance, String engineering, String ethnic, String gaming, String greek, String martial_arts, String media, String medical, String music, String performing_arts, String programming, String religion, String science, String self_improvement, String social, String sports, String technology) {
         this.academic = academic;
         this.art = art;
+        this.business = business;
         this.comedy = comedy;
+        this.community_service = community_service;
         this.culture = culture;
         this.dance = dance;
+        this.engineering = engineering;
         this.ethnic = ethnic;
         this.gaming = gaming;
         this.greek = greek;
-        this.matrial_arts = matrial_arts;
+        this.martial_arts = martial_arts;
         this.media = media;
+        this.medical = medical;
         this.music = music;
+        this.performing_arts = performing_arts;
         this.programming = programming;
         this.religion = religion;
         this.science = science;
+        this.self_improvement = self_improvement;
         this.social = social;
         this.sports = sports;
         this.technology = technology;
     }
 
-    public boolean isAcademic() {
+    public String getAcademic() {
         return academic;
     }
 
-    public void setAcademic(boolean academic) {
+    public void setAcademic(String academic) {
         this.academic = academic;
     }
 
-    public boolean isArt() {
+    public String getArt() {
         return art;
     }
 
-    public void setArt(boolean art) {
+    public void setArt(String art) {
         this.art = art;
     }
 
-    public boolean isComedy() {
+    public String getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(String business) {
+        this.business = business;
+    }
+
+    public String getComedy() {
         return comedy;
     }
 
-    public void setComedy(boolean comedy) {
+    public void setComedy(String comedy) {
         this.comedy = comedy;
     }
 
-    public boolean isCulture() {
+    public String getCommunity_service() {
+        return community_service;
+    }
+
+    public void setCommunity_service(String community_service) {
+        this.community_service = community_service;
+    }
+
+    public String getCulture() {
         return culture;
     }
 
-    public void setCulture(boolean culture) {
+    public void setCulture(String culture) {
         this.culture = culture;
     }
 
-    public boolean isDance() {
+    public String getDance() {
         return dance;
     }
 
-    public void setDance(boolean dance) {
+    public void setDance(String dance) {
         this.dance = dance;
     }
 
-    public boolean isEthnic() {
+    public String getEngineering() {
+        return engineering;
+    }
+
+    public void setEngineering(String engineering) {
+        this.engineering = engineering;
+    }
+
+    public String getEthnic() {
         return ethnic;
     }
 
-    public void setEthnic(boolean ethnic) {
+    public void setEthnic(String ethnic) {
         this.ethnic = ethnic;
     }
 
-    public boolean isGaming() {
+    public String getGaming() {
         return gaming;
     }
 
-    public void setGaming(boolean gaming) {
+    public void setGaming(String gaming) {
         this.gaming = gaming;
     }
 
-    public boolean isGreek() {
+    public String getGreek() {
         return greek;
     }
 
-    public void setGreek(boolean greek) {
+    public void setGreek(String greek) {
         this.greek = greek;
     }
 
-    public boolean isMatrial_arts() {
-        return matrial_arts;
+    public String getMartial_arts() {
+        return martial_arts;
     }
 
-    public void setMatrial_arts(boolean matrial_arts) {
-        this.matrial_arts = matrial_arts;
+    public void setMartial_arts(String martial_arts) {
+        this.martial_arts = martial_arts;
     }
 
-    public boolean isMedia() {
+    public String getMedia() {
         return media;
     }
 
-    public void setMedia(boolean media) {
+    public void setMedia(String media) {
         this.media = media;
     }
 
-    public boolean isMusic() {
+    public String getMedical() {
+        return medical;
+    }
+
+    public void setMedical(String medical) {
+        this.medical = medical;
+    }
+
+    public String getMusic() {
         return music;
     }
 
-    public void setMusic(boolean music) {
+    public void setMusic(String music) {
         this.music = music;
     }
 
-    public boolean isProgramming() {
+    public String getPerforming_arts() {
+        return performing_arts;
+    }
+
+    public void setPerforming_arts(String performing_arts) {
+        this.performing_arts = performing_arts;
+    }
+
+    public String getProgramming() {
         return programming;
     }
 
-    public void setProgramming(boolean programming) {
+    public void setProgramming(String programming) {
         this.programming = programming;
     }
 
-    public boolean isReligion() {
+    public String getReligion() {
         return religion;
     }
 
-    public void setReligion(boolean religion) {
+    public void setReligion(String religion) {
         this.religion = religion;
     }
 
-    public boolean isScience() {
+    public String getScience() {
         return science;
     }
 
-    public void setScience(boolean science) {
+    public void setScience(String science) {
         this.science = science;
     }
 
-    public boolean isSocial() {
+    public String getSelf_improvement() {
+        return self_improvement;
+    }
+
+    public void setSelf_improvement(String self_improvement) {
+        this.self_improvement = self_improvement;
+    }
+
+    public String getSocial() {
         return social;
     }
 
-    public void setSocial(boolean social) {
+    public void setSocial(String social) {
         this.social = social;
     }
 
-    public boolean isSports() {
+    public String getSports() {
         return sports;
     }
 
-    public void setSports(boolean sports) {
+    public void setSports(String sports) {
         this.sports = sports;
     }
 
-    public boolean isTechnology() {
+    public String getTechnology() {
         return technology;
     }
 
-    public void setTechnology(boolean technology) {
+    public void setTechnology(String technology) {
         this.technology = technology;
     }
 }

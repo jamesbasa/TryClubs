@@ -29,4 +29,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="firebase_users_tag">users</string>
+    <string name="firebase_clubs_tag">clubs</string>
+    <string name="firebase_following_clubs_tag">following_clubs</string>
+
 </resources>
