@@ -436,7 +436,7 @@ public class ClubProfileActivity extends AppCompatActivity {
     private void checkIfFollowingClubsIndexExist() {
         Log.d(TAG, "checkIfFollowingClubsIndexExist");
 
-        mUserRef.addValueEventListener(new ValueEventListener() {
+        mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChild(getApplicationContext().getString(R.string.firebase_following_clubs_tag))) {

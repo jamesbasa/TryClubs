@@ -2,16 +2,13 @@ package com.ucsd.tryclubs.Fragment;
 
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +16,6 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.firebase.ui.FirebaseUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,8 +33,6 @@ import com.ucsd.tryclubs.Model.Post;
 import com.ucsd.tryclubs.R;
 import com.ucsd.tryclubs.ViewHolder.PostViewHolder;
 import com.ucsd.tryclubs.getRandom;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class TimelineFragment extends Fragment {
 
@@ -76,7 +70,7 @@ public class TimelineFragment extends Fragment {
             mUserRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_users_tag)).child(mAuth.getCurrentUser().getUid());
         }
         mEventsRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_events_tag));
-        Log.d(TAG, "setupTimelineRecyclerView!!!" );
+        Log.d(TAG, "setupTimelineRecyclerView!!!");
         option = new FirebaseRecyclerOptions.Builder<Post>()
                 .setQuery(mEventsRef, Post.class)
                 .build();
@@ -163,20 +157,35 @@ public class TimelineFragment extends Fragment {
         mAddPost = (FloatingActionButton) v.findViewById(R.id.buttonAddPost);
         mNestedScroll = v.findViewById(R.id.timeline_nestedsv);
         mAddPost.hide();
-        if (mAuth.getCurrentUser() != null) {
-            mAddPost.show();
-            mNestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    if(nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1) != null) {
-                        if ((scrollY >= (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
-                                scrollY > oldScrollY) {
-                            mAddPost.hide();
-                        } else {
-                            mAddPost.show();
-                        }
 
+        if (mAuth.getCurrentUser() != null) {
+            mUserRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild("my_clubs")) {
+                        if (dataSnapshot.child("my_clubs").getChildrenCount() > 0) {
+                            mAddPost.show();
+                            mNestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                                @Override
+                                public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                                    if (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1) != null) {
+                                        if ((scrollY >= (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
+                                                scrollY > oldScrollY) {
+                                            mAddPost.hide();
+                                        } else {
+                                            mAddPost.show();
+                                        }
+
+                                    }
+                                }
+                            });
+                        }
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
             });
         }
@@ -200,7 +209,7 @@ public class TimelineFragment extends Fragment {
         });
         */
 
-        mAddPost.setOnClickListener(new View.OnClickListener(){
+        mAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), NewPostActivity.class));
@@ -214,6 +223,7 @@ public class TimelineFragment extends Fragment {
         adapter.startListening();
         return v;
     }
+
 
     @Override
     public void onStart() {
