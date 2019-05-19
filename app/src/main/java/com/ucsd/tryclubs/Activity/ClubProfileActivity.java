@@ -496,7 +496,7 @@ public class ClubProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChild("events")) {
-                    mUserRef.child("events").setValue("");
+                    mThisclubRef.child("events").setValue("");
                 }
 
                 if (dataSnapshot.hasChild("events")) {

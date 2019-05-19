@@ -124,13 +124,22 @@ public class MyFollowingFragment extends Fragment {
     private void checkIfFollowingEventsIndexExist() {
         Log.d(TAG, "checkIfFollowingEventsIndexExist");
 
-        mUserRef.addValueEventListener(new ValueEventListener() {
+        mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChild("following_events")) {
                     mUserRef.child("following_events").setValue("");
                 }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        mUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("following_events")) {
                     if (dataSnapshot.child("following_events").getChildrenCount() > 0) {
                         mNoFollowingTextView.setVisibility(View.INVISIBLE);
@@ -138,8 +147,8 @@ public class MyFollowingFragment extends Fragment {
                         mNoFollowingTextView.setVisibility(View.VISIBLE);
                     }
                 }
-
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

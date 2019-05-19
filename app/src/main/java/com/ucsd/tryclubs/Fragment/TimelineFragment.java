@@ -74,7 +74,6 @@ public class TimelineFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         if (mAuth.getCurrentUser() != null) {
             mUserRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_users_tag)).child(mAuth.getCurrentUser().getUid());
-            checkIfFollowingEventsIndexExist();
         }
         mEventsRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_events_tag));
         Log.d(TAG, "setupTimelineRecyclerView!!!" );
@@ -116,12 +115,13 @@ public class TimelineFragment extends Fragment {
                                         holder.mLike.setLiked(true);
                                     }
                                 }
+                            } else {
+                                holder.mLike.setLiked(false);
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
                         }
                     });
                     holder.mLike.setOnLikeListener(new OnLikeListener() {
@@ -162,21 +162,24 @@ public class TimelineFragment extends Fragment {
         mRecyclerView.hasFixedSize(); //for performance issues apparently...
         mAddPost = (FloatingActionButton) v.findViewById(R.id.buttonAddPost);
         mNestedScroll = v.findViewById(R.id.timeline_nestedsv);
+        mAddPost.hide();
+        if (mAuth.getCurrentUser() != null) {
+            mAddPost.show();
+            mNestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    if(nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1) != null) {
+                        if ((scrollY >= (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
+                                scrollY > oldScrollY) {
+                            mAddPost.hide();
+                        } else {
+                            mAddPost.show();
+                        }
 
-        mNestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1) != null) {
-                    if ((scrollY >= (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
-                            scrollY > oldScrollY) {
-                        mAddPost.hide();
-                    } else {
-                        mAddPost.show();
                     }
-
                 }
-            }
-        });
+            });
+        }
 
         /*
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -210,23 +213,6 @@ public class TimelineFragment extends Fragment {
         mRecyclerView.setAdapter(adapter);
         adapter.startListening();
         return v;
-    }
-
-    private void checkIfFollowingEventsIndexExist() {
-        Log.d(TAG, "checkIfFollowingEventsIndexExist");
-
-        mUserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChild("following_events")) {
-                    mUserRef.child("following_events").setValue("");
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override

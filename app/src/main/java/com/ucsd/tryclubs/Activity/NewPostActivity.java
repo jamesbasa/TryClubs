@@ -30,8 +30,12 @@ import org.w3c.dom.Text;
 
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class NewPostActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -149,9 +153,11 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
 
                         @Override
                         public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-                            String currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
-                            mDate.setText(currentDateString);
+                                              int month, int day) {
+                            String[] shortMonths = new DateFormatSymbols().getShortMonths();
+                            String result = shortMonths[month] + " " + day + ", " + year;
+
+                            mDate.setText(result);
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
