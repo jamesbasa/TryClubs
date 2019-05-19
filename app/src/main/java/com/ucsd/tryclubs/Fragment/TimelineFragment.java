@@ -135,22 +135,17 @@ public class TimelineFragment extends Fragment {
                             mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag)).child(model.getEname()).removeValue();
                         }
                     });
+
+                    holder.mClubName.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent clubProfilePage = new Intent(getContext(), ClubProfileActivity.class);
+                            Log.d(TAG, "Timeline.setOnClickListener Intent Extra: " + holder.mClubName.getText().toString());
+                            clubProfilePage.putExtra(ClubProfileActivity.EXTRA, holder.mClubName.getText().toString().trim());
+                            startActivity(clubProfilePage);
+                        }
+                    });
                 }
-
-                holder.mClubName.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-
-
-
-                        Intent clubProfilePage = new Intent(getContext(), ClubProfileActivity.class);
-                        Log.d(TAG, "Timeline.setOnClickListener Intent Extra: " + holder.mClubName.getText().toString());
-                        clubProfilePage.putExtra(ClubProfileActivity.EXTRA, holder.mClubName.getText().toString().trim());
-                        startActivity(clubProfilePage);
-                    }
-                });
             }
 
             @NonNull
