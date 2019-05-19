@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="4dp"
+    android:background="?selectableItemBackground">
+
+    <android.support.design.chip.Chip
+        android:clickable="false"
+        android:id="@+id/club_page_tags_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#sample" />
+
+</LinearLayout>

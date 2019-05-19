@@ -31,9 +31,8 @@
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/loginbutton_style"
         android:text="@string/change_password"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,9 +45,8 @@
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/loginbutton_style_red"
+        android:backgroundTint="@color/red"
         android:text="@string/delete_account"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,6 +66,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_close_24px" />
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/profilePage_logout_materialbuttton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/logout"
+        app:icon="@drawable/ic_baseline_exit_to_app_24px"
+        app:layout_constraintBottom_toTopOf="@+id/profilePage_cancel_imagebutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profilePage_deleteAccount_button"
+        app:layout_constraintVertical_bias="0.941" />
 
     <TextView
         android:id="@+id/profilePage_welcomeWord_textview"

@@ -5,9 +5,10 @@
     <string name="next">Next</string>
 
     <string name="timeline">Timeline</string>
-    <string name="clublist">Clublist</string>
-    <string name="create_club">Create a club</string>
-    <string name="my_club">Manage my club</string>
+    <string name="following_clubs">Following Clubs</string>
+    <string name="following_events">Following Events</string>
+    <string name="create_club">Create a Club</string>
+    <string name="my_club">Manage My Club</string>
     <string name="logout">Logout</string>
 
     <string name="username_hint">Email</string>
@@ -32,7 +33,11 @@
     <string name="firebase_users_tag">users</string>
     <string name="firebase_clubs_tag">clubs</string>
     <string name="firebase_following_clubs_tag">following_clubs</string>
+    <string name="firebase_following_events_tag">following_events</string>
     <string name="firebase_clubmembers_tag">members</string>
     <string name="firebase_purpose_tag">purpose</string>
+    <string name="firebase_my_club_tag">my_clubs</string>
+    <string name="firebase_tags_tag">tags</string>
+    <string name="firebase_events_tag">events</string>
 
 </resources>

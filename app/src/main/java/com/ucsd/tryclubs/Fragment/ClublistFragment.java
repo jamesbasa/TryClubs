@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +25,12 @@ import com.ucsd.tryclubs.Activity.ClubProfileActivity;
 import com.ucsd.tryclubs.Model.FollowingClubs;
 import com.ucsd.tryclubs.R;
 import com.ucsd.tryclubs.ViewHolder.FollowingClubsViewHolder;
-import com.ucsd.tryclubs.getRandomPicture;
+import com.ucsd.tryclubs.getRandom;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClublistFragment extends Fragment{
+public class  ClublistFragment extends Fragment{
 
     private static final String TAG = "ClublistFragment";
 
@@ -91,7 +93,7 @@ public class ClublistFragment extends Fragment{
 
                 RequestOptions requestoptions = new RequestOptions();
                 Glide.with(holder.mImageView.getContext())
-                        .load(getRandomPicture.getRandomCheeseDrawable())
+                        .load(getRandom.getRandomUCSDDrawable())
                         .apply(requestoptions.fitCenter())
                         .into(holder.mImageView);
             }

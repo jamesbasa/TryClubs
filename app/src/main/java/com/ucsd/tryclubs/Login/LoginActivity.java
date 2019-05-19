@@ -187,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (user != null) {
             // if the user is signed in
-            goToUserProfileActivityHelper();
+            finish();
         }
     }
 

@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/drawer_timeline"
+        android:checkable="true"
         android:title="@string/timeline"
         android:icon="@drawable/ic_baseline_dashboard_24px"/>
 
     <item android:id="@+id/drawer_clublist"
-        android:title="@string/clublist"
-        android:icon="@drawable/ic_baseline_view_list_24px"/>
+        android:checkable="true"
+        android:title="@string/following_clubs"
+        android:icon="@drawable/ic_baseline_star_24px"/>
+
+    <item android:id="@+id/drawer_my_following"
+        android:checkable="true"
+        android:title="@string/following_events"
+        android:icon="@drawable/ic_baseline_favorite_24px"/>
 
     <item android:id="@+id/drawer_create_club"
         android:title="@string/create_club"

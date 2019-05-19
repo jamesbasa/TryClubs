@@ -1,105 +1,251 @@
 package com.ucsd.tryclubs.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
+
+import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.firebase.ui.FirebaseUI;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
+import com.ucsd.tryclubs.Activity.ClubProfileActivity;
+import com.ucsd.tryclubs.Activity.NewPostActivity;
+import com.ucsd.tryclubs.Model.Post;
 import com.ucsd.tryclubs.R;
+import com.ucsd.tryclubs.ViewHolder.PostViewHolder;
+import com.ucsd.tryclubs.getRandom;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TimelineFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TimelineFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 public class TimelineFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FloatingActionButton mAddPost;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+    private NestedScrollView mNestedScroll;
 
-    private OnFragmentInteractionListener mListener;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mEventsRef;
+    private DatabaseReference mUserRef;
+
+    private static final String TAG = "TimelineFragment";
+
+    FirebaseRecyclerOptions<Post> option;
+    FirebaseRecyclerAdapter<Post, PostViewHolder> adapter;
+
+    View v;
 
     public TimelineFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TimelineFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TimelineFragment newInstance(String param1, String param2) {
-        TimelineFragment fragment = new TimelineFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+                             final Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_timeline, container, false);
+        Log.d(TAG, "this is me");
+
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            mUserRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_users_tag)).child(mAuth.getCurrentUser().getUid());
+            checkIfFollowingEventsIndexExist();
+        }
+        mEventsRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_events_tag));
+        Log.d(TAG, "setupTimelineRecyclerView!!!" );
+        option = new FirebaseRecyclerOptions.Builder<Post>()
+                .setQuery(mEventsRef, Post.class)
+                .build();
+        adapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(option) {
+            @Override
+            protected void onBindViewHolder(@NonNull final PostViewHolder holder, int position, @NonNull final Post model) {
+                RequestOptions requestoptions = new RequestOptions();
+                Glide.with(holder.mTimelineImg.getContext())
+                        .load(getRandom.getRandomUCSDDrawable())
+                        .apply(requestoptions.fitCenter())
+                        .into(holder.mTimelineImg);
+
+                holder.mClubName.setText(model.getHosts());
+                holder.mDescription.setText(model.getDescription());
+                holder.mTitle.setText(model.getEname());
+                holder.mLocation.setText(model.getLocation());
+                String date = model.getDate();
+                String time = model.getTime();
+                String dateAndTime = date + " " + time;
+                holder.mDateTime.setText(dateAndTime);
+
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user == null) {
+                    holder.mLike.setVisibility(View.INVISIBLE);
+                } else {
+                    holder.mLike.setVisibility(View.VISIBLE);
+                    mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag)).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChildren()) {
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    Post post = ds.getValue(Post.class);
+                                    Log.d(TAG, "checkIfEventIsFollwed, have gotten: " + post.getEname());
+                                    if (post.getEname().equals(model.getEname())) {
+                                        Log.d(TAG, "checkIfEventIsFollwed, Found Followed: " + post.getEname());
+                                        holder.mLike.setLiked(true);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    holder.mLike.setOnLikeListener(new OnLikeListener() {
+                        @Override
+                        public void liked(LikeButton likeButton) {
+                            mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag)).child(model.getEname()).setValue(model);
+                        }
+
+                        @Override
+                        public void unLiked(LikeButton likeButton) {
+                            mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag)).child(model.getEname()).removeValue();
+                        }
+                    });
+                }
+
+                holder.mClubName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+
+
+
+                        Intent clubProfilePage = new Intent(getContext(), ClubProfileActivity.class);
+                        Log.d(TAG, "Timeline.setOnClickListener Intent Extra: " + holder.mClubName.getText().toString());
+                        clubProfilePage.putExtra(ClubProfileActivity.EXTRA, holder.mClubName.getText().toString().trim());
+                        startActivity(clubProfilePage);
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public PostViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View view = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.post_layout, viewGroup, false);
+                return new PostViewHolder(view);
+            }
+        };
+
+        v = inflater.inflate(R.layout.fragment_timeline, container, false);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.timeline_recyclerView);
+        mRecyclerView.hasFixedSize(); //for performance issues apparently...
+        mAddPost = (FloatingActionButton) v.findViewById(R.id.buttonAddPost);
+        mNestedScroll = v.findViewById(R.id.timeline_nestedsv);
+
+        mNestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1) != null) {
+                    if ((scrollY >= (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
+                            scrollY > oldScrollY) {
+                        mAddPost.hide();
+                    } else {
+                        mAddPost.show();
+                    }
+
+                }
+            }
+        });
+
+        /*
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy < 0) mAddPost.show();
+                else if (dy > 0){
+                    mAddPost.hide();
+                }
+            }
+        });
+        */
+
+        mAddPost.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NewPostActivity.class));
+            }
+        });
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(adapter);
+        adapter.startListening();
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private void checkIfFollowingEventsIndexExist() {
+        Log.d(TAG, "checkIfFollowingEventsIndexExist");
+
+        mUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChild("following_events")) {
+                    mUserRef.child("following_events").setValue("");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onStart() {
+        super.onStart();
+        mRecyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

@@ -22,8 +22,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
-        app:itemIconTint="@color/darkgary"
-        app:itemTextColor="@color/darkgary">
+        app:itemIconTint="@drawable/drawer_item_color"
+        app:itemTextColor="@drawable/drawer_item_color">
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

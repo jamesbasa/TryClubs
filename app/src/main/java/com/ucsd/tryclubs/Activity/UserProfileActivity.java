@@ -3,6 +3,7 @@ package com.ucsd.tryclubs.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -36,6 +37,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private Button mChangePasswordBtn;
     private Button mDeleteAccountBtn;
     private ImageButton mGoBackBtn;
+    private MaterialButton mLogoutBtn;
     private TextView mWelcomeTextView;
     private FirebaseAuth mAuth;
     private ImageView mGaryFace;
@@ -79,6 +81,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mGoBackBtn = (ImageButton) findViewById(R.id.profilePage_cancel_imagebutton);
         mWelcomeTextView = (TextView) findViewById(R.id.profilePage_welcomeWord_textview);
         mGaryFace = (ImageView) findViewById(R.id.profilePage_gary_imageView);
+        mLogoutBtn = (MaterialButton) findViewById(R.id.profilePage_logout_materialbuttton);
 
         // attach username to "HELLO"
         String oldWelcome = mWelcomeTextView.getText().toString();
@@ -136,6 +139,14 @@ public class UserProfileActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Professionalism Point Deduction!", Toast.LENGTH_LONG).show();
                     hitGary = 0;
                 }
+            }
+        });
+
+        mLogoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                goToMainActivityHelper();
             }
         });
 

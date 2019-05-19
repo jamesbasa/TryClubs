@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/club_info_dialog_edit_name_editText"
+        android:hint="Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"/>
+
+    <EditText
+        android:id="@+id/club_info_dialog_edit_email_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/club_info_dialog_edit_name_editText"
+        android:hint="Email"
+        android:layout_alignParentStart="true"
+        android:inputType="textEmailAddress"/>
+
+</RelativeLayout>

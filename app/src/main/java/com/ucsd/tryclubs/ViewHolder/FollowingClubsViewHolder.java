@@ -22,9 +22,5 @@ public class FollowingClubsViewHolder extends RecyclerView.ViewHolder{
         mImageView = itemView.findViewById(R.id.clublist_circleImageView);
         mTextView = itemView.findViewById(R.id.clublist_clubdescription);
         linearLayout = (LinearLayout) itemView.findViewById(R.id.clublist_linearlayout);
-
     }
-
-
-
 }
