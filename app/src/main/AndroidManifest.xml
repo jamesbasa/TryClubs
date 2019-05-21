@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.NewPostActivity"></activity>
+        <activity android:name=".Activity.SearchActivity"></activity>
+        <activity android:name=".Activity.NewPostActivity" />
         <activity android:name=".Activity.ClubSuggestionsActivity" />
         <activity android:name=".Activity.ClubCreationActivity" />
         <activity android:name=".Activity.ClubProfileActivity" />

@@ -86,7 +86,7 @@ public class Tags {
         this.technology = technology;
     }
 
-    public boolean isAcademic() {
+    public boolean isacademic() {
         return academic;
     }
 
@@ -94,7 +94,7 @@ public class Tags {
         this.academic = academic;
     }
 
-    public boolean isArt() {
+    public boolean isart() {
         return art;
     }
 
@@ -102,7 +102,7 @@ public class Tags {
         this.art = art;
     }
 
-    public boolean isBusiness() {
+    public boolean isbusiness() {
         return business;
     }
 
@@ -110,7 +110,7 @@ public class Tags {
         this.business = business;
     }
 
-    public boolean isComedy() {
+    public boolean iscomedy() {
         return comedy;
     }
 
@@ -118,7 +118,7 @@ public class Tags {
         this.comedy = comedy;
     }
 
-    public boolean isCommunity_service() {
+    public boolean iscommunity_service() {
         return community_service;
     }
 
@@ -126,7 +126,7 @@ public class Tags {
         this.community_service = community_service;
     }
 
-    public boolean isCulture() {
+    public boolean isculture() {
         return culture;
     }
 
@@ -134,7 +134,7 @@ public class Tags {
         this.culture = culture;
     }
 
-    public boolean isDance() {
+    public boolean isdance() {
         return dance;
     }
 
@@ -142,7 +142,7 @@ public class Tags {
         this.dance = dance;
     }
 
-    public boolean isEngineering() {
+    public boolean isengineering() {
         return engineering;
     }
 
@@ -150,7 +150,7 @@ public class Tags {
         this.engineering = engineering;
     }
 
-    public boolean isEthnic() {
+    public boolean isethnic() {
         return ethnic;
     }
 
@@ -158,7 +158,7 @@ public class Tags {
         this.ethnic = ethnic;
     }
 
-    public boolean isGaming() {
+    public boolean isgaming() {
         return gaming;
     }
 
@@ -166,7 +166,7 @@ public class Tags {
         this.gaming = gaming;
     }
 
-    public boolean isGreek() {
+    public boolean isgreek() {
         return greek;
     }
 
@@ -174,7 +174,7 @@ public class Tags {
         this.greek = greek;
     }
 
-    public boolean isLifestyle() {
+    public boolean islifestyle() {
         return lifestyle;
     }
 
@@ -182,7 +182,7 @@ public class Tags {
         this.lifestyle = lifestyle;
     }
 
-    public boolean isMartial_arts() {
+    public boolean ismartial_arts() {
         return martial_arts;
     }
 
@@ -190,7 +190,7 @@ public class Tags {
         this.martial_arts = martial_arts;
     }
 
-    public boolean isMedia() {
+    public boolean ismedia() {
         return media;
     }
 
@@ -198,7 +198,7 @@ public class Tags {
         this.media = media;
     }
 
-    public boolean isMedical() {
+    public boolean ismedical() {
         return medical;
     }
 
@@ -206,7 +206,7 @@ public class Tags {
         this.medical = medical;
     }
 
-    public boolean isMusic() {
+    public boolean ismusic() {
         return music;
     }
 
@@ -214,7 +214,7 @@ public class Tags {
         this.music = music;
     }
 
-    public boolean isPerforming_arts() {
+    public boolean isperforming_arts() {
         return performing_arts;
     }
 
@@ -222,7 +222,7 @@ public class Tags {
         this.performing_arts = performing_arts;
     }
 
-    public boolean isProgramming() {
+    public boolean isprogramming() {
         return programming;
     }
 
@@ -230,7 +230,7 @@ public class Tags {
         this.programming = programming;
     }
 
-    public boolean isReligion() {
+    public boolean isreligion() {
         return religion;
     }
 
@@ -238,7 +238,7 @@ public class Tags {
         this.religion = religion;
     }
 
-    public boolean isScience() {
+    public boolean isscience() {
         return science;
     }
 
@@ -246,7 +246,7 @@ public class Tags {
         this.science = science;
     }
 
-    public boolean isSelf_improvement() {
+    public boolean isself_improvement() {
         return self_improvement;
     }
 
@@ -254,7 +254,7 @@ public class Tags {
         this.self_improvement = self_improvement;
     }
 
-    public boolean isSocial() {
+    public boolean issocial() {
         return social;
     }
 
@@ -262,7 +262,7 @@ public class Tags {
         this.social = social;
     }
 
-    public boolean isSports() {
+    public boolean issports() {
         return sports;
     }
 
@@ -270,7 +270,7 @@ public class Tags {
         this.sports = sports;
     }
 
-    public boolean isTechnology() {
+    public boolean istechnology() {
         return technology;
     }
 

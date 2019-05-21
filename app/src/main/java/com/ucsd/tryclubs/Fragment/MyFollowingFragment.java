@@ -1,8 +1,10 @@
 package com.ucsd.tryclubs.Fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -93,6 +95,22 @@ public class MyFollowingFragment extends Fragment {
                     @Override
                     public void unLiked(LikeButton likeButton) {
                         mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag)).child(model.getEname()).removeValue();
+
+
+                            String eventNmae = model.getEname();
+                            final Post deletedItem = adapter.getItem(holder.getAdapterPosition());
+                            adapter.notifyItemRemoved(holder.getAdapterPosition());
+
+                            Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),  eventNmae.toUpperCase() + " removed from Following Events List", Snackbar.LENGTH_LONG);
+                            snackbar.setAction("UNDO", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag)).child(model.getEname()).setValue(deletedItem);
+                                }
+                            });
+                            snackbar.setActionTextColor(Color.YELLOW);
+                            snackbar.show();
+
                     }
                 });
 

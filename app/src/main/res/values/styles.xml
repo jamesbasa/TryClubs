@@ -11,6 +11,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">@font/googlesans_regular</item>
         <item name="textInputStyle">@style/AppTextField</item>
+        <item name="chipStandaloneStyle">@style/AppChip.Standalone</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -36,12 +37,25 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="AppTextAppearance.Chip" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="fontFamily">@font/googlesans_regular</item>
+        <item name="android:fontFamily">@font/googlesans_regular</item>
+    </style>
+
     <style name="AppTextField" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">@color/text_field_background</item>
     </style>
 
+    <style name="AppChip.Standalone" parent="Widget.MaterialComponents.Chip.Entry">
+        <item name="android:textAppearance">@style/AppTextAppearance.Chip</item>
+    </style>
+
     <style name="AppTextField_grey" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">#D3D3D3</item>
+    </style>
+
+    <style name="AppTextField_transparent" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">#00000000</item>
     </style>
 
     <style name="Widget.MaterialComponents.Chip.Filter" parent="Base.Widget.MaterialComponents.Chip">
@@ -52,5 +66,4 @@
 
         <item name="checkedIcon">@drawable/ic_mtrl_chip_checked_black</item>
     </style>
-
 </resources>

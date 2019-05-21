@@ -100,6 +100,7 @@ public class TimelineFragment extends Fragment {
                     mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag)).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            holder.mLike.setLiked(false);
                             if (dataSnapshot.hasChildren()) {
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     Post post = ds.getValue(Post.class);
@@ -109,8 +110,6 @@ public class TimelineFragment extends Fragment {
                                         holder.mLike.setLiked(true);
                                     }
                                 }
-                            } else {
-                                holder.mLike.setLiked(false);
                             }
                         }
 
@@ -118,6 +117,7 @@ public class TimelineFragment extends Fragment {
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
                     });
+
                     holder.mLike.setOnLikeListener(new OnLikeListener() {
                         @Override
                         public void liked(LikeButton likeButton) {

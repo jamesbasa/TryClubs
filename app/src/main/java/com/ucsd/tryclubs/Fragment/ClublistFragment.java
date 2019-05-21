@@ -105,9 +105,7 @@ public class  ClublistFragment extends Fragment{
                         .inflate(R.layout.clublist_layout, viewGroup, false);
                 return new FollowingClubsViewHolder(view);
             }
-
         };
-
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }

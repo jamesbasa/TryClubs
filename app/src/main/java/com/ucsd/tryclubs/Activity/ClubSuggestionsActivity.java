@@ -141,7 +141,7 @@ public class ClubSuggestionsActivity extends AppCompatActivity {
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             public View mView;
-            public CircleImageView mCirleImage;
+            public CircleImageView mCircleImage;
             public TextView mName;
             public LikeButton mStar;
 
@@ -149,7 +149,7 @@ public class ClubSuggestionsActivity extends AppCompatActivity {
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 mView = itemView;
-                mCirleImage = itemView.findViewById(R.id.club_suggestion_circleImageView);
+                mCircleImage = itemView.findViewById(R.id.club_suggestion_circleImageView);
                 mName = itemView.findViewById(R.id.club_suggestion_clubdescription);
                 mStar = itemView.findViewById(R.id.club_suggestion_star);
             }
@@ -184,10 +184,10 @@ public class ClubSuggestionsActivity extends AppCompatActivity {
 
 
             RequestOptions requestoptions = new RequestOptions();
-            Glide.with(viewHolder.mCirleImage.getContext())
+            Glide.with(viewHolder.mCircleImage.getContext())
                     .load(getRandom.getRandomUCSDDrawable())
                     .apply(requestoptions.fitCenter())
-                    .into(viewHolder.mCirleImage);
+                    .into(viewHolder.mCircleImage);
         }
 
         @Override

@@ -22,32 +22,30 @@
     </string-array>
 
     <string-array name="all_custom_tags">
-        <item>academic</item>
-        <item>art</item>
-        <item>business</item>
-        <item>comedy</item>
-        <item>community_service</item>
-        <item>culture</item>
-        <item>dance</item>
-        <item>engineering</item>
-        <item>ethnic</item>
-        <item>gaming</item>
-        <item>greek</item>
-        <item>lifestyle</item>
-        <item>martial_arts</item>
-        <item>media</item>
-        <item>medical</item>
-        <item>music</item>
-        <item>performing_arts</item>
-        <item>programming</item>
-        <item>religion</item>
-        <item>science</item>
-        <item>self_improvement</item>
-        <item>social</item>
-        <item>sports</item>
-        <item>technology</item>
-
-
+        <item>#academic</item>
+        <item>#art</item>
+        <item>#business</item>
+        <item>#comedy</item>
+        <item>#community_service</item>
+        <item>#culture</item>
+        <item>#dance</item>
+        <item>#engineering</item>
+        <item>#ethnic</item>
+        <item>#gaming</item>
+        <item>#greek</item>
+        <item>#lifestyle</item>
+        <item>#martial_arts</item>
+        <item>#media</item>
+        <item>#medical</item>
+        <item>#music</item>
+        <item>#performing_arts</item>
+        <item>#programming</item>
+        <item>#religion</item>
+        <item>#science</item>
+        <item>#self_improvement</item>
+        <item>#social</item>
+        <item>#sports</item>
+        <item>#technology</item>
     </string-array>
 
     <integer-array name="bubblepicker_images">

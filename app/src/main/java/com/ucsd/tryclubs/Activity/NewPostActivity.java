@@ -129,11 +129,10 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
                 clubName,mLocation.getText().toString().trim(),
                 mDate.getText().toString().trim(),mTime.getText().toString().trim(),
                 mDescription.getText().toString().trim());
-        DatabaseReference postClubRef = mClubRef.child(getApplicationContext().getString(R.string.firebase_events_tag)).push();
-        postClubRef.setValue(post);
+        mClubRef.child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
+        mEventRef.child(post.getEname()).setValue(post);
+        mUserRef.child(getApplicationContext().getString(R.string.firebase_following_events_tag)).child(post.getEname()).setValue(post);
 
-        DatabaseReference postEventRef = mEventRef.push();
-        postEventRef.setValue(post);
         onBackPressed();
     }
 

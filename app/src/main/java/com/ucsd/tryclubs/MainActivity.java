@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.ucsd.tryclubs.Activity.ClubCreationActivity;
 import com.ucsd.tryclubs.Activity.ClubProfileActivity;
+import com.ucsd.tryclubs.Activity.SearchActivity;
 import com.ucsd.tryclubs.Activity.UserProfileActivity;
 import com.ucsd.tryclubs.Fragment.ClublistFragment;
 import com.ucsd.tryclubs.Fragment.MyFollowingFragment;
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity";
 
     // top bar stuff
-    private MaterialSearchView materialSearchView;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar; // maybe useful in the future, toolbar is the "Blue Bar" in the top
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mUserRef;
     private DatabaseReference mUserMyClubRef;
+    private DatabaseReference mClubs;
 
     // Fragment
     private TimelineFragment fTimelineFragment;
@@ -73,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView mProfileView;
     private TextView mUserEmailAccount;
     private TextView mUsername;
+
+    private RecyclerView mRecyclerView;
 
     /**
      * OnCreate() method is the first method run automatically when
@@ -93,37 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // locate Toolbar
         toolbar = (Toolbar)findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-        // SEARCH BAR:
-        // Library (Please Check): https://github.com/MiguelCatalan/MaterialSearchView
-        // TODO - implementation
-        materialSearchView = (MaterialSearchView) findViewById(R.id.search_view);
-
-        // add auto fill in the search bar
-        materialSearchView.setSuggestions(getResources().getStringArray(R.array.all_clubs_suggestions));
-        materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //Do some magic
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
-        });
-
-        materialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-                //Do some magic
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-                //Do some magic
-            }
-        });
 
         // SIDE DRAWER (aka NavigationView):
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -227,8 +201,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else if (materialSearchView.isSearchOpen()) {
-            materialSearchView.closeSearch();
         } else {
             super.onBackPressed();
         }
@@ -244,8 +216,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
-
             return true;
+        }
+
+        if (item.getItemId() == R.id.action_search) {
+            Intent SearchPage = new Intent(getApplicationContext(), SearchActivity.class);
+            Log.d(TAG, "Going into Search Page");
+            startActivity(SearchPage);
         }
 
         return super.onOptionsItemSelected(item);
@@ -260,10 +237,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
-
-        MenuItem item = menu.findItem(R.id.action_search);
-        materialSearchView.setMenuItem(item);
-
         return true;
     }
 
@@ -297,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
                     Log.d(TAG, "ManageMyClub Menu Item Intent Extra: " + cn);
                     clubProfilePage.putExtra(ClubProfileActivity.EXTRA, cn);
-                     startActivity(clubProfilePage);
+                    startActivity(clubProfilePage);
                 }
 
                 @Override
@@ -355,8 +328,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void CloseDrawerAndSearchBar() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else if (materialSearchView.isSearchOpen()) {
-            materialSearchView.closeSearch();
         }
     }
 
@@ -365,6 +336,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_container, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void setFragmentWithBackStack(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().addToBackStack(null);
         fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
     }

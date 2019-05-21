@@ -7,7 +7,7 @@ public class getRandom {
     private static final Random RANDOM = new Random();
 
     public static int getRandomUCSDDrawable() {
-        switch (RANDOM.nextInt(14)) {
+        switch (RANDOM.nextInt(20)) {
             default:
             case 0:
                 return R.drawable.geisel_2;
@@ -37,6 +37,22 @@ public class getRandom {
                 return R.drawable.snake;
             case 13:
                 return R.drawable.stringio;
+            case 14:
+                return R.drawable.ucsd_64_night;
+            case 15:
+                return R.drawable.ucsd_medical;
+            case 16:
+                return R.drawable.ucsd_nc_1;
+            case 17:
+                return R.drawable.ucsd_nch;
+            case 18:
+                return R.drawable.ucsd_people;
+            case 19:
+                return R.drawable.ucsd_people_2;
+            case 20:
+                return R.drawable.ucsd_people_3;
+            case 21:
+                return R.drawable.ucsd_roosevelt;
         }
     }
 
