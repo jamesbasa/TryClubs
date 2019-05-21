@@ -466,6 +466,7 @@ public class SearchActivity extends AppCompatActivity {
                                 FollowingClubs model = dataSnapshot.getValue(FollowingClubs.class);
                                 mUserRef.child("following_clubs").child(model.getClub_name()).removeValue();
                                 viewHolder.mStar.setLiked(false);
+                                onResume();
                             }
 
                             @Override
