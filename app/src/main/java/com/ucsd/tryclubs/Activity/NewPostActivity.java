@@ -159,6 +159,7 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
                             mDate.setText(result);
                         }
                     }, mYear, mMonth, mDay);
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             datePickerDialog.show();
         }
         if (v == mTime) {
