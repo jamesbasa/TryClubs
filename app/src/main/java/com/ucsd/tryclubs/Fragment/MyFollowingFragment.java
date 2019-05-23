@@ -1,6 +1,7 @@
 package com.ucsd.tryclubs.Fragment;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.ucsd.tryclubs.Activity.ClubProfileActivity;
 import com.ucsd.tryclubs.Model.Post;
 import com.ucsd.tryclubs.R;
 import com.ucsd.tryclubs.ViewHolder.PostViewHolder;
@@ -111,6 +113,16 @@ public class MyFollowingFragment extends Fragment {
                             snackbar.setActionTextColor(Color.YELLOW);
                             snackbar.show();
 
+                    }
+                });
+
+                holder.mClubName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent clubProfilePage = new Intent(getContext(), ClubProfileActivity.class);
+                        Log.d(TAG, "FollowingFragment.setOnClickListener Intent Extra: " + holder.mClubName.getText().toString());
+                        clubProfilePage.putExtra(ClubProfileActivity.EXTRA, holder.mClubName.getText().toString().trim());
+                        startActivity(clubProfilePage);
                     }
                 });
 

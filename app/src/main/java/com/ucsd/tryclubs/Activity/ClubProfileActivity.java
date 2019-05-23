@@ -83,6 +83,8 @@ public class ClubProfileActivity extends AppCompatActivity {
     private TextView purpose_textView;
     private TextView mNoEventTextView;
 
+    String clubNameInHere = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +95,7 @@ public class ClubProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final String clubName = getIntent().getStringExtra(EXTRA);
+        clubNameInHere = clubName;
         mFloatingBtn = (FloatingActionButton) findViewById(R.id.club_profile_floatingbtn);
         ImageView imageView = findViewById(R.id.backdrop);
         Glide.with(this).load(getRandom.getRandomUCSDDrawable()).apply(RequestOptions.centerCropTransform()).into(imageView);
@@ -105,9 +108,56 @@ public class ClubProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mThisclubRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_clubs_tag)).child(clubName);
-        mUserRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_users_tag)).child(mAuth.getUid());
-        mUserFollowingClubRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_users_tag)).child(mAuth.getCurrentUser().getUid())
-                .child(getApplicationContext().getString(R.string.firebase_following_clubs_tag));
+        mFloatingBtn.hide();
+
+        if (mAuth.getCurrentUser() != null) {
+            mFloatingBtn.show();
+            mUserRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_users_tag)).child(mAuth.getUid());
+            mUserFollowingClubRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_users_tag)).child(mAuth.getCurrentUser().getUid())
+                    .child(getApplicationContext().getString(R.string.firebase_following_clubs_tag));
+
+            checkIfFollowingClubsIndexExist();
+            mUserFollowingClubRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (checkIfclubIsFollwed(clubName, dataSnapshot)) {
+                        mFloatingBtn.setImageResource(R.drawable.ic_baseline_check_24px);
+                        mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.greenEnd));
+                        isFollowed = true;
+                    } else {
+                        mFloatingBtn.setImageResource(R.drawable.ic_baseline_star_24px);
+                        mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+                        isFollowed = false;
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            mFloatingBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isFollowed) {
+                        // when followed, click to unfollow
+                        Log.d(TAG, "Trying to unfollow this club: " + followedClubUID);
+                        mUserFollowingClubRef.child(followedClubUID).removeValue();
+                        mFloatingBtn.setImageResource(R.drawable.ic_baseline_star_24px);
+                        mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+                        isFollowed = false;
+                    } else {
+                        // when unfollow, click to follow
+                        followthisclub();
+                        mFloatingBtn.setImageResource(R.drawable.ic_baseline_check_24px);
+                        mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.greenEnd));
+                        isFollowed = true;
+                    }
+                }
+            });
+        }
+
         mThisclubMembersRef = mThisclubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag));
         mThisclubTagsRef = mThisclubRef.child(getApplicationContext().getString(R.string.firebase_tags_tag));
 
@@ -128,47 +178,6 @@ public class ClubProfileActivity extends AppCompatActivity {
         });
 
         checkIfClubsEventsIndexExist();
-        checkIfFollowingClubsIndexExist();
-        mUserFollowingClubRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (checkIfclubIsFollwed(clubName, dataSnapshot)) {
-                    mFloatingBtn.setImageResource(R.drawable.ic_baseline_check_24px);
-                    mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.greenEnd));
-                    isFollowed = true;
-                } else {
-                    mFloatingBtn.setImageResource(R.drawable.ic_baseline_star_24px);
-                    mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
-                    isFollowed = false;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        mFloatingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isFollowed) {
-                    // when followed, click to unfollow
-                    Log.d(TAG, "Trying to unfollow this club: " + followedClubUID);
-                    mUserFollowingClubRef.child(followedClubUID).removeValue();
-                    mFloatingBtn.setImageResource(R.drawable.ic_baseline_star_24px);
-                    mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
-                    isFollowed = false;
-                } else {
-                    // when unfollow, click to follow
-                    followthisclub();
-                    mFloatingBtn.setImageResource(R.drawable.ic_baseline_check_24px);
-                    mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.greenEnd));
-                    isFollowed = true;
-                }
-            }
-        });
-
         mInfoRecyclerView = (RecyclerView) findViewById(R.id.club_profile_info_recyclerView);
         mInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         setupInfoRecyclerView(mInfoRecyclerView);
@@ -194,12 +203,35 @@ public class ClubProfileActivity extends AppCompatActivity {
             }
         });
 
-        purpose_textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPurposeEditDialog();
-            }
-        });
+        if (mAuth.getCurrentUser() != null) {
+            mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(getApplicationContext().getString(R.string.firebase_my_club_tag))) {
+                        if (dataSnapshot.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).hasChildren()) {
+                            DataSnapshot ds = dataSnapshot.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).getChildren().iterator().next();
+                            Clubs club = ds.getValue(Clubs.class);
+                            Log.d(TAG, "has children" + club.getClub_name());
+                            Log.d(TAG, "has children" + clubName);
+                            if (club.getClub_name().equals(clubName)) {
+                                purpose_textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        showPurposeEditDialog();
+                                    }
+                                });
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         mTagsRecyclerView = (RecyclerView) findViewById(R.id.club_profile_tags_recyclerView);
         mTagsRecyclerView.hasFixedSize();
@@ -284,16 +316,17 @@ public class ClubProfileActivity extends AppCompatActivity {
         eventsAdapter.startListening();
     }
 
-
     private void updatePurposeinFirebase(String newPurpose) {
         mThisclubRef.child(getApplicationContext().getString(R.string.firebase_purpose_tag)).setValue(newPurpose);
         String name = mThisclubRef.getKey();
         mUserRef.child(getApplicationContext().getString(R.string.firebase_following_clubs_tag)).child(name).child(getApplicationContext().getString(R.string.firebase_purpose_tag)).setValue(newPurpose);
+        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(name).child(getApplicationContext().getString(R.string.firebase_purpose_tag)).setValue(newPurpose);
     }
 
     private void updateInfoinFirebase(String name, String email) {
         ClubMembers clubMembers = new ClubMembers(name, email);
         mThisclubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
+        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubNameInHere).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
     }
 
     private void showInfoEditDialog(View miniView) {
@@ -348,7 +381,6 @@ public class ClubProfileActivity extends AppCompatActivity {
             }
         }).show();
     }
-
 
     private void setupTagRecyclerView(RecyclerView mTagsRecyclerView) {
         mTagsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -416,15 +448,36 @@ public class ClubProfileActivity extends AppCompatActivity {
             @NonNull
             @Override
             public ClubPageInfoSectionViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View view = LayoutInflater.from(viewGroup.getContext())
+                final View view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.clubpage_info_section, viewGroup, false);
 
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showInfoEditDialog(v);
-                    }
-                });
+                if (mAuth.getCurrentUser() != null) {
+                    mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild(getApplicationContext().getString(R.string.firebase_my_club_tag))) {
+                                if (dataSnapshot.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).hasChildren()) {
+                                    DataSnapshot ds = dataSnapshot.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).getChildren().iterator().next();
+                                    Clubs club = ds.getValue(Clubs.class);
+                                    if (club.getClub_name().equals(clubNameInHere)) {
+                                        view.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                showInfoEditDialog(v);
+                                            }
+                                        });
+                                    }
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
                 return new ClubPageInfoSectionViewHolder(view);
             }
         };
@@ -508,6 +561,7 @@ public class ClubProfileActivity extends AppCompatActivity {
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -521,8 +575,7 @@ public class ClubProfileActivity extends AppCompatActivity {
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
             Log.d(TAG, "bbbb");
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }

@@ -156,6 +156,16 @@ public class SearchActivity extends AppCompatActivity {
 
                 FirebaseUser user = mAuth.getCurrentUser();
 
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
+                        Log.d(TAG, "SearchViewItem.setOnClickListener Intent Extra: " + holder.mName.getText().toString());
+                        clubProfilePage.putExtra(ClubProfileActivity.EXTRA, holder.mName.getText().toString().trim());
+                        startActivity(clubProfilePage);
+                    }
+                });
+
                 if (user == null) {
                     holder.mStar.setVisibility(View.INVISIBLE);
                 } else {
@@ -192,17 +202,6 @@ public class SearchActivity extends AppCompatActivity {
                             mUserRef.child(getApplicationContext().getString(R.string.firebase_following_clubs_tag)).child(model.getClub_name()).removeValue();
                         }
                     });
-
-                    holder.mView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
-                            Log.d(TAG, "SearchViewItem.setOnClickListener Intent Extra: " + holder.mName.getText().toString());
-                            clubProfilePage.putExtra(ClubProfileActivity.EXTRA, holder.mName.getText().toString().trim());
-                            startActivity(clubProfilePage);
-                        }
-                    });
-
                 }
             }
 
