@@ -85,6 +85,7 @@ public class  ClublistFragment extends Fragment{
                     @Override
                     public void onClick(View v) {
                         Intent clubProfilePage = new Intent(getContext(), ClubProfileActivity.class);
+                        clubProfilePage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(TAG, "holder.itemView.setOnClickListener Intent Extra: " + club_name);
                         clubProfilePage.putExtra(ClubProfileActivity.EXTRA, club_name);
                         startActivity(clubProfilePage);

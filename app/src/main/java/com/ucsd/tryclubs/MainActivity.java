@@ -268,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Clubs club = ds.getValue(Clubs.class);
                     String cn = club.getClub_name();
                     Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
+                    clubProfilePage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     Log.d(TAG, "ManageMyClub Menu Item Intent Extra: " + cn);
                     clubProfilePage.putExtra(ClubProfileActivity.EXTRA, cn);
                     startActivity(clubProfilePage);

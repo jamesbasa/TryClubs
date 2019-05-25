@@ -159,6 +159,7 @@ public class ClubCreationActivity extends AppCompatActivity {
                                     }
                                 });
                                 Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
+                                clubProfilePage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 Log.d(TAG, "mDoneBtn.setOnClickListener Intent Extra: " + clubName);
                                 clubProfilePage.putExtra(ClubProfileActivity.EXTRA, clubName);
                                 startActivity(clubProfilePage);

@@ -2,6 +2,7 @@ package com.ucsd.tryclubs.Activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -64,7 +66,6 @@ public class ClubProfileActivity extends AppCompatActivity {
     private DatabaseReference mThisclubTagsRef;
 
     private boolean isFollowed;
-    private String followedClubUID = "";
 
     public static final String EXTRA = "club_name";
 
@@ -82,6 +83,7 @@ public class ClubProfileActivity extends AppCompatActivity {
     private RecyclerView mTagsRecyclerView;
     private TextView purpose_textView;
     private TextView mNoEventTextView;
+    private TextView mAddMemberTextView;
 
     String clubNameInHere = "";
 
@@ -142,8 +144,8 @@ public class ClubProfileActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (isFollowed) {
                         // when followed, click to unfollow
-                        Log.d(TAG, "Trying to unfollow this club: " + followedClubUID);
-                        mUserFollowingClubRef.child(followedClubUID).removeValue();
+                        Log.d(TAG, "Trying to unfollow this club: " + clubName);
+                        mUserFollowingClubRef.child(clubName).removeValue();
                         mFloatingBtn.setImageResource(R.drawable.ic_baseline_star_24px);
                         mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
                         isFollowed = false;
@@ -185,6 +187,8 @@ public class ClubProfileActivity extends AppCompatActivity {
 
         mNoEventTextView = (TextView) findViewById(R.id.club_profile_events_no_event_TextView);
         mEventRecyclerView = (RecyclerView) findViewById(R.id.club_profile_events_recyclerView);
+        mAddMemberTextView = (TextView) findViewById(R.id.club_profile_add_member);
+        mAddMemberTextView.setVisibility(View.INVISIBLE);
         mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         setupEventRecyclerView(mEventRecyclerView);
         mEventRecyclerView.hasFixedSize();
@@ -220,8 +224,15 @@ public class ClubProfileActivity extends AppCompatActivity {
                                         showPurposeEditDialog();
                                     }
                                 });
-                            }
 
+                                mAddMemberTextView.setVisibility(View.VISIBLE);
+                                mAddMemberTextView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        showAddMemberDialog();
+                                    }
+                                });
+                            }
                         }
                     }
                 }
@@ -323,10 +334,44 @@ public class ClubProfileActivity extends AppCompatActivity {
         mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(name).child(getApplicationContext().getString(R.string.firebase_purpose_tag)).setValue(newPurpose);
     }
 
-    private void updateInfoinFirebase(String name, String email) {
+    private void updateInfoinFirebase(String name, String email, String oldName) {
         ClubMembers clubMembers = new ClubMembers(name, email);
-        mThisclubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
-        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubNameInHere).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
+
+        // remove old value
+        mThisclubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(oldName).removeValue();
+        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubNameInHere).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(oldName).removeValue();
+
+        mThisclubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
+        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubNameInHere).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
+    }
+
+    private void addNewMemberFirebase(String name, String email) {
+        ClubMembers clubMembers = new ClubMembers(name, email);
+        mThisclubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
+        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubNameInHere).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
+    }
+
+    private void showAddMemberDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.add_new_member_dialog, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText dialogNameTextView = view.findViewById(R.id.club_new_member_dialog_edit_name_editText);
+        final EditText dialogEmailTextView = view.findViewById(R.id.club_new_member_dialog_edit_email_editText);
+        builder.setView(view).setTitle("Add Principle Member")
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setPositiveButton("update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newName = dialogNameTextView.getText().toString();
+                String newEmail = dialogEmailTextView.getText().toString();
+                addNewMemberFirebase(newName, newEmail);
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private void showInfoEditDialog(View miniView) {
@@ -337,6 +382,7 @@ public class ClubProfileActivity extends AppCompatActivity {
 
         final TextView oldNameTextView = miniView.findViewById(R.id.club_profile_info_name_textView);
         final TextView oldEmailTextView = miniView.findViewById(R.id.club_profile_info_email_textView);
+        final String oldName = oldNameTextView.getText().toString();
 
         dialogNameTextView.setText(oldNameTextView.getText().toString());
         dialogEmailTextView.setText(oldEmailTextView.getText().toString());
@@ -354,10 +400,11 @@ public class ClubProfileActivity extends AppCompatActivity {
                 String newEmail = dialogEmailTextView.getText().toString();
                 oldNameTextView.setText(newName);
                 oldEmailTextView.setText(newEmail);
-                updateInfoinFirebase(newName, newEmail);
+                updateInfoinFirebase(newName, newEmail, oldName);
                 dialog.dismiss();
             }
-        }).show();
+        });
+        builder.show();
     }
 
     private void showPurposeEditDialog() {
@@ -379,7 +426,8 @@ public class ClubProfileActivity extends AppCompatActivity {
                 updatePurposeinFirebase(newPurpose);
                 dialog.dismiss();
             }
-        }).show();
+        });
+        builder.show();
     }
 
     private void setupTagRecyclerView(RecyclerView mTagsRecyclerView) {
@@ -507,6 +555,13 @@ public class ClubProfileActivity extends AppCompatActivity {
     public boolean checkIfclubIsFollwed(String clubName, DataSnapshot dataSnapshot) {
         Log.d(TAG, "checkIfclubIsFollwed, club name: " + clubName);
 
+        if (dataSnapshot.hasChild(clubName)) {
+            Log.d(TAG, "Already Followed " + clubName);
+            return true;
+        }
+        return false;
+
+        /*
         FollowingClubs club = new FollowingClubs();
 
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -517,11 +572,11 @@ public class ClubProfileActivity extends AppCompatActivity {
             if (club.getClub_name().equals(clubName)) {
                 Log.d(TAG, "checkIfclubIsFollwed, Found Followed: " + club.getClub_name());
                 Log.d(TAG, "checkIfclubIsFollwed, Found Master Key: " + club.getClub_name());
-                followedClubUID = ds.getKey();
                 return true;
             }
         }
         return false;
+        */
     }
 
     public void followthisclub() {
@@ -532,7 +587,6 @@ public class ClubProfileActivity extends AppCompatActivity {
                 Log.d(TAG, "followthisclub, club name: " + dataSnapshot);
                 Clubs club = dataSnapshot.getValue(Clubs.class);
                 mUserFollowingClubRef.child(club.getClub_name()).setValue(club);
-                followedClubUID = club.getClub_name();
             }
 
             @Override
@@ -571,13 +625,7 @@ public class ClubProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
-            Log.d(TAG, "bbbb");
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -593,17 +641,10 @@ public class ClubProfileActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // TODO maybe remove
-        infoAdapter.startListening();
-        mInfoRecyclerView.setAdapter(infoAdapter);
-        eventsAdapter.startListening();
-        mEventRecyclerView.setAdapter(eventsAdapter);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        infoAdapter.stopListening();
-        eventsAdapter.startListening();
     }
 }

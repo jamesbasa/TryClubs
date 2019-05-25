@@ -160,6 +160,7 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
+                        clubProfilePage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(TAG, "SearchViewItem.setOnClickListener Intent Extra: " + holder.mName.getText().toString());
                         clubProfilePage.putExtra(ClubProfileActivity.EXTRA, holder.mName.getText().toString().trim());
                         startActivity(clubProfilePage);
@@ -410,6 +411,17 @@ public class SearchActivity extends AppCompatActivity {
             FirebaseUser user = aAuth.getCurrentUser();
             final FirebaseDatabase aFirebaseDatabase = FirebaseDatabase.getInstance();
 
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
+                    clubProfilePage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Log.d(TAG, "SearchViewItem.setOnClickListener Intent Extra: " + viewHolder.mName.getText().toString());
+                    clubProfilePage.putExtra(ClubProfileActivity.EXTRA, viewHolder.mName.getText().toString().trim());
+                    startActivity(clubProfilePage);
+                }
+            });
+
             if (user == null) {
                 viewHolder.mStar.setVisibility(View.INVISIBLE);
             } else {
@@ -471,16 +483,6 @@ public class SearchActivity extends AppCompatActivity {
 
                             }
                         });
-                    }
-                });
-
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
-                        Log.d(TAG, "SearchViewItem.setOnClickListener Intent Extra: " + viewHolder.mName.getText().toString());
-                        clubProfilePage.putExtra(ClubProfileActivity.EXTRA, viewHolder.mName.getText().toString().trim());
-                        startActivity(clubProfilePage);
                     }
                 });
             }

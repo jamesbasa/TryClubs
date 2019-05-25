@@ -124,6 +124,7 @@ public class MyFollowingFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Intent clubProfilePage = new Intent(getContext(), ClubProfileActivity.class);
+                        clubProfilePage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(TAG, "FollowingFragment.setOnClickListener Intent Extra: " + holder.mClubName.getText().toString());
                         clubProfilePage.putExtra(ClubProfileActivity.EXTRA, holder.mClubName.getText().toString().trim());
                         startActivity(clubProfilePage);
