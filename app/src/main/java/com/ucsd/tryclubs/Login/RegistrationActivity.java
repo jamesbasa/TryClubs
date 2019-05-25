@@ -82,7 +82,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 String user_input_password = mPasswordEditText.getText().toString();
                 String user_input_confirm_password = mConfirmPassEditText.getText().toString();
 
-                // TODO - TESTING
                 if (!TextUtils.isEmpty(user_input_email) && !TextUtils.isEmpty(user_input_password) && !TextUtils.isEmpty(user_input_confirm_password)) {
                     if (user_input_password.equals(user_input_confirm_password)) {
                         mAuth.createUserWithEmailAndPassword(user_input_email, user_input_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -172,7 +171,6 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        // TODO - FEEL LIKE NO NEED TO CHECK
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
 

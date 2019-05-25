@@ -114,7 +114,6 @@ public class SetUpAccountActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
-        // TODO
         if (user != null) {
             // when the user is signed in
         } else {

@@ -206,7 +206,6 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Helper method which use Intent to go back to the Main Page (Timeline)
      */
-    // TODO
     private void goToMainActivityHelper() {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         Animatoo.animateSlideUp(this); //fire the slide up animation

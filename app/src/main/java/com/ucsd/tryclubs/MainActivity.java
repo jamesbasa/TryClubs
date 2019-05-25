@@ -250,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
 
-        // TODO - Fill in
         if (id == R.id.drawer_timeline) {
             getSupportActionBar().setTitle("Timeline");
             setFragment(new TimelineFragment());

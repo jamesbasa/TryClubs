@@ -78,14 +78,6 @@ public class DiscoverActivity extends AppCompatActivity {
         mSubtitle.setTypeface(type);
         mTapToChoose.setTypeface(type);
 
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO
-                goToMainActivityHelper();
-            }
-        });
-
         picker.setAdapter(new BubblePickerAdapter() {
             @Override
             public int getTotalCount() {
@@ -169,15 +161,5 @@ public class DiscoverActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         picker.onPause();
-    }
-
-    /**
-     * Helper method which use Intent to go back to the Main Page (Timeline)
-     */
-    // TODO
-    private void goToMainActivityHelper() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        Animatoo.animateSlideUp(this); //fire the slide up animation
-        finish();
     }
 }
