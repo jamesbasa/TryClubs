@@ -422,11 +422,9 @@ public class SearchActivity extends AppCompatActivity {
                         if (dataSnapshot.hasChildren()) {
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 FollowingClubs followingClubs = ds.getValue(FollowingClubs.class);
-
-                                    if (followingClubs.getClub_name().equals(mValue.get(viewHolder.getAdapterPosition()))) {
-                                        viewHolder.mStar.setLiked(true);
-                                    }
-
+                                if (followingClubs.getClub_name().equals(mValue.get(viewHolder.getAdapterPosition()))) {
+                                    viewHolder.mStar.setLiked(true);
+                                }
                             }
                         }
                     }

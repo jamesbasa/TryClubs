@@ -4,15 +4,24 @@ package com.ucsd.tryclubs.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -24,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -34,12 +44,16 @@ import com.ucsd.tryclubs.R;
 import com.ucsd.tryclubs.ViewHolder.PostViewHolder;
 import com.ucsd.tryclubs.getRandom;
 
+import java.sql.Time;
+import java.util.Objects;
+
 public class TimelineFragment extends Fragment {
 
     private FloatingActionButton mAddPost;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private NestedScrollView mNestedScroll;
+    private TextView mSortTextView;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -50,13 +64,13 @@ public class TimelineFragment extends Fragment {
 
     FirebaseRecyclerOptions<Post> option;
     FirebaseRecyclerAdapter<Post, PostViewHolder> adapter;
+    Query firebaseQuery;
 
     View v;
 
     public TimelineFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,10 +83,90 @@ public class TimelineFragment extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             mUserRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_users_tag)).child(mAuth.getCurrentUser().getUid());
         }
+
         mEventsRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_events_tag));
+        firebaseQuery = mEventsRef.orderByChild("date");
         Log.d(TAG, "setupTimelineRecyclerView!!!");
+        setUpTimeLine(firebaseQuery);
+
+        v = inflater.inflate(R.layout.fragment_timeline, container, false);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.timeline_recyclerView);
+        mRecyclerView.hasFixedSize(); //for performance issues apparently...
+        mAddPost = (FloatingActionButton) v.findViewById(R.id.buttonAddPost);
+        mNestedScroll = v.findViewById(R.id.timeline_nestedsv);
+        mSortTextView = v.findViewById(R.id.timeline_sort_TextView);
+        registerForContextMenu(mSortTextView);
+        mAddPost.hide();
+
+        if (mAuth.getCurrentUser() != null) {
+            mUserRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild("my_clubs")) {
+                        if (dataSnapshot.child("my_clubs").getChildrenCount() > 0) {
+                            mAddPost.show();
+                            mNestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                                @Override
+                                public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                                    if (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1) != null) {
+                                        if ((scrollY >= (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
+                                                scrollY > oldScrollY) {
+                                            mAddPost.hide();
+                                        } else {
+                                            mAddPost.show();
+                                        }
+
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        /*
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy < 0) mAddPost.show();
+                else if (dy > 0){
+                    mAddPost.hide();
+                }
+            }
+        });
+        */
+
+        mAddPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NewPostActivity.class));
+            }
+        });
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(adapter);
+        adapter.startListening();
+        return v;
+    }
+
+    private void setUpTimeLine(Query query) {
         option = new FirebaseRecyclerOptions.Builder<Post>()
-                .setQuery(mEventsRef, Post.class)
+                .setQuery(query, Post.class)
                 .build();
         adapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(option) {
             @Override
@@ -150,92 +244,46 @@ public class TimelineFragment extends Fragment {
                 return new PostViewHolder(view);
             }
         };
-
-        v = inflater.inflate(R.layout.fragment_timeline, container, false);
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.timeline_recyclerView);
-        mRecyclerView.hasFixedSize(); //for performance issues apparently...
-        mAddPost = (FloatingActionButton) v.findViewById(R.id.buttonAddPost);
-        mNestedScroll = v.findViewById(R.id.timeline_nestedsv);
-        mAddPost.hide();
-
-        if (mAuth.getCurrentUser() != null) {
-            mUserRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.hasChild("my_clubs")) {
-                        if (dataSnapshot.child("my_clubs").getChildrenCount() > 0) {
-                            mAddPost.show();
-                            mNestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-                                @Override
-                                public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                                    if (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1) != null) {
-                                        if ((scrollY >= (nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
-                                                scrollY > oldScrollY) {
-                                            mAddPost.hide();
-                                        } else {
-                                            mAddPost.show();
-                                        }
-
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-        /*
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy < 0) mAddPost.show();
-                else if (dy > 0){
-                    mAddPost.hide();
-                }
-            }
-        });
-        */
-
-        mAddPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), NewPostActivity.class));
-            }
-        });
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapter);
-        adapter.startListening();
-        return v;
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getActivity().getMenuInflater().inflate(R.menu.sort_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            default:
+                return super.onContextItemSelected(item);
+            case R.id.sort_by_time:
+                firebaseQuery = mEventsRef.orderByChild("date");
+                setUpTimeLine(firebaseQuery);
+                mRecyclerView.setAdapter(adapter);
+                adapter.startListening();
+                mLayoutManager.setReverseLayout(true);
+                mLayoutManager.setStackFromEnd(true);
+                return true;
+            case R.id.sort_by_name:
+                firebaseQuery = mEventsRef.orderByChild("hosts");
+                setUpTimeLine(firebaseQuery);
+                mRecyclerView.setAdapter(adapter);
+                adapter.startListening();
+                mLayoutManager.setReverseLayout(false);
+                mLayoutManager.setStackFromEnd(false);
+                return true;
+        }
+    }
 
     @Override
     public void onStart() {
         super.onStart();
-        mRecyclerView.setAdapter(adapter);
-        adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
     }
 
 

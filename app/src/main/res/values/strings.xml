@@ -40,6 +40,8 @@
     <string name="firebase_tags_tag">tags</string>
     <string name="firebase_events_tag">events</string>
     <string name="search">Search...</string>
+
+    <string name="firebase_lower_case_club_name_tag">lower_case_club_name</string>
     
     <string name="search_page_marquee">Hint: Try to input #academic, #art, #business, #comedy, #community_service, #culture, #dance, #engineering, #ethnic, #gaming, #greek, #lifestyle, #martial_arts, #media, #medical, #music, #performing_arts, #programming, #religion, #science, #self_improvement, #social, #sports, #technology</string>
 

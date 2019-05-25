@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -64,11 +65,14 @@ public class MyFollowingFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUserRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_users_tag)).child(mAuth.getCurrentUser().getUid());
         checkIfFollowingEventsIndexExist();
+
+
         mUserFollowingEvetsRef = mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag));
+        Query firebaseQuery = mUserFollowingEvetsRef.orderByChild("date");
 
         Log.d(TAG, "setupTimelineRecyclerView!!!" );
         option = new FirebaseRecyclerOptions.Builder<Post>()
-                .setQuery(mUserFollowingEvetsRef, Post.class)
+                .setQuery(firebaseQuery, Post.class)
                 .build();
         adapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(option) {
             @Override
@@ -189,14 +193,11 @@ public class MyFollowingFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mRecyclerView.setAdapter(adapter);
-        adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
     }
 
 }

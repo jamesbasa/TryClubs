@@ -9,6 +9,7 @@
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/timeline_nestedsv"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,16 +18,39 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="What's New"
-                android:textSize="16sp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="10dp"
-                />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="16dp"
+                    android:text="What's New"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="start"/>
+
+                <TextView
+                    android:id="@+id/timeline_sort_TextView"
+                    android:gravity="end"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:text="Sort"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:onClick="openContextMenu"
+                    />
+
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/timeline_recyclerView"
