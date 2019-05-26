@@ -2,9 +2,11 @@ package com.ucsd.tryclubs.Fragment;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -44,9 +46,6 @@ import com.ucsd.tryclubs.R;
 import com.ucsd.tryclubs.ViewHolder.PostViewHolder;
 import com.ucsd.tryclubs.getRandom;
 
-import java.sql.Time;
-import java.util.Objects;
-
 public class TimelineFragment extends Fragment {
 
     private FloatingActionButton mAddPost;
@@ -85,7 +84,7 @@ public class TimelineFragment extends Fragment {
         }
 
         mEventsRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_events_tag));
-        firebaseQuery = mEventsRef.orderByChild("date");
+        firebaseQuery = mEventsRef.orderByChild("sort_date");
         Log.d(TAG, "setupTimelineRecyclerView!!!");
         setUpTimeLine(firebaseQuery);
 
@@ -156,8 +155,6 @@ public class TimelineFragment extends Fragment {
             }
         });
         mLayoutManager = new LinearLayoutManager(getContext());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
         adapter.startListening();
@@ -259,12 +256,10 @@ public class TimelineFragment extends Fragment {
             default:
                 return super.onContextItemSelected(item);
             case R.id.sort_by_time:
-                firebaseQuery = mEventsRef.orderByChild("date");
+                firebaseQuery = mEventsRef.orderByChild("sort_date");
                 setUpTimeLine(firebaseQuery);
                 mRecyclerView.setAdapter(adapter);
                 adapter.startListening();
-                mLayoutManager.setReverseLayout(true);
-                mLayoutManager.setStackFromEnd(true);
                 return true;
             case R.id.sort_by_name:
                 firebaseQuery = mEventsRef.orderByChild("hosts");

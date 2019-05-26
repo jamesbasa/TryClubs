@@ -70,7 +70,7 @@ public class MyFollowingFragment extends Fragment {
         mUserFollowingEvetsRef = mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag));
         Query firebaseQuery = mUserFollowingEvetsRef.orderByChild("date");
 
-        Log.d(TAG, "setupTimelineRecyclerView!!!" );
+        Log.d(TAG, "setupMyFollowingRecyclerView!!!" );
         option = new FirebaseRecyclerOptions.Builder<Post>()
                 .setQuery(firebaseQuery, Post.class)
                 .build();
@@ -147,8 +147,8 @@ public class MyFollowingFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.my_following_recyclerView);
         mRecyclerView.hasFixedSize();
         mLayoutManager = new LinearLayoutManager(getContext());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
+        //mLayoutManager.setReverseLayout(true);
+        //mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
         adapter.startListening();

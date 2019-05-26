@@ -126,12 +126,20 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
         DatabaseReference mClubRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_clubs_tag)).child(clubName);
 
         Post post = new Post(mEventName.getText().toString().trim(),
-                clubName,mLocation.getText().toString().trim(),
+                mClubName.getText().toString().trim(),mLocation.getText().toString().trim(),
                 mDate.getText().toString().trim(),mTime.getText().toString().trim(),
                 mDescription.getText().toString().trim());
-        mClubRef.child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
+
+        mFirebaseDatabase.getReference().child("clubs").child(mClubName.getText().toString().trim()).child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
+        //mClubRef.child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
         mEventRef.child(post.getEname()).setValue(post);
         mUserRef.child(getApplicationContext().getString(R.string.firebase_following_events_tag)).child(post.getEname()).setValue(post);
+
+        String d = String.format("%02d", mDay);
+        String m = String.format("%02d", mMonth);
+        String y = Integer.toString(mYear);
+        String t = y+m+d;
+        mEventRef.child(post.getEname()).child("sort_date").setValue(Long.parseLong(t));
 
         onBackPressed();
     }
@@ -157,6 +165,11 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
                             String result = shortMonths[month] + " " + day + ", " + year;
 
                             mDate.setText(result);
+
+                            mYear = year;
+                            mMonth = month+1;
+                            mDay = day;
+
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
