@@ -37,6 +37,8 @@
     <string name="firebase_tags_tag">tags</string>
     <string name="firebase_events_tag">events</string>
     <string name="search">Search...</string>
+    <string name="claimClub">Claim This Club</string>
+    <string name="add">ADD</string>
 
     <string name="firebase_lower_case_club_name_tag">lower_case_club_name</string>
     

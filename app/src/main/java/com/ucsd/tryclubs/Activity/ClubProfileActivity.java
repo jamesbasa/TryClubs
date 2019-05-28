@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.chip.Chip;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -189,7 +190,8 @@ public class ClubProfileActivity extends AppCompatActivity {
         mEventRecyclerView = (RecyclerView) findViewById(R.id.club_profile_events_recyclerView);
         mAddMemberTextView = (TextView) findViewById(R.id.club_profile_add_member);
         mAddMemberTextView.setVisibility(View.INVISIBLE);
-        mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mAddMemberTextView.setText(getApplicationContext().getString(R.string.claimClub));
+        //mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         setupEventRecyclerView(mEventRecyclerView);
         mEventRecyclerView.hasFixedSize();
 
@@ -226,6 +228,7 @@ public class ClubProfileActivity extends AppCompatActivity {
                                 });
 
                                 mAddMemberTextView.setVisibility(View.VISIBLE);
+                                mAddMemberTextView.setText(getApplicationContext().getString(R.string.add));
                                 mAddMemberTextView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -240,6 +243,16 @@ public class ClubProfileActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+        }
+
+        if (mAddMemberTextView.getText().toString().equals(getApplicationContext().getString(R.string.claimClub)) && mAuth.getCurrentUser() != null) {
+            mAddMemberTextView.setVisibility(View.VISIBLE);
+            mAddMemberTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showClaimDialog();
                 }
             });
         }
@@ -349,6 +362,26 @@ public class ClubProfileActivity extends AppCompatActivity {
         ClubMembers clubMembers = new ClubMembers(name, email);
         mThisclubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
         mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubNameInHere).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
+    }
+
+    private void showClaimDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Claiming: " + clubNameInHere)
+                .setMessage("Are you sure you want to claim " + clubNameInHere + "? By clicking YES, our team will contact you within 2 business days.")
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),  "Claiming " + clubNameInHere + " request sent", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        builder.show();
     }
 
     private void showAddMemberDialog() {
