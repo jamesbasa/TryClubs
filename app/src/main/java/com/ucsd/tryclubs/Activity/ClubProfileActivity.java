@@ -191,7 +191,7 @@ public class ClubProfileActivity extends AppCompatActivity {
         mAddMemberTextView = (TextView) findViewById(R.id.club_profile_add_member);
         mAddMemberTextView.setVisibility(View.INVISIBLE);
         mAddMemberTextView.setText(getApplicationContext().getString(R.string.claimClub));
-        //mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         setupEventRecyclerView(mEventRecyclerView);
         mEventRecyclerView.hasFixedSize();
 
