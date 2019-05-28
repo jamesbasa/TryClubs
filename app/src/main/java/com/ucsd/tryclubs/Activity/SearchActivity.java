@@ -431,7 +431,7 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         viewHolder.mStar.setLiked(false);
-                        if (dataSnapshot.hasChildren()) {
+                        if (dataSnapshot.hasChildren() && viewHolder.getAdapterPosition() >= 0) {
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 FollowingClubs followingClubs = ds.getValue(FollowingClubs.class);
                                 if (followingClubs.getClub_name().equals(mValue.get(viewHolder.getAdapterPosition()))) {
