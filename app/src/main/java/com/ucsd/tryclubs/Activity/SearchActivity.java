@@ -137,7 +137,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void firebaseSearch(String search) {
 
-        Query firebaseQuery = mClubRef.orderByChild("club_name").startAt(search.toUpperCase()).endAt(search.toLowerCase() + "\uf88f");
+        Query firebaseQuery = mClubRef.orderByChild(getApplicationContext().getString(R.string.firebase_lower_case_club_name_tag)).startAt(search.toLowerCase()).endAt(search.toLowerCase() + "\uf88f");
 
         FirebaseRecyclerOptions searchOption = new FirebaseRecyclerOptions.Builder<Clubs>()
                 .setQuery(firebaseQuery, Clubs.class).build();

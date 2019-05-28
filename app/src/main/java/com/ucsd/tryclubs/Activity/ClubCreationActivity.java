@@ -143,6 +143,7 @@ public class ClubCreationActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Void> task) {
                                 mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_tags_tag)).setValue(tags);
                                 mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
+                                mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_lower_case_club_name_tag)).setValue(clubName.toLowerCase());
                                 checkIfFollowingClubsIndexExist();
 
                                 mAllClubsRef.child(clubName).addValueEventListener(new ValueEventListener() {
@@ -195,7 +196,7 @@ public class ClubCreationActivity extends AppCompatActivity {
         clubName = mClubName.getText().toString().trim();
         String purpose = mPurpose.getText().toString().trim();
         int randomID = RANDOM.nextInt(100000-5000)+5000;
-        clubMembers.setName(mAuth.getCurrentUser().getDisplayName().toUpperCase());
+        clubMembers.setName(mAuth.getCurrentUser().getDisplayName());
         clubMembers.setEmail(mAuth.getCurrentUser().getEmail());
 
         club.setId(Integer.toString(randomID));
@@ -210,6 +211,7 @@ public class ClubCreationActivity extends AppCompatActivity {
                 newClubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
             }
         });
+        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubName).child(getApplicationContext().getString(R.string.firebase_lower_case_club_name_tag)).setValue(clubName.toLowerCase());
 
     }
 

@@ -108,12 +108,12 @@ public class UserProfileActivity extends AppCompatActivity {
         mDeleteAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.delete();
+                FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
+                u.delete();
 
                 FirebaseDatabase.getInstance().getReference().child(getApplicationContext().getString(R.string.firebase_users_tag))
                         .child(mAuth.getCurrentUser().getUid()).removeValue();
-
-
+                
                 mAuth.signOut();
                 goToMainActivityHelper();
                 Toast.makeText(UserProfileActivity.this, "Account Deleted!", Toast.LENGTH_LONG).show();
