@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mLogoutItem = mNavigationView.getMenu().getItem(5);
 
         mTimelineItem.setChecked(true);
+        getSupportActionBar().setTitle("Timeline");
     }
 
     /**

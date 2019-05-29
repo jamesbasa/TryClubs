@@ -113,7 +113,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
                 FirebaseDatabase.getInstance().getReference().child(getApplicationContext().getString(R.string.firebase_users_tag))
                         .child(mAuth.getCurrentUser().getUid()).removeValue();
-                
+
                 mAuth.signOut();
                 goToMainActivityHelper();
                 Toast.makeText(UserProfileActivity.this, "Account Deleted!", Toast.LENGTH_LONG).show();
