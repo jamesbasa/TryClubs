@@ -109,10 +109,11 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
-                u.delete();
 
                 FirebaseDatabase.getInstance().getReference().child(getApplicationContext().getString(R.string.firebase_users_tag))
                         .child(mAuth.getCurrentUser().getUid()).removeValue();
+
+                u.delete();
 
                 mAuth.signOut();
                 goToMainActivityHelper();
