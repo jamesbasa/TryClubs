@@ -25,6 +25,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         mView = itemView;
         mClubName = (TextView) itemView.findViewById(R.id.timeline_clubName);
+        mClubName.setSelected(true);
         mDateTime = (TextView) itemView.findViewById(R.id.timeline_date);
         mTitle = (TextView) itemView.findViewById(R.id.timeline_title);
         mDescription = (TextView) itemView.findViewById(R.id.timeline_description);

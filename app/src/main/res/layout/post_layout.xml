@@ -45,10 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:textColor="@android:color/white"
-                android:singleLine="true"
                 android:layout_marginRight="160dp"
                 android:gravity="bottom"
                 android:layout_alignLeft="@+id/timeline_title"
@@ -56,6 +53,13 @@
                 android:layout_alignRight="@+id/timeline_layoutdate"
                 android:layout_alignEnd="@+id/timeline_layoutdate"
                 android:layout_alignTop="@+id/timeline_layoutdate"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit ="2"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:scrollHorizontally="true"
+                android:clickable="false"
                 />
 
             <FrameLayout
