@@ -76,7 +76,10 @@ public class ForgottenPasswordActivity extends AppCompatActivity {
                                 //Snackbar.make(findViewById(android.R.id.content),  "Reset Password Email Sent", Snackbar.LENGTH_LONG).show();
                             } else {
                                 //Toast.makeText(ForgottenPasswordActivity.this, "Couldn't send reset password email", Toast.LENGTH_LONG).show();
-                                Snackbar.make(findViewById(android.R.id.content),  "Couldn't send reset password email", Snackbar.LENGTH_LONG).show();
+                                //Snackbar.make(findViewById(android.R.id.content),  "Couldn't send reset password email", Snackbar.LENGTH_LONG).show();
+
+                                String ErrorMsg = task.getException().getMessage();
+                                Snackbar.make(findViewById(android.R.id.content),  "Error: " + ErrorMsg, Snackbar.LENGTH_LONG).show();
                             }
                             mProgressBar.setVisibility(View.INVISIBLE);
                             mAlreadyHaveaccountTextView.setVisibility(View.VISIBLE);
@@ -130,10 +133,12 @@ public class ForgottenPasswordActivity extends AppCompatActivity {
     }
 
     /**
-     * Helper method which use Intent to go back to the Login Page (Timeline)
+     * Helper method which use Intent to go back to the Login Page
      */
     private void goToLoginInActivityHelper() {
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        Intent goToLoginInActivity = new Intent(getApplicationContext(), LoginActivity.class);
+        goToLoginInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(goToLoginInActivity);
         finish();
     }
 

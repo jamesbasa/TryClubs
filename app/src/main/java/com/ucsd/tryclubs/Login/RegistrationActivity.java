@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.ucsd.tryclubs.Activity.ClubProfileActivity;
 import com.ucsd.tryclubs.MainActivity;
 import com.ucsd.tryclubs.R;
 
@@ -209,7 +210,9 @@ public class RegistrationActivity extends AppCompatActivity {
      * Helper method which use Intent to go to the Login Page
      */
     private void goToLoginInActivityHelper() {
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        Intent goToLoginInActivity = new Intent(getApplicationContext(), LoginActivity.class);
+        goToLoginInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(goToLoginInActivity);
         finish();
     }
 
