@@ -118,6 +118,15 @@ public class RegistrationActivity extends AppCompatActivity {
                     mHaveAccountAlready.setVisibility(View.VISIBLE);
                     mLoginTextView.setVisibility(View.VISIBLE);
                 }
+
+                if (!user_input_email.endsWith("@ucsd.edu")) {
+                    Toast.makeText(RegistrationActivity.this, "Please make sure you use @ucsd.edu email", Toast.LENGTH_LONG).show();
+                    // set some button visibility
+                    mProgressBar.setVisibility(View.INVISIBLE);
+                    mSignUPBtn.setVisibility(View.VISIBLE);
+                    mHaveAccountAlready.setVisibility(View.VISIBLE);
+                    mLoginTextView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
