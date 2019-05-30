@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.ucsd.tryclubs.MainActivity;
 import com.ucsd.tryclubs.R;
 
+import java.util.Objects;
+
 /**
  * Class UserProfileActivity sets the content to res/layout/activity_user_profile.xml
  * and this is the Profile Page in the App.
@@ -75,7 +77,6 @@ public class UserProfileActivity extends AppCompatActivity {
         });
 
         // getting all stuff from view
-        final FirebaseUser user = mAuth.getCurrentUser();
         mChangePasswordBtn = (Button) findViewById(R.id.profilePage_changePassword_button);
         mDeleteAccountBtn = (Button) findViewById(R.id.profilePage_deleteAccount_button);
         mGoBackBtn = (ImageButton) findViewById(R.id.profilePage_cancel_imagebutton);
@@ -85,6 +86,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         // attach username to "HELLO"
         String oldWelcome = mWelcomeTextView.getText().toString();
+        FirebaseUser user = mAuth.getCurrentUser();
         String username = user.getDisplayName();
         if (!TextUtils.isEmpty(username)) {
             String newWelcome = oldWelcome + " " + username + "!";
@@ -95,6 +97,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mChangePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseUser user = mAuth.getCurrentUser();
                 mAuth.sendPasswordResetEmail(user.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -108,12 +111,11 @@ public class UserProfileActivity extends AppCompatActivity {
         mDeleteAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
-
                 FirebaseDatabase.getInstance().getReference().child(getApplicationContext().getString(R.string.firebase_users_tag))
                         .child(mAuth.getCurrentUser().getUid()).removeValue();
-
-                u.delete();
+                FirebaseUser user = mAuth.getCurrentUser();
+                user.delete();
+                mAuth.getCurrentUser().delete();
 
                 mAuth.signOut();
                 goToMainActivityHelper();
