@@ -2,12 +2,14 @@ package com.ucsd.tryclubs.Fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.TextViewCompat;
@@ -16,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +63,8 @@ public class TimelineFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private NestedScrollView mNestedScroll;
     private TextView mSortTextView;
+
+    private TextView mWhatsNew;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -157,6 +162,22 @@ public class TimelineFragment extends Fragment {
             }
         });
         */
+        mWhatsNew = (TextView) v.findViewById(R.id.whatsnew);
+        mWhatsNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), "Current Build Version: 1.0.51", Snackbar.LENGTH_SHORT);
+                View view = snackbar.getView();
+                TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                tv.setTextColor(Color.parseColor("#FFD700"));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                } else {
+                    tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                }
+                snackbar.show();
+            }
+        });
 
         mAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
