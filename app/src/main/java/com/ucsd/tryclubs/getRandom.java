@@ -9,6 +9,7 @@ public class getRandom {
     public static int getRandomUCSDDrawable() {
         switch (RANDOM.nextInt(22)) {
             default:
+                return R.drawable.cse;
             case 0:
                 return R.drawable.geisel_2;
             case 1:
