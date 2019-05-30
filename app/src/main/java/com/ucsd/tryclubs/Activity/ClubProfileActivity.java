@@ -399,12 +399,12 @@ public class ClubProfileActivity extends AppCompatActivity {
      */
     private void showClaimDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle("Claiming: " + clubNameInHere)
-                .setMessage("Are you sure you want to claim " + clubNameInHere + "? By clicking YES, our team will contact you within 2 business days.")
+                .setTitle("Claiming: " + "\"" + clubNameInHere + "\"")
+                .setMessage("Are you sure you want to claim \"" + clubNameInHere + "\"? By clicking YES, our team will contact you within 2 business days.")
                 .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),  "Claiming " + clubNameInHere + " request sent", Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),  "Claiming \"" + clubNameInHere + "\" request sent", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }

@@ -115,7 +115,7 @@ public class FollowingEventsFragment extends Fragment {
                             final Post deletedItem = adapter.getItem(holder.getAdapterPosition());
                             adapter.notifyItemRemoved(holder.getAdapterPosition());
 
-                            Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),  eventNmae.toUpperCase() + " removed from Following Events List", Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),  "\"" + eventNmae.toUpperCase() + "\" has removed from Following Events", Snackbar.LENGTH_LONG);
                             snackbar.setAction("UNDO", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
