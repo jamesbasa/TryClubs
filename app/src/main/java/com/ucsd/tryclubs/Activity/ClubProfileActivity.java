@@ -162,6 +162,8 @@ public class ClubProfileActivity extends AppCompatActivity {
                         mFloatingBtn.setBackgroundTintList(getResources().getColorStateList(R.color.greenEnd));
                         isFollowed = true;
                     }
+                    mFloatingBtn.hide();
+                    mFloatingBtn.show();
                 }
             });
         }
