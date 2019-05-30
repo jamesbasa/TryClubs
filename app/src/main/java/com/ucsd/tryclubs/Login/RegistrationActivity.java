@@ -3,6 +3,7 @@ package com.ucsd.tryclubs.Login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -92,7 +93,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                     goToSetUpAccountActivityHelper();
                                 } else {
                                     String errormsg = task.getException().getMessage();
-                                    Toast.makeText(RegistrationActivity.this, "Error: " + errormsg, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(RegistrationActivity.this, "Error: " + errormsg, Toast.LENGTH_LONG).show();
+                                    Snackbar.make(findViewById(android.R.id.content),  "Error: " + errormsg, Snackbar.LENGTH_LONG).show();
                                     // set some button visibility
                                     mProgressBar.setVisibility(View.INVISIBLE);
                                     mSignUPBtn.setVisibility(View.VISIBLE);
@@ -103,7 +105,14 @@ public class RegistrationActivity extends AppCompatActivity {
                         });
 
                     } else {
-                        Toast.makeText(RegistrationActivity.this, "Password and Confirm Password don't match", Toast.LENGTH_LONG).show();
+
+                        if (!TextUtils.isEmpty(user_input_email)&& !user_input_email.endsWith("@ucsd.edu")) {
+                            //Toast.makeText(RegistrationActivity.this, "Please make sure you use @ucsd.edu email", Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(android.R.id.content),  "Please make sure you use @ucsd.edu email", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            //Toast.makeText(RegistrationActivity.this, "Password and Confirm Password don't match", Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(android.R.id.content),  "Password and Confirm Password don't match", Snackbar.LENGTH_LONG).show();
+                        }
                         // set some button visibility
                         mProgressBar.setVisibility(View.INVISIBLE);
                         mSignUPBtn.setVisibility(View.VISIBLE);
@@ -111,16 +120,14 @@ public class RegistrationActivity extends AppCompatActivity {
                         mLoginTextView.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    Toast.makeText(RegistrationActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
-                    // set some button visibility
-                    mProgressBar.setVisibility(View.INVISIBLE);
-                    mSignUPBtn.setVisibility(View.VISIBLE);
-                    mHaveAccountAlready.setVisibility(View.VISIBLE);
-                    mLoginTextView.setVisibility(View.VISIBLE);
-                }
 
-                if (!user_input_email.endsWith("@ucsd.edu")) {
-                    Toast.makeText(RegistrationActivity.this, "Please make sure you use @ucsd.edu email", Toast.LENGTH_LONG).show();
+                    if (!TextUtils.isEmpty(user_input_email)&& !user_input_email.endsWith("@ucsd.edu")) {
+                        //Toast.makeText(RegistrationActivity.this, "Please make sure you use @ucsd.edu email", Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content),  "Please make sure you use @ucsd.edu email", Snackbar.LENGTH_LONG).show();
+                    } else {
+                        //Toast.makeText(RegistrationActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content),  "Please fill all fields", Snackbar.LENGTH_LONG).show();
+                    }
                     // set some button visibility
                     mProgressBar.setVisibility(View.INVISIBLE);
                     mSignUPBtn.setVisibility(View.VISIBLE);

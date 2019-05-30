@@ -3,6 +3,7 @@ package com.ucsd.tryclubs.Login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -79,16 +80,14 @@ public class SetUpAccountActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-
-
-
                                 createUserClassAndAddtoFirebase(usernameField,userEmail, uid);
+                                goToDiscoverActivityHelper();
                             } else {
-                                Toast.makeText(getApplicationContext(), task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                Snackbar.make(findViewById(android.R.id.content),  task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                             }
                         }
                     });
-                    goToDiscoverActivityHelper();
                 } else {
                     goToLoginActivityHelper();
                 }

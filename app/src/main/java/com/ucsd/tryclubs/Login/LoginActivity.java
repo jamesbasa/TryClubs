@@ -3,6 +3,7 @@ package com.ucsd.tryclubs.Login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -104,7 +105,9 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 // login fails
                                 String loginError = task.getException().getMessage();
-                                Toast.makeText(LoginActivity.this, "Error: " + loginError, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "Error: " + loginError, Toast.LENGTH_LONG).show();
+
+                                Snackbar.make(findViewById(android.R.id.content),  "Error: " + loginError, Snackbar.LENGTH_LONG).show();
                             }
                             // set some button visibility
                             mLoginProgressbar.setVisibility(View.INVISIBLE);
@@ -116,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(LoginActivity.this, "Please enter an Email or Password", Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content),  "Please enter an Email or Password", Snackbar.LENGTH_LONG).show();
                     mLoginProgressbar.setVisibility(View.INVISIBLE);
                     mLoginButton.setVisibility(View.VISIBLE);
                     mSignUpTextView.setVisibility(View.VISIBLE);

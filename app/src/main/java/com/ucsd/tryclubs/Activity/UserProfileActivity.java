@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -101,7 +102,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 mAuth.sendPasswordResetEmail(user.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(UserProfileActivity.this, "Reset Password Email Sent", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(UserProfileActivity.this, "Reset Password Email Sent", Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content),  "Reset Password Email Sent", Snackbar.LENGTH_LONG).show();
                     }
                 });
             }
@@ -120,6 +122,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 mAuth.signOut();
                 goToMainActivityHelper();
                 Toast.makeText(UserProfileActivity.this, "Account Deleted!", Toast.LENGTH_LONG).show();
+                //Snackbar.make(findViewById(android.R.id.content),  "Account Deleted!", Snackbar.LENGTH_LONG).show();
             }
         });
 

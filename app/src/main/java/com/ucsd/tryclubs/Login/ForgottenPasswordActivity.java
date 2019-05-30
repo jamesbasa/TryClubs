@@ -3,6 +3,7 @@ package com.ucsd.tryclubs.Login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -60,6 +61,7 @@ public class ForgottenPasswordActivity extends AppCompatActivity {
                 mProgressBar.setVisibility(View.VISIBLE);
                 mAlreadyHaveaccountTextView.setVisibility(View.INVISIBLE);
                 mLoginTextView.setVisibility(View.INVISIBLE);
+                mResetPassswordBtn.setVisibility(View.INVISIBLE);
 
                 // get user's email
                 String user_input_email = mEmailInputEditText.getText().toString();
@@ -71,14 +73,23 @@ public class ForgottenPasswordActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 goToLoginInActivityHelper();
                                 Toast.makeText(ForgottenPasswordActivity.this, "Reset Password Email Sent", Toast.LENGTH_LONG).show();
+                                //Snackbar.make(findViewById(android.R.id.content),  "Reset Password Email Sent", Snackbar.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(ForgottenPasswordActivity.this, "Couldn't send reset password email.", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(ForgottenPasswordActivity.this, "Couldn't send reset password email", Toast.LENGTH_LONG).show();
+                                Snackbar.make(findViewById(android.R.id.content),  "Couldn't send reset password email", Snackbar.LENGTH_LONG).show();
                             }
                             mProgressBar.setVisibility(View.INVISIBLE);
                             mAlreadyHaveaccountTextView.setVisibility(View.VISIBLE);
                             mLoginTextView.setVisibility(View.VISIBLE);
+                            mResetPassswordBtn.setVisibility(View.VISIBLE);
                         }
                     });
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content),  "Please Enter an Email", Snackbar.LENGTH_LONG).show();
+                    mProgressBar.setVisibility(View.INVISIBLE);
+                    mAlreadyHaveaccountTextView.setVisibility(View.VISIBLE);
+                    mLoginTextView.setVisibility(View.VISIBLE);
+                    mResetPassswordBtn.setVisibility(View.VISIBLE);
                 }
             }
         });
