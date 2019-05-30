@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,13 +27,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.ucsd.tryclubs.Activity.ClubCreationActivity;
 import com.ucsd.tryclubs.Activity.ClubProfileActivity;
 import com.ucsd.tryclubs.Activity.SearchActivity;
 import com.ucsd.tryclubs.Activity.UserProfileActivity;
-import com.ucsd.tryclubs.Fragment.ClublistFragment;
-import com.ucsd.tryclubs.Fragment.MyFollowingFragment;
+import com.ucsd.tryclubs.Fragment.FavoringClubsFragment;
+import com.ucsd.tryclubs.Fragment.FollowingEventsFragment;
 import com.ucsd.tryclubs.Fragment.TimelineFragment;
 import com.ucsd.tryclubs.Login.LoginActivity;
 import com.ucsd.tryclubs.Model.Clubs;
@@ -254,9 +252,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.drawer_timeline) {
             getSupportActionBar().setTitle("Timeline");
             setFragment(new TimelineFragment());
-        } else if (id == R.id.drawer_clublist) {
-            getSupportActionBar().setTitle("Clublist");
-            setFragment(new ClublistFragment());
+        } else if (id == R.id.drawer_favoring_clubs) {
+            getSupportActionBar().setTitle("Favoring Clubs");
+            setFragment(new FavoringClubsFragment());
         } else if (id == R.id.drawer_create_club) {
             startActivity(new Intent(getApplicationContext(), ClubCreationActivity.class));
         } else if (id == R.id.drawer_my_club) {
@@ -283,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             userClickedLogOut();
         } else if (id == R.id.drawer_my_following) {
             getSupportActionBar().setTitle("Following Events");
-            setFragment(new MyFollowingFragment());
+            setFragment(new FollowingEventsFragment());
         }
 
         CloseDrawerAndSearchBar();

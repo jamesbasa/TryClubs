@@ -36,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -49,6 +50,7 @@ import com.ucsd.tryclubs.ViewHolder.ClubPageInfoSectionViewHolder;
 import com.ucsd.tryclubs.ViewHolder.PostViewHolder;
 import com.ucsd.tryclubs.getRandom;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -265,9 +267,11 @@ public class ClubProfileActivity extends AppCompatActivity {
     private void setupEventRecyclerView(RecyclerView mEventRecyclerView) {
         Log.d(TAG, "setupEventRecyclerView!!!");
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Query firebaseQuery = mThisclubRef.child("events").orderByChild("sort_date").startAt(Long.parseLong(sdf.format(new Date())));
 
         optionEvents = new FirebaseRecyclerOptions.Builder<Post>()
-                .setQuery(mThisclubRef.child("events"), Post.class)
+                .setQuery(firebaseQuery, Post.class)
                 .build();
 
         eventsAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(optionEvents) {

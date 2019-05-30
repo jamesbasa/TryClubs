@@ -7,7 +7,7 @@ public class getRandom {
     private static final Random RANDOM = new Random();
 
     public static int getRandomUCSDDrawable() {
-        switch (RANDOM.nextInt(20)) {
+        switch (RANDOM.nextInt(22)) {
             default:
             case 0:
                 return R.drawable.geisel_2;

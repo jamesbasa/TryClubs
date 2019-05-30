@@ -30,9 +30,9 @@ import com.ucsd.tryclubs.getRandom;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class  ClublistFragment extends Fragment{
+public class FavoringClubsFragment extends Fragment{
 
-    private static final String TAG = "ClublistFragment";
+    private static final String TAG = "FavoringClubsFragment";
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -45,7 +45,7 @@ public class  ClublistFragment extends Fragment{
     FirebaseRecyclerOptions<FollowingClubs> options;
     FirebaseRecyclerAdapter<FollowingClubs, FollowingClubsViewHolder> adapter;
 
-    public ClublistFragment() {
+    public FavoringClubsFragment() {
 
     }
 

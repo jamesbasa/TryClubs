@@ -35,9 +35,12 @@ import com.ucsd.tryclubs.R;
 import com.ucsd.tryclubs.ViewHolder.PostViewHolder;
 import com.ucsd.tryclubs.getRandom;
 
-public class MyFollowingFragment extends Fragment {
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-    private static final String TAG = "MyFollowingFragment";
+public class FollowingEventsFragment extends Fragment {
+
+    private static final String TAG = "FollowingEventsFragment";
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -52,7 +55,7 @@ public class MyFollowingFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private TextView mNoFollowingTextView;
 
-    public MyFollowingFragment() {
+    public FollowingEventsFragment() {
         // Required empty public constructor
     }
 
@@ -68,7 +71,8 @@ public class MyFollowingFragment extends Fragment {
 
 
         mUserFollowingEvetsRef = mUserRef.child(getActivity().getString(R.string.firebase_following_events_tag));
-        Query firebaseQuery = mUserFollowingEvetsRef.orderByChild("date");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Query firebaseQuery = mUserFollowingEvetsRef.orderByChild("sort_date").startAt(Long.parseLong(sdf.format(new Date())));
 
         Log.d(TAG, "setupMyFollowingRecyclerView!!!" );
         option = new FirebaseRecyclerOptions.Builder<Post>()

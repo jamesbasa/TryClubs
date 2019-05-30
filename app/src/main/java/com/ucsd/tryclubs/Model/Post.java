@@ -8,15 +8,18 @@ public class Post {
     private String time;
     private String description;
 
+    private long sort_date;
+
     public Post(){} // needed for firebase?
 
-    public Post(String ename, String hosts, String location, String date, String time, String description) {
+    public Post(String ename, String hosts, String location, String date, String time, String description, long sort_date) {
         this.ename = ename;
         this.hosts = hosts;
         this.location = location;
         this.date = date;
         this.time = time;
         this.description = description;
+        this.sort_date = sort_date;
     }
 
     public String getEname() {
@@ -65,5 +68,13 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getSort_date() {
+        return sort_date;
+    }
+
+    public void setSort_date(long sort_date) {
+        this.sort_date = sort_date;
     }
 }

@@ -7,6 +7,7 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -49,6 +50,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
     // Easter Egg
     private int hitGary = 1;
+
+    private static final String TAG = "UserProfileActivity";
 
     /**
      * OnCreate() method is the first method run automatically when
@@ -115,9 +118,11 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseDatabase.getInstance().getReference().child(getApplicationContext().getString(R.string.firebase_users_tag))
                         .child(mAuth.getCurrentUser().getUid()).removeValue();
-                FirebaseUser user = mAuth.getCurrentUser();
+
+                Log.d(TAG, "uuuser" + mAuth.getCurrentUser());
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                FirebaseUser user = auth.getCurrentUser();
                 user.delete();
-                mAuth.getCurrentUser().delete();
 
                 mAuth.signOut();
                 goToMainActivityHelper();

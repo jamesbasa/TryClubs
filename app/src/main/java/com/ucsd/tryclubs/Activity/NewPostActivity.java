@@ -1,12 +1,11 @@
 package com.ucsd.tryclubs.Activity;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,16 +25,8 @@ import com.ucsd.tryclubs.Model.Clubs;
 import com.ucsd.tryclubs.Model.Post;
 import com.ucsd.tryclubs.R;
 
-import org.w3c.dom.Text;
-
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.DateFormatSymbols;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class NewPostActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -115,32 +106,32 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
                 if (!mClubName.getText().toString().isEmpty() && !mDate.getText().toString().isEmpty() && !mTime.getText().toString().isEmpty() && !mLocation.getText().toString().isEmpty() && !mDescription.getText().toString().isEmpty() && !mEventName.getText().toString().isEmpty()) {
                     addPost();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please Make Sure All Text Fields Are Filled.", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Please Make Sure All Text Fields Are Filled.", Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content),  "Please Make Sure All Text Fields Are Filled.", Snackbar.LENGTH_LONG).show();
                 }
             }
         });
     }
 
     private void addPost() {
+        String d = String.format("%02d", mDay);
+        String m = String.format("%02d", mMonth);
+        String y = Integer.toString(mYear);
+        String t = y+m+d;
+
         DatabaseReference mEventRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_events_tag));
         DatabaseReference mClubRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_clubs_tag)).child(clubName);
 
         Post post = new Post(mEventName.getText().toString().trim(),
                 mClubName.getText().toString().trim(),mLocation.getText().toString().trim(),
                 mDate.getText().toString().trim(),mTime.getText().toString().trim(),
-                mDescription.getText().toString().trim());
+                mDescription.getText().toString().trim(), Long.parseLong(t));
 
         mFirebaseDatabase.getReference().child("clubs").child(mClubName.getText().toString().trim()).child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
         //mClubRef.child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
         mEventRef.child(post.getEname()).setValue(post);
         mUserRef.child(getApplicationContext().getString(R.string.firebase_following_events_tag)).child(post.getEname()).setValue(post);
-
-        String d = String.format("%02d", mDay);
-        String m = String.format("%02d", mMonth);
-        String y = Integer.toString(mYear);
-        String t = y+m+d;
-        mEventRef.child(post.getEname()).child("sort_date").setValue(Long.parseLong(t));
-
+        //mEventRef.child(post.getEname()).child("sort_date").setValue(Long.parseLong(t));
         onBackPressed();
     }
 

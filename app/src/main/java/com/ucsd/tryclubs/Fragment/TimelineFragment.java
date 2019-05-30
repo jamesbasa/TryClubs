@@ -46,6 +46,9 @@ import com.ucsd.tryclubs.R;
 import com.ucsd.tryclubs.ViewHolder.PostViewHolder;
 import com.ucsd.tryclubs.getRandom;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TimelineFragment extends Fragment {
 
     private FloatingActionButton mAddPost;
@@ -84,7 +87,10 @@ public class TimelineFragment extends Fragment {
         }
 
         mEventsRef = mFirebaseDatabase.getReference().child(getActivity().getString(R.string.firebase_events_tag));
-        firebaseQuery = mEventsRef.orderByChild("sort_date");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        firebaseQuery = mEventsRef.orderByChild("sort_date").startAt(Long.parseLong(sdf.format(new Date())));
+
         Log.d(TAG, "setupTimelineRecyclerView!!!");
         setUpTimeLine(firebaseQuery);
 
@@ -256,7 +262,8 @@ public class TimelineFragment extends Fragment {
             default:
                 return super.onContextItemSelected(item);
             case R.id.sort_by_time:
-                firebaseQuery = mEventsRef.orderByChild("sort_date");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                firebaseQuery = mEventsRef.orderByChild("sort_date").startAt(Long.parseLong(sdf.format(new Date())));
                 setUpTimeLine(firebaseQuery);
                 mRecyclerView.setAdapter(adapter);
                 adapter.startListening();
