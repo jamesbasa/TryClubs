@@ -28,6 +28,9 @@ import com.ucsd.tryclubs.R;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
+/**
+ * class NewPostActivity is the Post Creation page in the app
+ */
 public class NewPostActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "NewPostActivity";
@@ -113,6 +116,9 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+    /**
+     * method addPost adds the new post under the club, user's following events, and events
+     */
     private void addPost() {
         String d = String.format("%02d", mDay);
         String m = String.format("%02d", mMonth);
@@ -136,6 +142,9 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
+    /**
+     * Override onClick to define the behavior of clicking the Date or Time Picker
+     */
     @Override
     public void onClick(View v) {
         if (v == mDate) {

@@ -36,6 +36,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * class ClubSuggestionsActivity is the Club Suggestions page after Discover page
+ */
 public class ClubSuggestionsActivity extends AppCompatActivity {
 
     public static final String EXTRA = "selected_category";
@@ -107,6 +110,9 @@ public class ClubSuggestionsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
+    /**
+     * Override onOptionsItemSelected to define the behavior of the "check" button
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.club_suggestion_done) {
@@ -134,6 +140,9 @@ public class ClubSuggestionsActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Firebase adapter of the club list
+     */
     public static class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.ViewHolder> {
 
         Context mContext;
@@ -196,6 +205,9 @@ public class ClubSuggestionsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * method checkIfFollowingClubsIndexExist checks if the following clubs index exists under user's Database
+     */
     private void checkIfFollowingClubsIndexExist() {
         Log.d(TAG, "checkIfFollowingClubsIndexExist");
 
@@ -214,6 +226,11 @@ public class ClubSuggestionsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * method followthisclub add the corresponding club under user's following clubs
+     *
+     * @param clubName  [the corresponding club name]
+     */
     public void followthisclub(final String clubName) {
 
         mAllClubsRef.child(clubName).addValueEventListener(new ValueEventListener() {

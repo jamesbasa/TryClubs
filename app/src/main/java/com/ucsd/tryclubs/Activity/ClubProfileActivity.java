@@ -55,6 +55,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * class ClubProfileActivity is the Club Profile page in the app
+ */
 public class ClubProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "ClubProfileActivity";
@@ -264,6 +267,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         setupTagRecyclerView(mTagsRecyclerView);
     }
 
+    /**
+     * method setupEventRecyclerView sets up the recycler view in the Events session
+     */
     private void setupEventRecyclerView(RecyclerView mEventRecyclerView) {
         Log.d(TAG, "setupEventRecyclerView!!!");
 
@@ -344,6 +350,11 @@ public class ClubProfileActivity extends AppCompatActivity {
         eventsAdapter.startListening();
     }
 
+    /**
+     * method updatePurposeinFirebase updates the purpose of the club
+     *
+     * @param newPurpose    [the new purpose of the club]
+     */
     private void updatePurposeinFirebase(String newPurpose) {
         mThisclubRef.child(getApplicationContext().getString(R.string.firebase_purpose_tag)).setValue(newPurpose);
         String name = mThisclubRef.getKey();
@@ -351,6 +362,13 @@ public class ClubProfileActivity extends AppCompatActivity {
         mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(name).child(getApplicationContext().getString(R.string.firebase_purpose_tag)).setValue(newPurpose);
     }
 
+    /**
+     * method updateInfoinFirebase updates the principle members info of the club
+     *
+     * @param name  [the new name]
+     * @param email [the new email]
+     * @param oldName   [the old name]
+     */
     private void updateInfoinFirebase(String name, String email, String oldName) {
         ClubMembers clubMembers = new ClubMembers(name, email);
 
@@ -362,12 +380,21 @@ public class ClubProfileActivity extends AppCompatActivity {
         mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubNameInHere).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
     }
 
+    /**
+     * method addNewMemberFirebase adds new principle members to the club
+     *
+     * @param name  [the new members name]
+     * @param email [the new members email]
+     */
     private void addNewMemberFirebase(String name, String email) {
         ClubMembers clubMembers = new ClubMembers(name, email);
         mThisclubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
         mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubNameInHere).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(name).setValue(clubMembers);
     }
 
+    /**
+     * method showClaimDialog opens the "Claim" Dialog
+     */
     private void showClaimDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle("Claiming: " + clubNameInHere)
@@ -388,6 +415,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * method showAddMemberDialog opens the "ADD" Dialog
+     */
     private void showAddMemberDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.add_new_member_dialog, (ViewGroup) findViewById(android.R.id.content), false);
@@ -411,6 +441,11 @@ public class ClubProfileActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * method showInfoEditDialog opens the "Edit Principle Members" Dialog
+     *
+     * @param miniView  [the view holder of the corresponding principle members]
+     */
     private void showInfoEditDialog(View miniView) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.edit_info_dialog, (ViewGroup) findViewById(android.R.id.content), false);
@@ -444,6 +479,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * method showPurposeEditDialog shows the "Purpose Edit" Dialog
+     */
     private void showPurposeEditDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.edit_purpose_dialog, (ViewGroup) findViewById(android.R.id.content), false);
@@ -471,6 +509,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         mTagsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
+    /**
+     * Firebase adapter of showing Tags of the club
+     */
     public static class TagsRecyclerViewAdapter extends RecyclerView.Adapter<TagsRecyclerViewAdapter.ViewHolder> {
 
         Context mContext;
@@ -513,7 +554,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Firebase adapter of the info session of the club
+     */
     private void setupInfoRecyclerView(RecyclerView mInfoRecyclerView) {
         Log.d(TAG, "setupInfoRecyclerView!!!");
         Log.d(TAG, "setupInfoRecyclerView!!! - this is the target club: " + mThisclubRef.getKey());
@@ -571,6 +614,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         infoAdapter.startListening();
     }
 
+    /**
+     * method checkIfFollowingClubsIndexExist checks if the following_clubs index exists under user's index
+     */
     private void checkIfFollowingClubsIndexExist() {
         Log.d(TAG, "checkIfFollowingClubsIndexExist");
 
@@ -589,6 +635,13 @@ public class ClubProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * method checkIfclubIsFollwed checked if this club has been followed
+     *
+     * @param clubName  [this club name]
+     * @param dataSnapshot  [all following clubs of the user]
+     * @return  true if followed, false if unfollowed
+     */
     public boolean checkIfclubIsFollwed(String clubName, DataSnapshot dataSnapshot) {
         Log.d(TAG, "checkIfclubIsFollwed, club name: " + clubName);
 
@@ -616,6 +669,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         */
     }
 
+    /**
+     * method followthisclub follows this club
+     */
     public void followthisclub() {
 
         mThisclubRef.addValueEventListener(new ValueEventListener() {
@@ -633,6 +689,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * method checkIfClubsEventsIndexExist checks if this club has events index
+     */
     private void checkIfClubsEventsIndexExist() {
         Log.d(TAG, "checkIfClubsEventsIndexExist");
 

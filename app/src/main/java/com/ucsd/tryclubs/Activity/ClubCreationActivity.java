@@ -38,6 +38,9 @@ import org.w3c.dom.Text;
 
 import java.util.Set;
 
+/**
+ * method ClubCreationActivity is the Club Creation page in the app
+ */
 public class ClubCreationActivity extends AppCompatActivity {
 
     private static final String TAG = "ClubCreationActivity";

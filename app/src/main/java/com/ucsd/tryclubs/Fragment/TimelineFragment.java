@@ -49,6 +49,10 @@ import com.ucsd.tryclubs.getRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+/**
+ * TimelineFragment is the Timeline Page in the app
+ */
 public class TimelineFragment extends Fragment {
 
     private FloatingActionButton mAddPost;
@@ -167,6 +171,10 @@ public class TimelineFragment extends Fragment {
         return v;
     }
 
+    /**
+     * method setUpTimeLine use the query point to parse all posts that with dates later than today(inclusive) in the firebase
+     * @param query
+     */
     private void setUpTimeLine(Query query) {
         option = new FirebaseRecyclerOptions.Builder<Post>()
                 .setQuery(query, Post.class)
@@ -250,12 +258,18 @@ public class TimelineFragment extends Fragment {
         };
     }
 
+    /**
+     * Override onCreateContextMenu defines the behavior of "sort" text
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         getActivity().getMenuInflater().inflate(R.menu.sort_menu, menu);
     }
 
+    /**
+     * Override onContextItemSelected defines the behavior of the pop up window after hitting "sort"
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {

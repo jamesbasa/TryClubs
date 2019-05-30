@@ -48,6 +48,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * class SearchActivity is the Search page in the app
+ */
 public class SearchActivity extends AppCompatActivity {
 
     private MaterialButton mSearchBtn;
@@ -135,6 +138,11 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * method firebaseSearch enables search by Text
+     *
+     * @param search    [the input searching text]
+     */
     private void firebaseSearch(String search) {
 
         Query firebaseQuery = mClubRef.orderByChild(getApplicationContext().getString(R.string.firebase_lower_case_club_name_tag)).startAt(search.toLowerCase()).endAt(search.toLowerCase() + "\uf88f");
@@ -219,6 +227,9 @@ public class SearchActivity extends AppCompatActivity {
         firebaseRecyclerAdapter.startListening();
     }
 
+    /**
+     * method firebaseTagSearch enables search by Tags
+     */
     private void firebaseTagSearch() {
         mTagsChipGroup.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
             @Override
@@ -322,6 +333,9 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * ViewHolder of each item (each club)
+     */
     public class SearchListViewHolder extends RecyclerView.ViewHolder {
         public View mView;
         public CircleImageView mCircleImage;
@@ -339,6 +353,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * method addChipToGroup adds a new chip to the ChipGroup
+     *
+     * @param tagsName  [the new input tag name]
+     * @param chipGroup [the ChipGroup in the View]
+     */
     private void addChipToGroup(String tagsName, final ChipGroup chipGroup) {
         boolean existed = false;
         if (mTagsChipGroup.getChildCount() > 0) {
@@ -365,6 +385,9 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Firebase Adapter when search by Tags
+     */
     public class TagsSearchRecyclerViewAdapter extends RecyclerView.Adapter<TagsSearchRecyclerViewAdapter.ViewHolder> {
 
         Context mContext;

@@ -38,6 +38,10 @@ import com.ucsd.tryclubs.getRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+/**
+ * FollowingEventsFragment is the Following Events page in the app
+ */
 public class FollowingEventsFragment extends Fragment {
 
     private static final String TAG = "FollowingEventsFragment";
@@ -160,6 +164,9 @@ public class FollowingEventsFragment extends Fragment {
         return v;
     }
 
+    /**
+     * method checkIfFollowingEventsIndexExist checks if the "following_events" is existed in the user's Database
+     */
     private void checkIfFollowingEventsIndexExist() {
         Log.d(TAG, "checkIfFollowingEventsIndexExist");
 

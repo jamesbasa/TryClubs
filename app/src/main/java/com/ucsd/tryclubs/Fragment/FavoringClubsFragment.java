@@ -28,7 +28,7 @@ import com.ucsd.tryclubs.ViewHolder.FollowingClubsViewHolder;
 import com.ucsd.tryclubs.getRandom;
 
 /**
- * A simple {@link Fragment} subclass.
+ * FavoringClubsFragment is the "Favoring Clubs" page in the app
  */
 public class FavoringClubsFragment extends Fragment{
 
@@ -67,6 +67,9 @@ public class FavoringClubsFragment extends Fragment{
         return v;
     }
 
+    /**
+     * method setupRecyclerView set up the favoring clubs lists
+     */
     public void setupRecyclerView(RecyclerView recyclerView) {
         Log.d(TAG, "setupRecyclerView!!!" );
 
