@@ -6,33 +6,25 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.igalata.bubblepicker.BubblePickerListener;
 import com.igalata.bubblepicker.adapter.BubblePickerAdapter;
 import com.igalata.bubblepicker.model.BubbleGradient;
 import com.igalata.bubblepicker.model.PickerItem;
 import com.igalata.bubblepicker.rendering.BubblePicker;
-import com.ucsd.tryclubs.Activity.ClubProfileActivity;
 import com.ucsd.tryclubs.Activity.ClubSuggestionsActivity;
-import com.ucsd.tryclubs.MainActivity;
 import com.ucsd.tryclubs.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Class DiscoverActivity sets the content to res/layout/activity_discover.xml
- * and this is the Bubble Picker "Discover" page.
+ * class DiscoverActivity is the "Discover/Bubble Picker" page in the App.
  */
 public class DiscoverActivity extends AppCompatActivity {
 

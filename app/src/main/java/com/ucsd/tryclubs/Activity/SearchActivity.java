@@ -1,6 +1,5 @@
 package com.ucsd.tryclubs.Activity;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -56,7 +55,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * class SearchActivity is the Search page in the app
+ * class SearchActivity is the "Search" page in the App.
  */
 public class SearchActivity extends AppCompatActivity {
 
@@ -103,15 +102,15 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((!mSearchField.getText().toString().trim().startsWith("#") && actionId == EditorInfo.IME_NULL
-                        && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                        && event.getAction() == KeyEvent.ACTION_DOWN) || (!mSearchField.getText().toString().trim().startsWith("#") && actionId == EditorInfo.IME_ACTION_NEXT)) {
                     if (mTagsChipGroup.getChildCount() > 0) {
                         mTagsChipGroup.removeAllViews();
                         return true;
                     }
                     String search = mSearchField.getText().toString().trim();
                     firebaseSearch(search);
-                } else if (mSearchField.getText().toString().trim().startsWith("#") && actionId == EditorInfo.IME_NULL
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                } else if ((mSearchField.getText().toString().trim().startsWith("#") && actionId == EditorInfo.IME_NULL
+                        && event.getAction() == KeyEvent.ACTION_DOWN) || (mSearchField.getText().toString().trim().startsWith("#") && actionId == EditorInfo.IME_ACTION_NEXT)) {
 
                     String[] t = mSearchField.getText().toString().toLowerCase().trim().split(" ");
                     mSearchField.setText(null);
@@ -614,6 +613,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    /*
     public void onResume() {
         super.onResume();
         Log.d(TAG, "resume");
@@ -623,4 +623,5 @@ public class SearchActivity extends AppCompatActivity {
             firebaseSearch(mSearchField.getText().toString());
         }
     }
+    */
 }

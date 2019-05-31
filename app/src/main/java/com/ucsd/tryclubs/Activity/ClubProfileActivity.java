@@ -2,7 +2,6 @@ package com.ucsd.tryclubs.Activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.design.chip.Chip;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -45,7 +42,6 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.ucsd.tryclubs.Model.ClubMembers;
 import com.ucsd.tryclubs.Model.Clubs;
-import com.ucsd.tryclubs.Model.FollowingClubs;
 import com.ucsd.tryclubs.Model.Post;
 import com.ucsd.tryclubs.Model.Tags;
 import com.ucsd.tryclubs.R;
@@ -59,7 +55,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * class ClubProfileActivity is the Club Profile page in the app
+ * class ClubProfileActivity is the "Club Profile" page in the App.
  */
 public class ClubProfileActivity extends AppCompatActivity {
 
@@ -445,6 +441,21 @@ public class ClubProfileActivity extends AppCompatActivity {
                 }).setPositiveButton("update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (dialogNameTextView.getText().toString().trim().equals(".") || dialogNameTextView.getText().toString().trim().equals("#") || dialogNameTextView.getText().toString().trim().equals("$")
+                        || dialogNameTextView.getText().toString().trim().equals("[") || dialogNameTextView.getText().toString().trim().equals("]")) {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid symbol, must not contain '.', '#', '$', '[', or ']'", Snackbar.LENGTH_SHORT);
+                    View view = snackbar.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    snackbar.show();
+                    dialog.dismiss();
+                    return;
+                }
                 if (TextUtils.isEmpty(dialogEmailTextView.getText().toString().trim()) ||  TextUtils.isEmpty(dialogNameTextView.getText().toString().trim())) {
                     Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Fields cannot be empty", Snackbar.LENGTH_SHORT);
                     View view = snackbar.getView();
@@ -462,6 +473,7 @@ public class ClubProfileActivity extends AppCompatActivity {
                 String newName = dialogNameTextView.getText().toString().trim();
                 String newEmail = dialogEmailTextView.getText().toString().trim();
                 addNewMemberFirebase(newName, newEmail);
+                Log.d(TAG, "onClick: TAGGGGGGGGG");
                 dialog.dismiss();
             }
         });
@@ -495,6 +507,21 @@ public class ClubProfileActivity extends AppCompatActivity {
                 }).setPositiveButton("update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (dialogNameTextView.getText().toString().trim().equals(".") || dialogNameTextView.getText().toString().trim().equals("#") || dialogNameTextView.getText().toString().trim().equals("$")
+                || dialogNameTextView.getText().toString().trim().equals("[") || dialogNameTextView.getText().toString().trim().equals("]")) {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid symbol, must not contain '.', '#', '$', '[', or ']'", Snackbar.LENGTH_SHORT);
+                    View view = snackbar.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    snackbar.show();
+                    dialog.dismiss();
+                    return;
+                }
                 if (TextUtils.isEmpty(dialogEmailTextView.getText().toString().trim()) ||  TextUtils.isEmpty(dialogNameTextView.getText().toString().trim())) {
                     Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Fields cannot be empty", Snackbar.LENGTH_SHORT);
                     View view = snackbar.getView();

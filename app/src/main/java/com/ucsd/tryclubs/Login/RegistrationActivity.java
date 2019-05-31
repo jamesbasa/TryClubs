@@ -1,5 +1,6 @@
 package com.ucsd.tryclubs.Login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -11,13 +12,15 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,14 +28,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.ucsd.tryclubs.Activity.ClubProfileActivity;
 import com.ucsd.tryclubs.MainActivity;
 import com.ucsd.tryclubs.R;
 
 /**
- * Class RegistrationActivity sets the content to res/layout/activity_registration.xml
- * and this is the Sign up new user page.
- *
+ * Class RegistrationActivity is the "Registration" page in the App.
  */
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -215,6 +215,21 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 mVisibleImBtn.setVisibility(View.VISIBLE);
                 mInvisibleImBtn.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        mConfirmPassEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_DOWN)|| (actionId == EditorInfo.IME_ACTION_DONE)){
+                    View view = getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                    mSignUPBtn.performClick();
+                }
+                return true;
             }
         });
 

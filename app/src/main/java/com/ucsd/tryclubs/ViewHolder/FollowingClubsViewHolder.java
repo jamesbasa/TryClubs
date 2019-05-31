@@ -9,7 +9,7 @@ import com.ucsd.tryclubs.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FollowingClubsViewHolder extends RecyclerView.ViewHolder{
+public class FollowingClubsViewHolder extends RecyclerView.ViewHolder {
 
     public View mView;
     public CircleImageView mImageView;

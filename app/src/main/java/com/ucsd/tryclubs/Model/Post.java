@@ -10,7 +10,8 @@ public class Post {
 
     private long sort_date;
 
-    public Post(){} // needed for firebase?
+    public Post() {
+    } // needed for firebase?
 
     public Post(String ename, String hosts, String location, String date, String time, String description, long sort_date) {
         this.ename = ename;

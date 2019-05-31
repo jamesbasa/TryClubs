@@ -1,32 +1,24 @@
 package com.ucsd.tryclubs.Fragment;
 
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -52,9 +44,8 @@ import com.ucsd.tryclubs.getRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 /**
- * TimelineFragment is the Timeline Page in the app
+ * class TimelineFragment is the "Timeline" page in the App.
  */
 public class TimelineFragment extends Fragment {
 
@@ -72,6 +63,7 @@ public class TimelineFragment extends Fragment {
     private DatabaseReference mUserRef;
 
     private static final String TAG = "TimelineFragment";
+    private static final String BUILD_VERSION = "Current Build Version: 1.0.55";
 
     FirebaseRecyclerOptions<Post> option;
     FirebaseRecyclerAdapter<Post, PostViewHolder> adapter;
@@ -166,7 +158,7 @@ public class TimelineFragment extends Fragment {
         mWhatsNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), "Current Build Version: 1.0.54", Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), BUILD_VERSION, Snackbar.LENGTH_SHORT);
                 View view = snackbar.getView();
                 TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
                 tv.setTextColor(Color.parseColor("#FFD700"));

@@ -1,5 +1,6 @@
 package com.ucsd.tryclubs.Login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -9,11 +10,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,9 +32,7 @@ import com.ucsd.tryclubs.Model.User;
 import com.ucsd.tryclubs.R;
 
 /**
- * Class SetUpAccountActivity sets the content to res/layout/activity_set_up_account.xml
- * and this is page where user assigns their username after sign up as a new user.
- *
+ * Class SetUpAccountActivity is the "set up account" page in the App.
  */
 public class SetUpAccountActivity extends AppCompatActivity {
 
@@ -104,6 +105,21 @@ public class SetUpAccountActivity extends AppCompatActivity {
                 } else {
                     goToLoginActivityHelper();
                 }
+            }
+        });
+
+        mEnterUserNameEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_DOWN)|| (actionId == EditorInfo.IME_ACTION_DONE)){
+                    View view = getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                    mNextButton.performClick();
+                }
+                return true;
             }
         });
     }

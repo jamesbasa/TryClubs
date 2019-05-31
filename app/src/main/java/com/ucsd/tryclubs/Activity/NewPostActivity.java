@@ -18,7 +18,6 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +33,7 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
 /**
- * class NewPostActivity is the Post Creation page in the app
+ * class NewPostActivity is the "Post Creation" page in the App.
  */
 public class NewPostActivity extends AppCompatActivity implements View.OnClickListener {
 

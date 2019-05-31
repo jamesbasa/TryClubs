@@ -1,14 +1,11 @@
 package com.ucsd.tryclubs.Fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +25,7 @@ import com.ucsd.tryclubs.ViewHolder.FollowingClubsViewHolder;
 import com.ucsd.tryclubs.getRandom;
 
 /**
- * FavoringClubsFragment is the "Favoring Clubs" page in the app
+ * class FavoringClubsFragment is the "Favoring Clubs" page in the App.
  */
 public class FavoringClubsFragment extends Fragment{
 

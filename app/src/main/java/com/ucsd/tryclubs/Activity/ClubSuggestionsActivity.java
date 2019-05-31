@@ -37,7 +37,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * class ClubSuggestionsActivity is the Club Suggestions page after Discover page
+ * class ClubSuggestionsActivity is the "Club Suggestions" page after Discover page in the App.
  */
 public class ClubSuggestionsActivity extends AppCompatActivity {
 

@@ -10,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -38,11 +37,10 @@ import com.ucsd.tryclubs.Login.LoginActivity;
 import com.ucsd.tryclubs.Model.Clubs;
 
 /**
- * Class MainActivity sets the content to res/layout/activity_main.xml
- * and this is the TimeLine and the start screen of the App.
- *
+ * class MainActivity is the starter class in the App.
+ * It sets the default view as the TimeLine Fragment.
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
 
@@ -75,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView mUserEmailAccount;
     private TextView mUsername;
 
-    private RecyclerView mRecyclerView;
-
     /**
      * OnCreate() method is the first method run automatically when
      * an Activity is called
@@ -86,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout);
 
-        Log.d(TAG, "this is you");
         // set the timeline fragment as default
         fTimelineFragment = new TimelineFragment();
         setFragment(fTimelineFragment);
@@ -94,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // get authentication from Firebase
         mAuth = FirebaseAuth.getInstance();
         // locate Toolbar
-        toolbar = (Toolbar)findViewById(R.id.main_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
         // SIDE DRAWER (aka NavigationView):
@@ -104,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mNavigationView = (NavigationView)findViewById(R.id.navigation_view);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         // get the header stuff in side the side drawer
         headerView = mNavigationView.getHeaderView(0);
@@ -115,11 +110,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (mAuth.getCurrentUser() == null) {
                     // when user is not signed in
                     goToLoginActivityHelper();
-                    CloseDrawerAndSearchBar();
+                    CloseDrawer();
                 } else {
                     // when user is signed in
                     goToUserProfileActivityHelper();
-                    CloseDrawerAndSearchBar();
+                    CloseDrawer();
                 }
             }
         });
@@ -231,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Override system method onCreateOptionsMenu which Inflates(replaces)
      * the ToolBar to SearchBar's View
      *
-     * @param menu  [the "search" button specifically]
+     * @param menu [the "search" button specifically]
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -243,21 +238,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Override system method onNavigationItemSelected defines the behavior
      * of which an items in the drawer is clicked
      *
-     * @param menuItem  [an item in the drawer menu]
+     * @param menuItem [an item in the drawer menu]
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
 
-        if (id == R.id.drawer_timeline) {
+        if (id == R.id.drawer_timeline) { // timeline
             getSupportActionBar().setTitle("Timeline");
             setFragment(new TimelineFragment());
-        } else if (id == R.id.drawer_favoring_clubs) {
+        } else if (id == R.id.drawer_favoring_clubs) { // favoring clubs
             getSupportActionBar().setTitle("Favoring Clubs");
             setFragment(new FavoringClubsFragment());
-        } else if (id == R.id.drawer_create_club) {
+        } else if (id == R.id.drawer_my_following) { // following events
+            getSupportActionBar().setTitle("Following Events");
+            setFragment(new FollowingEventsFragment());
+        } else if (id == R.id.drawer_create_club) { // create a club
             startActivity(new Intent(getApplicationContext(), ClubCreationActivity.class));
-        } else if (id == R.id.drawer_my_club) {
+        } else if (id == R.id.drawer_my_club) { // manage my club
             Query q = mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).limitToFirst(1);
             q.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -277,14 +275,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
             });
-        } else if (id == R.id.drawer_logout) {
+        } else if (id == R.id.drawer_logout) { // log out
             userClickedLogOut();
-        } else if (id == R.id.drawer_my_following) {
-            getSupportActionBar().setTitle("Following Events");
-            setFragment(new FollowingEventsFragment());
         }
 
-        CloseDrawerAndSearchBar();
+        CloseDrawer();
         return true;
     }
 
@@ -324,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Hepler method which closes the Drawer when an item is clicked
      */
-    private void CloseDrawerAndSearchBar() {
+    private void CloseDrawer() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         }

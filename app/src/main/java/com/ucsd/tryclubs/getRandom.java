@@ -2,10 +2,18 @@ package com.ucsd.tryclubs;
 
 import java.util.Random;
 
+/**
+ * class getRandom returns random UCSD pictures or color for elements in the App.
+ */
 public class getRandom {
 
     private static final Random RANDOM = new Random();
 
+    /**
+     * method getRandomUCSDDrawable returns a random UCSD picture
+     *
+     * @return a random picture in resource file
+     */
     public static int getRandomUCSDDrawable() {
         switch (RANDOM.nextInt(22)) {
             default:
@@ -57,8 +65,13 @@ public class getRandom {
         }
     }
 
+    /**
+     * method getRandomColor returns a random color
+     *
+     * @return a random color
+     */
     public static String getRandomColor() {
-        switch (RANDOM.nextInt(7)) {
+        switch (RANDOM.nextInt(8)) {
             default:
             case 0:
                 return "#03A9F4";

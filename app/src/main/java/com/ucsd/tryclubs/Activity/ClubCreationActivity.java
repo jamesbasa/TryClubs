@@ -45,7 +45,7 @@ import org.w3c.dom.Text;
 import java.util.Set;
 
 /**
- * method ClubCreationActivity is the Club Creation page in the app
+ * class ClubCreationActivity is the "Club Creation" page in the App.
  */
 public class ClubCreationActivity extends AppCompatActivity {
 
@@ -518,7 +518,6 @@ public class ClubCreationActivity extends AppCompatActivity {
             this.checkCount--;
         }
     }
-
 
     /**
      * checkIfFollowingClubsIndexExist checks if the following_clubs index under user's profile exists

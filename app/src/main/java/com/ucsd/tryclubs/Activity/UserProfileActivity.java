@@ -31,12 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.ucsd.tryclubs.MainActivity;
 import com.ucsd.tryclubs.R;
 
-import java.util.Objects;
-
 /**
- * Class UserProfileActivity sets the content to res/layout/activity_user_profile.xml
- * and this is the Profile Page in the App.
- *
+ * class UserProfileActivity is the "User Profile" page in the App.
  */
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -96,7 +92,7 @@ public class UserProfileActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         String username = user.getDisplayName();
         if (!TextUtils.isEmpty(username)) {
-            String newWelcome = oldWelcome + " " + username + "!";
+            String newWelcome = oldWelcome + "\n" + username + "!";
             mWelcomeTextView.setText(newWelcome.toUpperCase());
         }
 
@@ -182,6 +178,7 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Animatoo.animateSlideUp(this); //fire the slide up animation
     }
 
     /**
