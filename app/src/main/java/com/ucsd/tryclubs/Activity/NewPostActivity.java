@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -72,10 +73,12 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
         mDate = findViewById(R.id.post_creation_date);
         mTime = findViewById(R.id.post_creation_time);
         mLocation = findViewById(R.id.post_creation_location);
+        mLocation.setInputType(InputType.TYPE_CLASS_TEXT);
         mDescription = findViewById(R.id.post_creation_description);
         mExit = findViewById(R.id.post_creation_exit_imageView);
         mDoneBtn = findViewById(R.id.post_creation_done_MaterialButton);
         mEventName = findViewById(R.id.post_creation_event_name);
+        mEventName.setInputType(InputType.TYPE_CLASS_TEXT);
 
         mMyClubRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

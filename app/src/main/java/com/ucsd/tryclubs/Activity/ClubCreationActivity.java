@@ -13,6 +13,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -84,6 +85,7 @@ public class ClubCreationActivity extends AppCompatActivity {
         mUserRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_users_tag)).child(mAuth.getCurrentUser().getUid());
 
         mClubName = (TextInputEditText) findViewById(R.id.club_creation_clubname);
+        mClubName.setInputType(InputType.TYPE_CLASS_TEXT);
         mPurpose = (TextInputEditText) findViewById(R.id.club_creation_purpose);
         mExit = (ImageView) findViewById(R.id.club_creation_exit_imageView);
         mDoneBtn = (MaterialButton) findViewById(R.id.club_creation_done_MaterialButton);
