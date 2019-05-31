@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.chip.Chip;
@@ -16,7 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -405,6 +408,14 @@ public class ClubProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),  "Claiming \"" + clubNameInHere + "\" request sent", Snackbar.LENGTH_LONG);
+                        View view = snackbar.getView();
+                        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                        tv.setTextColor(Color.parseColor("#FFD700"));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        } else {
+                            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                        }
                         snackbar.show();
                         dialog.dismiss();
                     }
@@ -434,8 +445,22 @@ public class ClubProfileActivity extends AppCompatActivity {
                 }).setPositiveButton("update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String newName = dialogNameTextView.getText().toString();
-                String newEmail = dialogEmailTextView.getText().toString();
+                if (TextUtils.isEmpty(dialogEmailTextView.getText().toString().trim()) ||  TextUtils.isEmpty(dialogNameTextView.getText().toString().trim())) {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Fields cannot be empty", Snackbar.LENGTH_SHORT);
+                    View view = snackbar.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    snackbar.show();
+                    dialog.dismiss();
+                    return;
+                }
+                String newName = dialogNameTextView.getText().toString().trim();
+                String newEmail = dialogEmailTextView.getText().toString().trim();
                 addNewMemberFirebase(newName, newEmail);
                 dialog.dismiss();
             }
@@ -470,8 +495,22 @@ public class ClubProfileActivity extends AppCompatActivity {
                 }).setPositiveButton("update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String newName = dialogNameTextView.getText().toString();
-                String newEmail = dialogEmailTextView.getText().toString();
+                if (TextUtils.isEmpty(dialogEmailTextView.getText().toString().trim()) ||  TextUtils.isEmpty(dialogNameTextView.getText().toString().trim())) {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Fields cannot be empty", Snackbar.LENGTH_SHORT);
+                    View view = snackbar.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    snackbar.show();
+                    dialog.dismiss();
+                    return;
+                }
+                String newName = dialogNameTextView.getText().toString().trim();
+                String newEmail = dialogEmailTextView.getText().toString().trim();
                 oldNameTextView.setText(newName);
                 oldEmailTextView.setText(newEmail);
                 updateInfoinFirebase(newName, newEmail, oldName);
@@ -498,7 +537,22 @@ public class ClubProfileActivity extends AppCompatActivity {
                 }).setPositiveButton("update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String newPurpose = dialogPurposeTextView.getText().toString();
+                if (TextUtils.isEmpty(dialogPurposeTextView.getText().toString().trim())) {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Fields cannot be empty", Snackbar.LENGTH_SHORT);
+                    View view = snackbar.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    snackbar.show();
+                    dialog.dismiss();
+                    return;
+                }
+
+                String newPurpose = dialogPurposeTextView.getText().toString().trim();
                 purpose_textView.setText(newPurpose);
                 updatePurposeinFirebase(newPurpose);
                 dialog.dismiss();

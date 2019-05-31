@@ -4,10 +4,12 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,9 +17,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -44,6 +49,7 @@ import com.ucsd.tryclubs.R;
 import com.ucsd.tryclubs.getRandom;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -88,14 +94,88 @@ public class SearchActivity extends AppCompatActivity {
         mWelcomeHint = (TextView) findViewById(R.id.search_page_marquee);
         mWelcomeHint.setSelected(true);
 
-        String[] tags;
+        final String[] tags;
         tags = getResources().getStringArray(R.array.all_custom_tags);
+
+        mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (!mSearchField.getText().toString().trim().startsWith("#") && actionId == EditorInfo.IME_NULL
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    String search = mSearchField.getText().toString().trim();
+                    firebaseSearch(search);
+                } else if (mSearchField.getText().toString().trim().startsWith("#") && actionId == EditorInfo.IME_NULL
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    /*
+                    String[] t = mSearchField.getText().toString().toLowerCase().trim().split(" ");
+                    mSearchField.setText(null);
+                    for (String a : t) {
+                        if (Arrays.asList(tags).contains(a)) {
+                            addChipToGroup(a, mTagsChipGroup);
+                        } else {
+                            Snackbar sn = Snackbar.make(findViewById(android.R.id.content), a + " does not exist", Snackbar.LENGTH_LONG);
+                            View view = sn.getView();
+                            TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                            tv.setTextColor(Color.parseColor("#FFD700"));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            } else {
+                                tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                            }
+                            sn.show();
+                            continue;
+                        }
+                    }
+                    */
+                    String temp = mSearchField.getText().toString().toLowerCase().trim();
+                    mSearchField.setText(null);
+                    if (Arrays.asList(tags).contains(temp)) {
+                        addChipToGroup(temp, mTagsChipGroup);
+                    } else {
+                        Snackbar sn = Snackbar.make(findViewById(android.R.id.content), temp + " does not exist\n Hint: only one tag at a time", Snackbar.LENGTH_LONG);
+                        View view = sn.getView();
+                        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                        tv.setTextColor(Color.parseColor("#FFD700"));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        } else {
+                            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                        }
+                        sn.show();
+                    }
+                }
+                return true;
+            }
+        });
 
         mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String search = mSearchField.getText().toString();
-                firebaseSearch(search);
+                if (mSearchField.getText().toString().trim().startsWith("#")) {
+                    String temp = mSearchField.getText().toString().toLowerCase().trim();
+                    //String[] t = mSearchField.getText().toString().toLowerCase().trim().split(" ");
+                    mSearchField.setText(null);
+                    if (Arrays.asList(tags).contains(temp)) {
+                        addChipToGroup(temp, mTagsChipGroup);
+                    } else {
+                        Snackbar sn = Snackbar.make(findViewById(android.R.id.content), temp + " does not exist\n Hint: only one tag at a time", Snackbar.LENGTH_LONG);
+                        View view = sn.getView();
+                        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                        tv.setTextColor(Color.parseColor("#FFD700"));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        } else {
+                            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                        }
+                        sn.show();
+                    }
+                } else {
+                    if (mTagsChipGroup.getChildCount() > 0 && !mSearchField.getText().toString().trim().isEmpty()) {
+                        mTagsChipGroup.removeAllViews();
+                    }
+                    String search = mSearchField.getText().toString().trim();
+                    firebaseSearch(search);
+                }
             }
         });
 
@@ -141,7 +221,7 @@ public class SearchActivity extends AppCompatActivity {
     /**
      * method firebaseSearch enables search by Text
      *
-     * @param search    [the input searching text]
+     * @param search [the input searching text]
      */
     private void firebaseSearch(String search) {
 
@@ -283,7 +363,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onChildViewRemoved(View parent, View child) {
                 if (mTagsChipGroup.getChildCount() == 0) {
-                    mSearchBtn.performClick();
+                    String search = mSearchField.getText().toString().trim();
+                    firebaseSearch(search);
                 } else {
                     String selectedTag = "";
                     if (mTagsChipGroup.getChildCount() > 0) {
@@ -365,6 +446,7 @@ public class SearchActivity extends AppCompatActivity {
             for (int i = 0; i < mTagsChipGroup.getChildCount(); i++) {
                 if (((Chip) mTagsChipGroup.getChildAt(i)).getText().toString().equals(tagsName)) {
                     existed = true;
+                    mRecyclerView.setAdapter(tagsAdapter);
                 }
             }
         }

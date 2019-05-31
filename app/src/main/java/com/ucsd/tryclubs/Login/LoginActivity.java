@@ -1,6 +1,8 @@
 package com.ucsd.tryclubs.Login;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -8,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -107,7 +110,16 @@ public class LoginActivity extends AppCompatActivity {
                                 String loginError = task.getException().getMessage();
                                 //Toast.makeText(LoginActivity.this, "Error: " + loginError, Toast.LENGTH_LONG).show();
 
-                                Snackbar.make(findViewById(android.R.id.content),  "Error: " + loginError, Snackbar.LENGTH_LONG).show();
+                                Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Error: " + loginError, Snackbar.LENGTH_LONG);
+                                View view = sn.getView();
+                                TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                                tv.setTextColor(Color.parseColor("#FFD700"));
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                                    tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                } else {
+                                    tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                                }
+                                sn.show();
                             }
                             // set some button visibility
                             mLoginProgressbar.setVisibility(View.INVISIBLE);
@@ -119,7 +131,16 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content),  "Please enter an Email or Password", Snackbar.LENGTH_LONG).show();
+                    Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Please enter an Email or Password", Snackbar.LENGTH_LONG);
+                    View view = sn.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    sn.show();
                     mLoginProgressbar.setVisibility(View.INVISIBLE);
                     mLoginButton.setVisibility(View.VISIBLE);
                     mSignUpTextView.setVisibility(View.VISIBLE);

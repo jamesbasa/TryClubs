@@ -166,7 +166,7 @@ public class TimelineFragment extends Fragment {
         mWhatsNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), "Current Build Version: 1.0.51", Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), "Current Build Version: 1.0.53", Snackbar.LENGTH_SHORT);
                 View view = snackbar.getView();
                 TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
                 tv.setTextColor(Color.parseColor("#FFD700"));

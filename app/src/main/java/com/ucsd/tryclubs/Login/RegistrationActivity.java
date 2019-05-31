@@ -1,6 +1,8 @@
 package com.ucsd.tryclubs.Login;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -8,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,7 +87,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String user_input_password = mPasswordEditText.getText().toString();
                 String user_input_confirm_password = mConfirmPassEditText.getText().toString();
 
-                if (!TextUtils.isEmpty(user_input_email) && !TextUtils.isEmpty(user_input_password) && !TextUtils.isEmpty(user_input_confirm_password)) {
+                if (!TextUtils.isEmpty(user_input_email) && !TextUtils.isEmpty(user_input_password) && !TextUtils.isEmpty(user_input_confirm_password) && user_input_email.toLowerCase().endsWith("@ucsd.edu")) {
                     if (user_input_password.equals(user_input_confirm_password)) {
                         mAuth.createUserWithEmailAndPassword(user_input_email, user_input_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -95,7 +98,16 @@ public class RegistrationActivity extends AppCompatActivity {
                                 } else {
                                     String errormsg = task.getException().getMessage();
                                     //Toast.makeText(RegistrationActivity.this, "Error: " + errormsg, Toast.LENGTH_LONG).show();
-                                    Snackbar.make(findViewById(android.R.id.content),  "Error: " + errormsg, Snackbar.LENGTH_LONG).show();
+                                    Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Error: " + errormsg, Snackbar.LENGTH_LONG);
+                                    View view = sn.getView();
+                                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                                    tv.setTextColor(Color.parseColor("#FFD700"));
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                    } else {
+                                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                                    }
+                                    sn.show();
                                     // set some button visibility
                                     mProgressBar.setVisibility(View.INVISIBLE);
                                     mSignUPBtn.setVisibility(View.VISIBLE);
@@ -107,12 +119,30 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     } else {
 
-                        if (!TextUtils.isEmpty(user_input_email)&& !user_input_email.endsWith("@ucsd.edu")) {
+                        if (!TextUtils.isEmpty(user_input_email) && !user_input_email.toLowerCase().endsWith("@ucsd.edu")) {
                             //Toast.makeText(RegistrationActivity.this, "Please make sure you use @ucsd.edu email", Toast.LENGTH_LONG).show();
-                            Snackbar.make(findViewById(android.R.id.content),  "Please make sure you use @ucsd.edu email", Snackbar.LENGTH_LONG).show();
+                            Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Please make sure you use @ucsd.edu email", Snackbar.LENGTH_LONG);
+                            View view = sn.getView();
+                            TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                            tv.setTextColor(Color.parseColor("#FFD700"));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                                tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            } else {
+                                tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                            }
+                            sn.show();
                         } else {
                             //Toast.makeText(RegistrationActivity.this, "Password and Confirm Password don't match", Toast.LENGTH_LONG).show();
-                            Snackbar.make(findViewById(android.R.id.content),  "Password and Confirm Password don't match", Snackbar.LENGTH_LONG).show();
+                            Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Password and Confirm Password don't match", Snackbar.LENGTH_LONG);
+                            View view = sn.getView();
+                            TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                            tv.setTextColor(Color.parseColor("#FFD700"));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                                tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            } else {
+                                tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                            }
+                            sn.show();
                         }
                         // set some button visibility
                         mProgressBar.setVisibility(View.INVISIBLE);
@@ -124,10 +154,28 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     if (!TextUtils.isEmpty(user_input_email)&& !user_input_email.endsWith("@ucsd.edu")) {
                         //Toast.makeText(RegistrationActivity.this, "Please make sure you use @ucsd.edu email", Toast.LENGTH_LONG).show();
-                        Snackbar.make(findViewById(android.R.id.content),  "Please make sure you use @ucsd.edu email", Snackbar.LENGTH_LONG).show();
+                        Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Please make sure you use @ucsd.edu email", Snackbar.LENGTH_LONG);
+                        View view = sn.getView();
+                        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                        tv.setTextColor(Color.parseColor("#FFD700"));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        } else {
+                            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                        }
+                        sn.show();
                     } else {
                         //Toast.makeText(RegistrationActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
-                        Snackbar.make(findViewById(android.R.id.content),  "Please fill all fields", Snackbar.LENGTH_LONG).show();
+                        Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Please fill all fields", Snackbar.LENGTH_LONG);
+                        View view = sn.getView();
+                        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                        tv.setTextColor(Color.parseColor("#FFD700"));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        } else {
+                            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                        }
+                        sn.show();
                     }
                     // set some button visibility
                     mProgressBar.setVisibility(View.INVISIBLE);

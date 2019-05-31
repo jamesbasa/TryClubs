@@ -2,6 +2,8 @@ package com.ucsd.tryclubs.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
@@ -9,9 +11,11 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -106,11 +110,20 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mClubName.getText().toString().isEmpty() && !mDate.getText().toString().isEmpty() && !mTime.getText().toString().isEmpty() && !mLocation.getText().toString().isEmpty() && !mDescription.getText().toString().isEmpty() && !mEventName.getText().toString().isEmpty()) {
+                if (!mClubName.getText().toString().trim().isEmpty() && !mDate.getText().toString().trim().isEmpty() && !mTime.getText().toString().trim().isEmpty() && !mLocation.getText().toString().trim().isEmpty() && !mDescription.getText().toString().trim().isEmpty() && !mEventName.getText().toString().trim().isEmpty()) {
                     addPost();
                 } else {
                     //Toast.makeText(getApplicationContext(), "Please Make Sure All Text Fields Are Filled.", Toast.LENGTH_LONG).show();
-                    Snackbar.make(findViewById(android.R.id.content),  "Please Make Sure All Text Fields Are Filled.", Snackbar.LENGTH_LONG).show();
+                    Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Please Make Sure All Text Fields Are Filled.", Snackbar.LENGTH_LONG);
+                    View view = sn.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    sn.show();
                 }
             }
         });

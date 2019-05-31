@@ -1,6 +1,8 @@
 package com.ucsd.tryclubs.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.chip.Chip;
@@ -13,10 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,6 +66,7 @@ public class ClubCreationActivity extends AppCompatActivity {
     private Clubs club = new Clubs();
     private ClubMembers clubMembers = new ClubMembers();
     private Tags tags = new Tags(0);
+    private ChipGroup cp;
     String clubName = "";
 
     private int checkCount = 0;
@@ -81,6 +87,7 @@ public class ClubCreationActivity extends AppCompatActivity {
         mPurpose = (TextInputEditText) findViewById(R.id.club_creation_purpose);
         mExit = (ImageView) findViewById(R.id.club_creation_exit_imageView);
         mDoneBtn = (MaterialButton) findViewById(R.id.club_creation_done_MaterialButton);
+        cp = (ChipGroup) findViewById(R.id.club_creation_chipGroup);
 
         mAcademic = (Chip) findViewById(R.id.academic_tag);
         mArt = (Chip) findViewById(R.id.art_tag);
@@ -132,13 +139,21 @@ public class ClubCreationActivity extends AppCompatActivity {
         SetSingleChipListener(mSports);
         SetSingleChipListener(mTechnology);
 
-
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkCount == 0) {
                     //Toast.makeText(getApplicationContext(), "Please Select At Least One Tag.", Toast.LENGTH_LONG).show();
-                    Snackbar.make(findViewById(android.R.id.content),  "Please Select At Least One Tag.", Snackbar.LENGTH_LONG).show();
+                    Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Please Select At Least One Tag.", Snackbar.LENGTH_LONG);
+                    View view = sn.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    sn.show();
                 } else {
                     addMyClub();
                 }
@@ -159,10 +174,19 @@ public class ClubCreationActivity extends AppCompatActivity {
      */
     private void addMyClub() {
 
-        if (TextUtils.isEmpty(mClubName.getText().toString()) || TextUtils.isEmpty(mPurpose.getText().toString())) {
+        if (TextUtils.isEmpty(mClubName.getText().toString().trim()) || TextUtils.isEmpty(mPurpose.getText().toString().trim())) {
             Log.d(TAG, "adding my club" + " if statement");
             //Toast.makeText(getApplicationContext(), "Please Make Sure All Text Fields Are Filled.", Toast.LENGTH_LONG).show();
-            Snackbar.make(findViewById(android.R.id.content),  "Please Make Sure All Text Fields Are Filled.", Snackbar.LENGTH_LONG).show();
+            Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Please Make Sure All Text Fields Are Filled.", Snackbar.LENGTH_LONG);
+            View view = sn.getView();
+            TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+            tv.setTextColor(Color.parseColor("#FFD700"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            } else {
+                tv.setGravity(Gravity.CENTER_HORIZONTAL);
+            }
+            sn.show();
         } else {
             Log.d(TAG, "adding my club now" +  mClubName.getText().toString().trim());
 
@@ -223,7 +247,7 @@ public class ClubCreationActivity extends AppCompatActivity {
      *
      * @param mChip [a specific Chip]
      */
-    private void SetSingleChipListener(Chip mChip) {
+    private void SetSingleChipListener(final Chip mChip) {
         mChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -474,6 +498,23 @@ public class ClubCreationActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void MaximumChip(int checkCount, Chip chip) {
+        if (checkCount > 5) {
+            chip.setChecked(false);
+            Snackbar sn = Snackbar.make(findViewById(android.R.id.content), "Maximum 5 tags are allowed", Snackbar.LENGTH_LONG);
+            View view = sn.getView();
+            TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+            tv.setTextColor(Color.parseColor("#FFD700"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            } else {
+                tv.setGravity(Gravity.CENTER_HORIZONTAL);
+            }
+            sn.show();
+            this.checkCount--;
+        }
     }
 
 

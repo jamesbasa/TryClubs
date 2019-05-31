@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
         <android.support.design.chip.ChipGroup
-            android:id="@+id/tag_group"
+            android:id="@+id/club_creation_chipGroup"
             android:layout_width="362dp"
             android:layout_height="329dp"
             android:layout_marginStart="8dp"
