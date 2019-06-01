@@ -89,7 +89,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         // attach username to "HELLO"
         String oldWelcome = mWelcomeTextView.getText().toString();
-        FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
         String username = user.getDisplayName();
         if (!TextUtils.isEmpty(username)) {
             String newWelcome = oldWelcome + "\n" + username + "!";
@@ -124,17 +124,26 @@ public class UserProfileActivity extends AppCompatActivity {
         mDeleteAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference().child(getApplicationContext().getString(R.string.firebase_users_tag))
-                        .child(mAuth.getCurrentUser().getUid()).removeValue();
 
-                Log.d(TAG, "uuuser" + mAuth.getCurrentUser());
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                FirebaseUser user = auth.getCurrentUser();
-                user.delete();
-
-                mAuth.signOut();
-                goToMainActivityHelper();
-                Toast.makeText(UserProfileActivity.this, "Account Deleted!", Toast.LENGTH_LONG).show();
+                if (user != null) {
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    FirebaseUser user = auth.getCurrentUser();
+                    final String currentUid= auth.getCurrentUser().getUid();
+                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                mAuth.signOut();
+                                FirebaseDatabase.getInstance().getReference().child(getApplicationContext().getString(R.string.firebase_users_tag))
+                                        .child(currentUid).removeValue();
+                                Toast.makeText(UserProfileActivity.this, "Account Deleted!", Toast.LENGTH_LONG).show();
+                                goToMainActivityHelper();
+                            } else {
+                                Toast.makeText(UserProfileActivity.this, "Some Error Just Happened.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                }
                 //Snackbar.make(findViewById(android.R.id.content),  "Account Deleted!", Snackbar.LENGTH_LONG).show();
             }
         });
@@ -152,10 +161,14 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (hitGary <= 5) {
-                    Toast.makeText(getApplicationContext(), "Gary: Ouch! Stop it! It hurts!", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Gary: Ouch! Stop it! It hurts!", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 250);
+                    toast.show();
                     hitGary++;
                 } else {
-                    Toast.makeText(getApplicationContext(), "Professionalism Point Deduction!", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Professionalism Point Deduction!", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 250);
+                    toast.show();
                     hitGary = 0;
                 }
             }

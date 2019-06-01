@@ -443,7 +443,7 @@ public class ClubProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (dialogNameTextView.getText().toString().trim().equals(".") || dialogNameTextView.getText().toString().trim().equals("#") || dialogNameTextView.getText().toString().trim().equals("$")
                         || dialogNameTextView.getText().toString().trim().equals("[") || dialogNameTextView.getText().toString().trim().equals("]")) {
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid symbol, must not contain '.', '#', '$', '[', or ']'", Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid symbol", Snackbar.LENGTH_SHORT);
                     View view = snackbar.getView();
                     TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
                     tv.setTextColor(Color.parseColor("#FFD700"));
@@ -509,7 +509,7 @@ public class ClubProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (dialogNameTextView.getText().toString().trim().equals(".") || dialogNameTextView.getText().toString().trim().equals("#") || dialogNameTextView.getText().toString().trim().equals("$")
                 || dialogNameTextView.getText().toString().trim().equals("[") || dialogNameTextView.getText().toString().trim().equals("]")) {
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid symbol, must not contain '.', '#', '$', '[', or ']'", Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid symbol", Snackbar.LENGTH_SHORT);
                     View view = snackbar.getView();
                     TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
                     tv.setTextColor(Color.parseColor("#FFD700"));
