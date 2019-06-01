@@ -128,7 +128,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (user != null) {
                     FirebaseAuth auth = FirebaseAuth.getInstance();
                     FirebaseUser user = auth.getCurrentUser();
-                    final String currentUid= auth.getCurrentUser().getUid();
+                    final String currentUid = auth.getCurrentUser().getUid();
                     user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
