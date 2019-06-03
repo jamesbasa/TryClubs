@@ -126,9 +126,7 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (user != null) {
-                    FirebaseAuth auth = FirebaseAuth.getInstance();
-                    FirebaseUser user = auth.getCurrentUser();
-                    final String currentUid = auth.getCurrentUser().getUid();
+                    final String currentUid = mAuth.getCurrentUser().getUid();
                     user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -139,7 +137,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                 Toast.makeText(UserProfileActivity.this, "Account Deleted!", Toast.LENGTH_LONG).show();
                                 goToMainActivityHelper();
                             } else {
-                                Toast.makeText(UserProfileActivity.this, "Some Error Just Happened.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserProfileActivity.this, "Some Errors Just Happened with Firebase.\nTroubleshooting: try logout and log back in to delete", Toast.LENGTH_LONG).show();
                             }
                         }
                     });

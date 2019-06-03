@@ -144,6 +144,20 @@ public class ClubCreationActivity extends AppCompatActivity {
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mClubName.getText().toString().trim().equals(".") || mClubName.getText().toString().trim().equals("#") || mClubName.getText().toString().trim().equals("$")
+                        || mClubName.getText().toString().trim().equals("[") || mClubName.getText().toString().trim().equals("]")) {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid symbol", Snackbar.LENGTH_SHORT);
+                    View view = snackbar.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    snackbar.show();
+                    return;
+                }
                 if (checkCount == 0) {
                     //Toast.makeText(getApplicationContext(), "Please Select At Least One Tag.", Toast.LENGTH_LONG).show();
                     Snackbar sn = Snackbar.make(findViewById(android.R.id.content),  "Please Select At Least One Tag.", Snackbar.LENGTH_LONG);

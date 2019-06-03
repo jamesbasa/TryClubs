@@ -108,7 +108,7 @@ public class DiscoverActivity extends AppCompatActivity {
             public void onBubbleDeselected(@NotNull PickerItem item) {
                 count--;
                 if(count == 0) {
-                    mNextButton.setText("SKIP");
+                    mNextButton.setText(getApplicationContext().getString(R.string.skip));
                 }
             }
         });

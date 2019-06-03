@@ -63,7 +63,7 @@ public class TimelineFragment extends Fragment {
     private DatabaseReference mUserRef;
 
     private static final String TAG = "TimelineFragment";
-    private static final String BUILD_VERSION = "Current Build Version: 1.0.58";
+    private static final String BUILD_VERSION = "Current Build Version: 1.1.0";
 
     FirebaseRecyclerOptions<Post> option;
     FirebaseRecyclerAdapter<Post, PostViewHolder> adapter;

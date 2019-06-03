@@ -112,6 +112,20 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mEventName.getText().toString().trim().equals(".") || mEventName.getText().toString().trim().equals("#") || mEventName.getText().toString().trim().equals("$")
+                        || mEventName.getText().toString().trim().equals("[") || mEventName.getText().toString().trim().equals("]")) {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid symbol", Snackbar.LENGTH_SHORT);
+                    View view = snackbar.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    snackbar.show();
+                    return;
+                }
                 if (!mClubName.getText().toString().trim().isEmpty() && !mDate.getText().toString().trim().isEmpty() && !mTime.getText().toString().trim().isEmpty() && !mLocation.getText().toString().trim().isEmpty() && !mDescription.getText().toString().trim().isEmpty() && !mEventName.getText().toString().trim().isEmpty()) {
                     addPost();
                 } else {
