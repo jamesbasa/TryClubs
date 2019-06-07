@@ -207,52 +207,76 @@ public class ClubCreationActivity extends AppCompatActivity {
             Log.d(TAG, "adding my club now" +  mClubName.getText().toString().trim());
 
             clubName = mClubName.getText().toString().trim();
-            String purpose = mPurpose.getText().toString().trim();
-            int randomID = RANDOM.nextInt(100000-5000)+5000;
-            clubMembers.setName(mAuth.getCurrentUser().getDisplayName());
-            clubMembers.setEmail(mAuth.getCurrentUser().getEmail());
 
-            club.setId(Integer.toString(randomID));
-            club.setClub_name(clubName);
-            club.setPurpose(purpose);
-
-            mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubName).setValue(club).addOnCompleteListener(new OnCompleteListener<Void>() {
+            mAllClubsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    DatabaseReference newClubRef = mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubName);
-                    newClubRef.child(getApplicationContext().getString(R.string.firebase_tags_tag)).setValue(tags);
-                    newClubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(clubName)) {
+                        Snackbar sn = Snackbar.make(findViewById(android.R.id.content), "Club name conflicted. Choose another name.", Snackbar.LENGTH_LONG);
+                        View view = sn.getView();
+                        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                        tv.setTextColor(Color.parseColor("#FFD700"));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        } else {
+                            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                        }
+                        sn.show();
+                    } else {
+                        String purpose = mPurpose.getText().toString().trim();
+                        int randomID = RANDOM.nextInt(100000-5000)+5000;
+                        clubMembers.setName(mAuth.getCurrentUser().getDisplayName());
+                        clubMembers.setEmail(mAuth.getCurrentUser().getEmail());
+
+                        club.setId(Integer.toString(randomID));
+                        club.setClub_name(clubName);
+                        club.setPurpose(purpose);
+
+                        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubName).setValue(club).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                DatabaseReference newClubRef = mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubName);
+                                newClubRef.child(getApplicationContext().getString(R.string.firebase_tags_tag)).setValue(tags);
+                                newClubRef.child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
+                            }
+                        });
+                        mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubName).child(getApplicationContext().getString(R.string.firebase_lower_case_club_name_tag)).setValue(clubName.toLowerCase());
+
+                        mAllClubsRef.child(clubName).setValue(club).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_tags_tag)).setValue(tags);
+                                mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
+                                mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_lower_case_club_name_tag)).setValue(clubName.toLowerCase());
+                                checkIfFollowingClubsIndexExist();
+
+                                mAllClubsRef.child(clubName).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        Log.d(TAG, "followthisclub, club name: " + dataSnapshot);
+                                        Clubs club = dataSnapshot.getValue(Clubs.class);
+                                        mUserRef.child(getApplicationContext().getString(R.string.firebase_following_clubs_tag)).child(clubName).setValue(club);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                                Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
+                                clubProfilePage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Log.d(TAG, "mDoneBtn.setOnClickListener Intent Extra: " + clubName);
+                                clubProfilePage.putExtra(ClubProfileActivity.EXTRA, clubName);
+                                startActivity(clubProfilePage);
+                                finish();
+                            }
+                        });
+                    }
                 }
-            });
-            mUserRef.child(getApplicationContext().getString(R.string.firebase_my_club_tag)).child(clubName).child(getApplicationContext().getString(R.string.firebase_lower_case_club_name_tag)).setValue(clubName.toLowerCase());
 
-            mAllClubsRef.child(clubName).setValue(club).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_tags_tag)).setValue(tags);
-                    mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_clubmembers_tag)).child(mAuth.getCurrentUser().getDisplayName()).setValue(clubMembers);
-                    mAllClubsRef.child(clubName).child(getApplicationContext().getString(R.string.firebase_lower_case_club_name_tag)).setValue(clubName.toLowerCase());
-                    checkIfFollowingClubsIndexExist();
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    mAllClubsRef.child(clubName).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Log.d(TAG, "followthisclub, club name: " + dataSnapshot);
-                            Clubs club = dataSnapshot.getValue(Clubs.class);
-                            mUserRef.child(getApplicationContext().getString(R.string.firebase_following_clubs_tag)).child(clubName).setValue(club);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    Intent clubProfilePage = new Intent(getApplicationContext(), ClubProfileActivity.class);
-                    clubProfilePage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Log.d(TAG, "mDoneBtn.setOnClickListener Intent Extra: " + clubName);
-                    clubProfilePage.putExtra(ClubProfileActivity.EXTRA, clubName);
-                    startActivity(clubProfilePage);
-                    finish();
                 }
             });
         }

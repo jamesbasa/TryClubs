@@ -149,25 +149,50 @@ public class NewPostActivity extends AppCompatActivity implements View.OnClickLi
      * method addPost adds the new post under the club, user's following events, and events
      */
     private void addPost() {
-        String d = String.format("%02d", mDay);
-        String m = String.format("%02d", mMonth);
-        String y = Integer.toString(mYear);
-        String t = y+m+d;
-
         DatabaseReference mEventRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_events_tag));
         DatabaseReference mClubRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_clubs_tag)).child(clubName);
 
-        Post post = new Post(mEventName.getText().toString().trim(),
-                mClubName.getText().toString().trim(),mLocation.getText().toString().trim(),
-                mDate.getText().toString().trim(),mTime.getText().toString().trim(),
-                mDescription.getText().toString().trim(), Long.parseLong(t));
+        mEventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(mEventName.getText().toString().trim())) {
+                    Snackbar sn = Snackbar.make(findViewById(android.R.id.content), "Event name conflicted. Choose another name.", Snackbar.LENGTH_LONG);
+                    View view = sn.getView();
+                    TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(Color.parseColor("#FFD700"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    sn.show();
+                } else {
+                    DatabaseReference mEventRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_events_tag));
+                    DatabaseReference mClubRef = mFirebaseDatabase.getReference().child(getApplicationContext().getString(R.string.firebase_clubs_tag)).child(clubName);
+                    String d = String.format("%02d", mDay);
+                    String m = String.format("%02d", mMonth);
+                    String y = Integer.toString(mYear);
+                    String t = y+m+d;
+                    Post post = new Post(mEventName.getText().toString().trim(),
+                            mClubName.getText().toString().trim(),mLocation.getText().toString().trim(),
+                            mDate.getText().toString().trim(),mTime.getText().toString().trim(),
+                            mDescription.getText().toString().trim(), Long.parseLong(t));
 
-        mFirebaseDatabase.getReference().child("clubs").child(mClubName.getText().toString().trim()).child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
-        //mClubRef.child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
-        mEventRef.child(post.getEname()).setValue(post);
-        mUserRef.child(getApplicationContext().getString(R.string.firebase_following_events_tag)).child(post.getEname()).setValue(post);
-        //mEventRef.child(post.getEname()).child("sort_date").setValue(Long.parseLong(t));
-        onBackPressed();
+                    mFirebaseDatabase.getReference().child("clubs").child(mClubName.getText().toString().trim()).child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
+                    //mClubRef.child(getApplicationContext().getString(R.string.firebase_events_tag)).child(post.getEname()).setValue(post);
+                    mEventRef.child(post.getEname()).setValue(post);
+                    mUserRef.child(getApplicationContext().getString(R.string.firebase_following_events_tag)).child(post.getEname()).setValue(post);
+                    //mEventRef.child(post.getEname()).child("sort_date").setValue(Long.parseLong(t));
+                    onBackPressed();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
