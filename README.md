@@ -1,4 +1,4 @@
-# ![](app/src/main/res/drawable-v24/App%20Logo%20Artifacts.png)
+# <img src="app/src/main/res/drawable-v24/App%20Logo%20Artifacts.png" width="60" height="60"> <img src="app/src/main/res/drawable/app_logo.png" height="60">
  
  Team S.U.C.C #28, CSE 110, Spring 2019.
 
@@ -9,6 +9,8 @@
   4. **"cd ~/Library/Android/sdk/platform-tools/"**
   5. **"./adb install "(add a space after install)**
   6. Drag the downloaded apk file from Step 1 to Terminal.
-  7. Hit "Enter" Key.
+  7. Hit "Enter".
   8. In Terminal, it should display "Performing Streamed Install Success".
   9. You should be able to find the App in the Emulator.
+---
+<img src="app/src/main/res/drawable-v24/Screen%20Shot%202019-06-08%20at%2011.08.30%20PM.png" width="60" height="60">
