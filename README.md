@@ -1,6 +1,6 @@
 # <img src="app/src/main/res/drawable-v24/App%20Logo%20Artifacts.png" width="60" height="60"> <img src="app/src/main/res/drawable/app_logo.png" height="60">
  
- Team S.U.C.C #28, CSE 110, Spring 2019.
+ Team S.U.C.C #28, CSE 110 UCSD, Spring 2019.
 
 ## Installation Instruction (Mac)
   1. [Click here to download the apk file](https://drive.google.com/a/ucsd.edu/file/d/1wvQ69oH2kIvkfDhZxvgy_i-lh_NGfzyj/view?usp=drivesdk)
