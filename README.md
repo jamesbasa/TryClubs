@@ -10,7 +10,7 @@
   5. **"./adb install "(add a space after install) and then drag the downloaded apk file from Step 1 to Terminal.**
   6. In Terminal, it should display "Performing Streamed Install Success".
   7. You should be able to find the App in the emulator.
-  8. Open the App and enjoy it!
+  8. Open the App and enjoy it! (You could check the build version by clicking in "What's news" in the Timeline, current newest build version is 1.1.1)
 ---
 <img src="app/src/main/res/drawable-v24/s1.png" >
 <img src="app/src/main/res/drawable-v24/s2.png" >
