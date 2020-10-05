@@ -3,8 +3,8 @@
  Team S.U.C.C. #28, CSE 110 UCSD, Spring 2019.
 
 ## Overview
-[Introduction](#introduction)
-[Installation Instructions (Mac)](#installation-instructions-mac)
+1. [Introduction](#introduction)
+2. [Installation Instructions (Mac)](#installation-instructions-mac)
 
 ---
 ## Introduction
