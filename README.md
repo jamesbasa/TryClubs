@@ -19,7 +19,7 @@ TryClubs is the go-to mobile application for finding and advertising student org
 <img src="app/src/main/res/drawable-v24/search.png" width="30%" height="30%">
 
 ### Club Profile Page
-<img src="app/src/main/res/drawable-v24/club_profile_1.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/club_profile_2.png" width="30%" height="30%">
+<img src="app/src/main/res/drawable-v24/club_profile_1.png" width="30%" height="30%">       <img src="app/src/main/res/drawable-v24/club_profile_2.png" width="30%" height="30%">
  
 ### Side Bar
 <img src="app/src/main/res/drawable-v24/side_bar.png" width="30%" height="30%">
@@ -34,17 +34,17 @@ TryClubs is the go-to mobile application for finding and advertising student org
 <img src="app/src/main/res/drawable-v24/log_in.png" width="30%" height="30%">
 
 ### Registration
-<img src="app/src/main/res/drawable-v24/reg.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/reg_setup.png" width="30%" height="30%">
+<img src="app/src/main/res/drawable-v24/reg.png" width="30%" height="30%">      <img src="app/src/main/res/drawable-v24/reg_setup.png" width="30%" height="30%">
 
-<img src="app/src/main/res/drawable-v24/reg_discover.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/reg_club_rec.png" width="30%" height="30%">
+<img src="app/src/main/res/drawable-v24/reg_discover.png" width="30%" height="30%">     <img src="app/src/main/res/drawable-v24/reg_club_rec.png" width="30%" height="30%">
 
 ### Reset Password
 <img src="app/src/main/res/drawable-v24/reset_pwd.png" width="30%" height="30%">
 
 ### Other
-<img src="app/src/main/res/drawable-v24/snack_bar.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/dia.png" width="30%" height="30%">
+<img src="app/src/main/res/drawable-v24/snack_bar.png" width="30%" height="30%">        <img src="app/src/main/res/drawable-v24/dia.png" width="30%" height="30%">
 
-<img src="app/src/main/res/drawable-v24/sort.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/profile_page.png" width="30%" height="30%">
+<img src="app/src/main/res/drawable-v24/sort.png" width="30%" height="30%">     <img src="app/src/main/res/drawable-v24/profile_page.png" width="30%" height="30%">
 
 ## Installation Instructions (Mac)
   1. [Click here to download the apk file](https://drive.google.com/open?id=1qCaEodWc5qqhxDT961YV4JrHltC0u_EP)
