@@ -11,24 +11,16 @@
 TryClubs is the go-to mobile application for finding and advertising student organizations. Enough with the paper adverts loitered around campus. Enough with the absurd amount of flyers getting shoved in your face on Library Walk. Enough with feeling lost in how to get involved. TryClubs will put an end to UCSD’s “UC Socially Dead” reputation by introducing students to their niches. We provide a user friendly interface for users to browse through and favorite clubs, a timeline feature that keeps users updated on club events, and a tagging feature that integrates seamless searching and organization of clubs.
 
 ## Preview
-### Log in
-<img src="app/src/main/res/drawable-v24/log_in.png" width="50%" height="50%">
-
-### Registration
-<img src="app/src/main/res/drawable-v24/reg.png" width="50%" height="50%">
-<img src="app/src/main/res/drawable-v24/reg_setup.png" width="50%" height="50%">
-<img src="app/src/main/res/drawable-v24/reg_discover.png" width="50%" height="50%">
-<img src="app/src/main/res/drawable-v24/reg_club_rec.png" width="50%" height="50%">
 
 ### Timeline (News Feed)
-<img src="app/src/main/res/drawable-v24/timeline.png" width="50%" height="50%">
+<img src="app/src/main/res/drawable-v24/timeline.png" width="30%" height="30%">
 
 ### Search
-<img src="app/src/main/res/drawable-v24/search.png" width="50%" height="50%">
+<img src="app/src/main/res/drawable-v24/search.png" width="30%" height="30%">
 
 ### Club Profile Page
-<img src="app/src/main/res/drawable-v24/club_profile_1.png" width="50%" height="50%">
-<img src="app/src/main/res/drawable-v24/club_profile_2.png" width="50%" height="50%">
+<img src="app/src/main/res/drawable-v24/club_profile_1.png" width="30%" height="30%">
+<img src="app/src/main/res/drawable-v24/club_profile_2.png" width="30%" height="30%">
 
 ### Side Bar
 <img src="app/src/main/res/drawable-v24/side_bar.png" width="50%" height="50%">
@@ -39,15 +31,23 @@ TryClubs is the go-to mobile application for finding and advertising student org
 ### Favoring Club Page
 <img src="app/src/main/res/drawable-v24/favoring_club.png" width="50%" height="50%">
 
+### Log in
+<img src="app/src/main/res/drawable-v24/log_in.png" width="50%" height="50%">
+
+### Registration
+<img src="app/src/main/res/drawable-v24/reg.png" width="50%" height="50%">
+<img src="app/src/main/res/drawable-v24/reg_setup.png" width="50%" height="50%">
+<img src="app/src/main/res/drawable-v24/reg_discover.png" width="50%" height="50%">
+<img src="app/src/main/res/drawable-v24/reg_club_rec.png" width="50%" height="50%">
+
+### Reset Password
+<img src="app/src/main/res/drawable-v24/reset_pwd.png" width="50%" height="50%">
+
 ### Other
 <img src="app/src/main/res/drawable-v24/snack_bar.png" width="50%" height="50%">
 <img src="app/src/main/res/drawable-v24/dia.png" width="50%" height="50%">
 <img src="app/src/main/res/drawable-v24/sort.png" width="50%" height="50%">
 <img src="app/src/main/res/drawable-v24/profile_page.png" width="50%" height="50%">
-
-### Reset Password
-<img src="app/src/main/res/drawable-v24/reset_pwd.png" width="50%" height="50%">
-
 
 ## Installation Instructions (Mac)
   1. [Click here to download the apk file](https://drive.google.com/open?id=1qCaEodWc5qqhxDT961YV4JrHltC0u_EP)
