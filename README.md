@@ -35,6 +35,7 @@ TryClubs is the go-to mobile application for finding and advertising student org
 
 ### Registration
 <img src="app/src/main/res/drawable-v24/reg.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/reg_setup.png" width="30%" height="30%">
+
 <img src="app/src/main/res/drawable-v24/reg_discover.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/reg_club_rec.png" width="30%" height="30%">
 
 ### Reset Password
