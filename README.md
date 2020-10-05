@@ -41,7 +41,7 @@ TryClubs is the go-to mobile application for finding and advertising student org
 
 ### Other
 <img src="app/src/main/res/drawable-v24/snack_bar.png" width="50%" height="50%">
-<img src="app/src/main/res/drawable-v24/dialog.png" width="50%" height="50%">
+<img src="app/src/main/res/drawable-v24/dia.png" width="50%" height="50%">
 <img src="app/src/main/res/drawable-v24/sort.png" width="50%" height="50%">
 <img src="app/src/main/res/drawable-v24/profile_page.png" width="50%" height="50%">
 
