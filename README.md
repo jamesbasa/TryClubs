@@ -41,7 +41,7 @@ TryClubs is the go-to mobile application for finding and advertising student org
 ### Reset Password
 <img src="app/src/main/res/drawable-v24/reset_pwd.png" width="30%" height="30%">
 
-### Other
+### Other (Snackbars, Dialog, Sort, Profile Page)
 <img src="app/src/main/res/drawable-v24/snack_bar.png" width="30%" height="30%">        <img src="app/src/main/res/drawable-v24/dia.png" width="30%" height="30%">
 
 <img src="app/src/main/res/drawable-v24/sort.png" width="30%" height="30%">     <img src="app/src/main/res/drawable-v24/profile_page.png" width="30%" height="30%">
