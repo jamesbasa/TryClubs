@@ -15,6 +15,8 @@ TryClubs is the go-to mobile application for finding and advertising student org
   7. You should be able to find the App in the emulator.
   8. Open the App and enjoy it! (You could check the build version in the App by clicking in the text "What's news" at the top of the Timeline, current newest build version is 1.1.1)
 ---
-<img src="app/src/main/res/drawable-v24/s1.png" >
+<img src="app/src/main/res/drawable-v24/s1.png" width="40%">
 <img src="app/src/main/res/drawable-v24/s2.png" >
 <img src="app/src/main/res/drawable-v24/s3.png" width="432" height="864">
+
+---
