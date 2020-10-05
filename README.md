@@ -43,6 +43,7 @@ TryClubs is the go-to mobile application for finding and advertising student org
 
 ### Other
 <img src="app/src/main/res/drawable-v24/snack_bar.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/dia.png" width="30%" height="30%">
+
 <img src="app/src/main/res/drawable-v24/sort.png" width="30%" height="30%"><img src="app/src/main/res/drawable-v24/profile_page.png" width="30%" height="30%">
 
 ## Installation Instructions (Mac)
